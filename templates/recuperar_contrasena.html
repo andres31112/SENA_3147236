@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restablecer Contraseña</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='recuperar_contrasena.css') }}">
+    <script type="text/babel" src="{{ url_for('static', filename='recuperar_contrasena.js') }}"></script>
+    <style>
+        /* Estilos para centrar el formulario como en el div "form-container" */
+        body, html {
+            height: 100%;
+            display: grid;
+            place-items: center;
+            background-color: #f8f9fa; /* Un fondo claro */
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px; /* Ancho máximo del formulario */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-5">
+                <h2 class="card-title text-center mb-4">Restablecer Contraseña</h2>
+                <p class="text-muted text-center mb-4">
+                    Ingresa tu correo y te enviaremos un enlace para recuperar tu cuenta.
+                </p>
+
+                <form action="/api/forgot-password" method="POST">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input
+                            type="email"
+                            class="form-control form-control-lg"
+                            id="email"
+                            name="email"  placeholder="tu@email.com"
+                            required
+                        />
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Enviar Enlace
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-4 text-center">
+                    <a href="/login" class="text-decoration-none">Volver a Iniciar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
