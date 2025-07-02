@@ -1,0 +1,366 @@
+/* --- ========================================== --- */
+/* ---        PALETA "CORPORATE CLEAN"          --- */
+/* --- ========================================== --- */
+:root {
+    --color-primario: #0078ad;
+    --color-primario-oscuro: #00628e;
+    --color-texto-principal: #2c3e50;
+    --color-texto-secundario: #7f8c8d;
+    --color-blanco: #FFFFFF;
+    --color-fondo-seccion: #f8f9fa;
+    --color-borde-suave: #ecf0f1;
+}
+
+
+/* --- ESTILOS GENERALES --- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    background-color: var(--color-blanco);
+    color: var(--color-texto-secundario);
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    color: var(--color-texto-principal);
+}
+
+
+/* --- ========================================== --- */
+/* ---        CABECERA CLARA Y ANIMADA          --- */
+/* --- ========================================== --- */
+header {
+    background-color: var(--color-fondo-seccion);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-borde-suave);
+    /* El padding inferior crea el espacio para el logo grande */
+    padding: 10px 10px 220px 10px;
+    transition: padding 0.5s ease-in-out;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+    padding: 0 10px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.5s ease-in-out;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+    /* Dejamos espacio para cuando el logo se mueva a la izquierda */
+    margin-left: 0;
+    transition: margin-left 0.5s ease-in-out;
+}
+
+.navbar a {
+    color: var(--color-texto-secundario); /* Texto oscuro */
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: var(--color-primario);
+}
+
+.icon-profile {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.1s ease-out;
+}
+
+.icon-profile:active {
+    transform: scale(0.9);
+}
+
+.icon-profile svg {
+    width: 24px;
+    height: 24px;
+    color: var(--color-texto-secundario); /* Ícono oscuro */
+    transition: color 0.3s ease;
+}
+.icon-profile:hover svg {
+    color: var(--color-primario);
+}
+
+.logo-center {
+    /* Posicionamiento inicial: centrado y abajo */
+    position: absolute;
+    left: 50%;
+    top: 60px; /* Distancia desde la parte superior del header */
+    transform: translateX(-50%);
+    transition: all 0.5s ease-in-out;
+}
+
+.logo-center svg {
+    color: var(--color-primario);
+    height: 140px;
+    width: 140px;
+    border-radius: 100%;
+    box-shadow: 0 5px 15px rgba(44, 62, 80, 0.1);
+    transition: all 0.5s ease-in-out;
+}
+
+
+/* --- ========================================== --- */
+/* ---       ANIMACIÓN NAVBAR CON SCROLL         --- */
+/* --- ========================================== --- */
+
+/* Clase que se añade con JavaScript al hacer scroll */
+.navbar.scrolled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color-fondo-seccion);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 5px 20px;
+}
+
+/* Cuando el header tiene un navbar "scrolled" dentro, reducimos su padding */
+header:has(.navbar.scrolled) {
+    padding-bottom: 10px;
+}
+
+/* Movimiento y cambio de tamaño del logo */
+.navbar.scrolled .logo-center {
+    position: relative; /* Lo devolvemos al flujo normal */
+    top: 0;
+    left: 0;
+    transform: translateX(0);
+}
+
+.navbar.scrolled .logo-center svg {
+    width: 45px;
+    height: 45px;
+    box-shadow: none;
+}
+
+/* Hacemos espacio para el logo a la izquierda */
+.navbar.scrolled .nav-links {
+    margin-left: 20px;
+}
+
+/* Agregamos un padding-top al contenido principal para compensar el navbar fijo */
+main.content {
+    transition: padding-top 0.5s ease-in-out;
+}
+body:has(.navbar.scrolled) main.content {
+    padding-top: 70px; /* Altura aproximada del navbar fijo */
+}
+
+
+/* --- ========================================== --- */
+/* ---   BLOQUE NUEVO: ANULAR TRANSICIÓN AL SUBIR  --- */
+/* --- ========================================== --- */
+/*
+  Esta clase se añade temporalmente vía JavaScript para anular
+  las animaciones únicamente cuando se vuelve a la parte superior,
+  logrando un efecto de "snap" en lugar de una transición inversa.
+*/
+header.no-transition-on-return,
+header.no-transition-on-return .navbar,
+header.no-transition-on-return .logo-center,
+header.no-transition-on-return .logo-center svg,
+header.no-transition-on-return .nav-links,
+body:has(header.no-transition-on-return) main.content {
+    transition: none;
+}
+
+
+/* --- ========================================== --- */
+/* ---        ESTILOS DEL FONDO ANIMADO         --- */
+/* --- ========================================== --- */
+.circles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    z-index: 1; /* Detrás del contenido */
+}
+
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 120, 173, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+}
+
+.circles li:nth-child(1){ left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+.circles li:nth-child(2){ left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+.circles li:nth-child(3){ left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+.circles li:nth-child(4){ left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+.circles li:nth-child(5){ left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+.circles li:nth-child(6){ left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+.circles li:nth-child(7){ left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+.circles li:nth-child(8){ left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+.circles li:nth-child(9){ left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
+.circles li:nth-child(10){ left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+
+@keyframes animate {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+    100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+}
+
+
+/* --- ========================================== --- */
+/* ---                 CONTENIDO                --- */
+/* --- ========================================== --- */
+.banner {
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.banner-content,
+.banner-content2 {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: stretch;
+}
+
+.banner-content {
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.banner-content2 {
+    gap: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid var(--color-borde-suave);
+    background-color: var(--color-blanco);
+}
+
+.welcome-message {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.statistics {
+    background-color: var(--color-blanco);
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border: 1px solid var(--color-borde-suave);
+}
+
+.information-contacts {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.map-container {
+    height: 100%;
+    background-color: #e9e5e1;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.welcome-message h1 { margin: 0 0 20px 0; font-size: 2em; }
+
+.btn-login {
+    background-color: transparent;
+    border: 1px solid var(--color-primario);
+    color: var(--color-primario);
+    padding: 10px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+}
+
+.statistic-item { padding: 5px 10px; text-align: center; }
+.statistic-item h3 { font-size: 1.8rem; margin: 0; }
+.statistic-item p { margin: 5px 0 0 0; font-size: 0.9rem; color: var(--color-texto-secundario); line-height: 1.2; }
+
+.information-contacts p { color: var(--color-texto-secundario); font-size: 1.1em; margin: 0 0 10px 0; }
+.information-contacts h2 { font-size: 2.5em; margin: 0 0 25px 0; }
+
+.information-contacts button {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    border: 2px solid var(--color-primario);
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.information-contacts button:hover {
+    background-color: var(--color-blanco);
+    color: var(--color-primario);
+}
+
+
+/* --- ========================================== --- */
+/* ---             DISEÑO RESPONSIVO            --- */
+/* --- ========================================== --- */
+@media (max-width: 992px) {
+    .banner-content,
+    .banner-content2 {
+        grid-template-columns: 1fr;
+    }
+
+    .statistics {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    .statistic-item {
+        padding: 15px 10px;
+    }
+
+    .information-contacts {
+        padding: 40px 24px;
+    }
+
+    .map-container {
+        min-height: 300px;
+    }
+}
+

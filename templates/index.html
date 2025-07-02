@@ -1,0 +1,111 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Animación Navbar</title>
+</head>
+<body>
+    
+<header>
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <nav class="navbar">
+        <div class="logo-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                <circle cx="8" cy="8" r="8"/>
+            </svg>
+        </div>
+        <div class="nav-links">
+            <a href="#">Inicio</a>
+            <a href="#">Quienes Somos</a>
+            <a href="#">Comunidad</a>
+            <a href="#">Contactos</a>
+        </div>
+        <div>
+            <button class="icon-profile">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<main class="content">
+    <section class="banner">
+        <div class="banner-content">
+            <div class="welcome-message">
+                <h1>Mensaje de bienvenida</h1>
+                  <a href="{{ url_for('login') }}">
+                <button class="btn-login">Iniciar Sesión</button>
+            </div>
+            
+            <div class="statistics">
+                <div class="statistic-item">
+                    <h3>3+</h3>
+                    <p>Administrativos</p>
+                </div>
+                <div class="statistic-item">
+                    <h3>22+</h3>
+                    <p>Servicios y <br> Vigilancia</p>
+                </div>
+                <div class="statistic-item">
+                    <h3>53+</h3>
+                    <p>Docentes</p>
+                </div>
+                <div class="statistic-item">
+                    <h3>983+</h3>
+                    <p>Estudiantes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="banner-content2">
+            <div class="information-contacts">
+                <p>Educacion, Ciencia, Cultura y Deporte para trascender</p>
+                <h2>COLEGIO NACIONES UNIDAS</h2>
+                <button>Contactanos</button>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.985876896238!2d-74.083789385238!3d4.699996996652438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9ad1a57a5f6d%3A0x955979929e7c5b9e!2sBogot%C3%A1!5e0!3m2!1ses!2sco!4v1622080302191!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+        <div class="advertisement_panel">
+            <p>Panel de Anuncio</p>
+            <div>
+                <div>
+                    <p>Mensaje del Anuncio</p>
+                    <div><img src="" alt=""></div>
+                </div>
+                <div>
+                    <p>Mensaje del anuncio</p>
+                    <div><img src="" alt=""></div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </section>
+    
+    <div style="height: 1000px; background: #e0e0e0; padding: 40px; text-align: center;">
+        <h2>Más contenido de la página</h2>
+    </div>
+</main>
+ <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+
+
+</body>
+</html>

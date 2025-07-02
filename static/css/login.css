@@ -1,0 +1,153 @@
+/* --- Variables y Estilos Globales --- */
+:root {
+    --color-primario: #0078ad;
+    --color-primario-oscuro: #00628e;
+    --color-texto-principal: #2c3e50;
+    --color-texto-secundario: #7f8c8d;
+    --color-blanco: #FFFFFF;
+    --color-fondo-seccion: #f8f9fa;
+    --color-borde-suave: #ecf0f1;
+}
+
+body {
+    background-color: var(--color-blanco);
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    /* QUITAMOS display:flex, justify-content y align-items.
+       El centrado se hará en .card */
+}
+
+
+/* --- Tarjeta de Login --- */
+.card {
+    /* ESTA ES LA CLAVE PARA CENTRARLO CORRECTAMENTE */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10; /* Para que esté por encima de .circles */
+
+    width: 300px;
+    padding: 1.9rem 1.2rem;
+    text-align: center;
+    background: var(--color-fondo-seccion);
+    border-radius: 15px; /* Un poco más suave */
+    border: 2px solid var(--color-primario);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- Campos de Input --- */
+.field {
+    margin-top: .5rem;
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    background-color: #f0f0f0; /* Un gris más claro para mejor contraste */
+    border-radius: 8px;
+    padding: .5em 1em;
+    border: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.field:focus-within {
+    border-color: var(--color-primario);
+}
+
+.input-icon {
+    height: 1em;
+    width: 1em;
+    fill: var(--color-texto-secundario);
+}
+
+.input-field {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: var(--color-texto-principal);
+}
+
+.input-field::placeholder {
+    color: var(--color-texto-secundario);
+}
+
+
+/* --- Texto --- */
+.title {
+    margin-bottom: 1rem;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: var(--color-primario);
+}
+
+
+/* --- Botones --- */
+.btn {
+    margin: 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: .8em;
+    padding: 0.7em 1.2em;
+    background-color: var(--color-primario);
+    border: 2px solid var(--color-primario);
+    color: var(--color-blanco);
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--color-primario-oscuro);
+    box-shadow: 0 8px 24px 0 rgba(0, 120, 173, 0.2);
+}
+
+.btn-link {
+    color: var(--color-texto-secundario);
+    display: block;
+    font-size: .75em;
+    text-decoration: none;
+    transition: color .3s ease-out;
+}
+
+.btn-link:hover {
+    color: var(--color-primario);
+}
+
+
+/* --- Fondo Animado --- */
+.circles {
+    position: fixed; /* 'fixed' es mejor para fondos que no se mueven con el scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1; /* Detrás del contenido */
+}
+
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 120, 173, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+}
+
+.circles li:nth-child(1){ left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+.circles li:nth-child(2){ left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+.circles li:nth-child(3){ left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+.circles li:nth-child(4){ left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+.circles li:nth-child(5){ left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+.circles li:nth-child(6){ left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+.circles li:nth-child(7){ left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+.circles li:nth-child(8){ left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+.circles li:nth-child(9){ left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
+.circles li:nth-child(10){ left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+
+@keyframes animate {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+    100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+}
