@@ -34,43 +34,26 @@ def load_user(user_id):
 # --- RUTAS PÚBLICAS ---
 @app.route('/')
 def index():
-    # Ahora la página principal puede saber si el usuario está logueado o no
     return render_template('index.html')
 
-# --- [PASO 2] RUTA DE LOGIN CON LÓGICA GET Y POST ---
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login')
 def login():
-    # Si el usuario ya tiene una sesión activa, lo mandamos al dashboard
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-
-    # Si el método es POST, el usuario ha enviado el formulario
-    if request.method == 'POST':
-        correo = request.form.get('correo_electronico')
-        password = request.form.get('password')
-
-        # Buscamos al usuario en la base de datos
-        usuario = Usuario.query.filter_by(correo_electronico=correo).first()
-
-        # Verificamos si el usuario existe y la contraseña es correcta
-        if usuario and usuario.check_password(password):
-            # Si es correcto, iniciamos la sesión
-            login_user(usuario)
-            flash('Inicio de sesión exitoso.', 'success')
-            # Redirigimos al panel del usuario
-            return redirect(url_for('dashboard'))
-        else:
-            # Si no, mostramos un error
-            flash('Credenciales incorrectas. Por favor, verifica tu correo y contraseña.', 'danger')
-            return redirect(url_for('login'))
-
-    # Si el método es GET, simplemente mostramos la página de login
     return render_template('login.html')
-
 
 @app.route('/forgot_password')
 def forgot_password():
         return render_template('forgot_password.html')
+
+
+@app.route('/PANEL_ADMIN')
+def gestion():
+        return render_template('superadmin/dashboard.html')
+    
+@app.route('/logout')
+def logout():
+    return render_template('index.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

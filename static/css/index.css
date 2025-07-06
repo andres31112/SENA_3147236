@@ -1,5 +1,6 @@
+
 /* --- ========================================== --- */
-/* ---        PALETA "CORPORATE CLEAN"          --- */
+/* ---             PALETA "CORPORATE CLEAN"       --- */
 /* --- ========================================== --- */
 :root {
     --color-primario: #0078ad;
@@ -29,7 +30,7 @@ h1, h2, h3 {
 
 
 /* --- ========================================== --- */
-/* ---        CABECERA CLARA Y ANIMADA          --- */
+/* ---             CABECERA CLARA Y ANIMADA       --- */
 /* --- ========================================== --- */
 header {
     background-color: var(--color-fondo-seccion);
@@ -53,11 +54,18 @@ header {
     transition: all 0.5s ease-in-out;
 }
 
+/* Nuevo contenedor para agrupar logo y enlaces */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espacio entre el logo y los enlaces */
+}
+
 .nav-links {
     display: flex;
     gap: 15px;
     /* Dejamos espacio para cuando el logo se mueva a la izquierda */
-    margin-left: 0;
+    margin-left: 0; /* Aseguramos que no haya un margen que lo separe */
     transition: margin-left 0.5s ease-in-out;
 }
 
@@ -115,7 +123,7 @@ header {
 
 
 /* --- ========================================== --- */
-/* ---       ANIMACIÓN NAVBAR CON SCROLL         --- */
+/* ---    ANIMACIÓN NAVBAR CON SCROLL            --- */
 /* --- ========================================== --- */
 
 /* Clase que se añade con JavaScript al hacer scroll */
@@ -127,6 +135,7 @@ header {
     background-color: var(--color-fondo-seccion);
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 5px 20px;
+    /* No necesitamos justify-content: flex-start aquí, ya que navbar-left lo gestiona */
 }
 
 /* Cuando el header tiene un navbar "scrolled" dentro, reducimos su padding */
@@ -136,7 +145,7 @@ header:has(.navbar.scrolled) {
 
 /* Movimiento y cambio de tamaño del logo */
 .navbar.scrolled .logo-center {
-    position: relative; /* Lo devolvemos al flujo normal */
+    position: relative; 
     top: 0;
     left: 0;
     transform: translateX(0);
@@ -148,9 +157,10 @@ header:has(.navbar.scrolled) {
     box-shadow: none;
 }
 
-/* Hacemos espacio para el logo a la izquierda */
+/* En el modo scrolled, el .nav-links no necesita margin-left adicional
+   ya que el gap en .navbar-left lo maneja */
 .navbar.scrolled .nav-links {
-    margin-left: 20px;
+    margin-left: 0; /* Aseguramos que no tenga un margen que lo separe */
 }
 
 /* Agregamos un padding-top al contenido principal para compensar el navbar fijo */
@@ -163,7 +173,7 @@ body:has(.navbar.scrolled) main.content {
 
 
 /* --- ========================================== --- */
-/* ---   BLOQUE NUEVO: ANULAR TRANSICIÓN AL SUBIR  --- */
+/* ---   BLOQUE NUEVO: ANULAR TRANSICIÓN AL SUBIR   --- */
 /* --- ========================================== --- */
 /*
   Esta clase se añade temporalmente vía JavaScript para anular
@@ -172,16 +182,20 @@ body:has(.navbar.scrolled) main.content {
 */
 header.no-transition-on-return,
 header.no-transition-on-return .navbar,
+header.no-transition-on-return .navbar-left, /* ¡NUEVO! */
 header.no-transition-on-return .logo-center,
 header.no-transition-on-return .logo-center svg,
 header.no-transition-on-return .nav-links,
+header.no-transition-on-return .nav-links a, /* ¡NUEVO! */
+header.no-transition-on-return .icon-profile, /* ¡NUEVO! */
+header.no-transition-on-return .icon-profile svg, /* ¡NUEVO! */
 body:has(header.no-transition-on-return) main.content {
-    transition: none;
+    transition: none !important;
 }
 
 
 /* --- ========================================== --- */
-/* ---        ESTILOS DEL FONDO ANIMADO         --- */
+/* ---           ESTILOS DEL FONDO ANIMADO        --- */
 /* --- ========================================== --- */
 .circles {
     position: absolute;
@@ -201,7 +215,7 @@ body:has(header.no-transition-on-return) main.content {
     list-style: none;
     width: 20px;
     height: 20px;
-    background: rgba(0, 120, 173, 0.2);
+    background: rgba(0, 121, 173, 0.623);
     animation: animate 25s linear infinite;
     bottom: -150px;
 }
@@ -224,7 +238,7 @@ body:has(header.no-transition-on-return) main.content {
 
 
 /* --- ========================================== --- */
-/* ---                 CONTENIDO                --- */
+/* ---                 CONTENIDO                  --- */
 /* --- ========================================== --- */
 .banner {
     padding: 40px 24px;
@@ -337,9 +351,25 @@ body:has(header.no-transition-on-return) main.content {
 
 
 /* --- ========================================== --- */
-/* ---             DISEÑO RESPONSIVO            --- */
+/* ---         DISEÑO RESPONSIVO                  --- */
 /* --- ========================================== --- */
-@media (max-width: 992px) {
+
+/* Estilos para pantallas pequeñas (móviles y tabletas pequeñas) */
+@media (max-width: 991.98px) { /* Punto de quiebre de Bootstrap para 'lg' y abajo */
+    /* El carrusel custom se comporta como un slider de 1 item */
+    .custom-carousel-item {
+        width: 100%; /* Un item por pantalla */
+    }
+
+    /* Mostrar controles e indicadores */
+    .custom-carousel-btn {
+        display: flex; 
+    }
+    .custom-carousel-indicators {
+        display: flex; 
+    }
+
+    /* Adaptaciones generales para pantallas más pequeñas */
     .banner-content,
     .banner-content2 {
         grid-template-columns: 1fr;
@@ -364,3 +394,147 @@ body:has(header.no-transition-on-return) main.content {
     }
 }
 
+ /* Estilos generales para la demostración */
+        body.demo-page {
+            background-color: #f3f4f6;
+            padding: 2.5rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Contenedor principal del componente */
+        .carousel-component {
+            position: relative;
+            width: 91.666667%;
+            max-width: 56rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Contenedor que se desborda y contiene las diapositivas */
+        .slides-wrapper {
+            overflow: hidden;
+        }
+
+        /* Contenedor flexible que se mueve */
+        .slides-container {
+            display: flex;
+        }
+
+        /* Cada diapositiva individual */
+        .carousel-slide {
+            min-width: 50%;
+            box-sizing: border-box;
+            padding: 0 0.75rem;
+        }
+
+        /* Estilo de la tarjeta */
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15), 0 8px 10px -6px rgb(0 0 0 / 0.15);
+        }
+        
+        .card-image-wrapper {
+            height: 10rem;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Asegura que el contenedor de contenido llene el espacio */
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .card-text {
+            color: #4b5563;
+            margin-bottom: 1rem;
+            flex-grow: 1; /* Empuja el botón hacia abajo */
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .card-button {
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.3s;
+            align-self: flex-start; /* Alinea el botón a la izquierda */
+            font-weight: 500;
+        }
+        
+        .card-button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Colores de botones específicos */
+        .btn-blue { background-color: #3b82f6; }
+        .btn-blue:hover { background-color: #2563eb; }
+        .btn-red { background-color: #ef4444; }
+        .btn-red:hover { background-color: #dc2626; }
+        .btn-sky { background-color: #0ea5e9; }
+        .btn-sky:hover { background-color: #0284c7; }
+        .btn-green { background-color: #22c55e; }
+        .btn-green:hover { background-color: #16a34a; }
+        .btn-gray { background-color: #4b5563; }
+        .btn-gray:hover { background-color: #374151; }
+        .btn-purple { background-color: #a855f7; }
+        .btn-purple:hover { background-color: #9333ea; }
+
+
+        /* Botones de navegación */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0.75rem;
+            border-radius: 9999px;
+            background-color: rgba(0, 0, 0, 0.3); /* Fondo oscuro semitransparente */
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev-button { left: 1rem; }
+        .next-button { right: 1rem; }
+
+        .nav-button svg {
+            height: 1.5rem;
+            width: 1.5rem;
+        }

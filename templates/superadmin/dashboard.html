@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios/Roles</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+    
+        {% extends "superadmin/base.html" %}
+        {% block content %}
+   <header class="bg-white shadow-sm p-3 d-none d-lg-flex justify-content-between align-items-center">
+    <!-- Barra de Búsqueda -->
+    <div class="input-group" style="max-width: 400px;">
+        <span class="input-group-text bg-light border-end-0" id="search-addon"><i class="fas fa-search"></i></span>
+        <input type="search" class="form-control border-start-0" placeholder="Buscar estudiantes, informes, etc..." aria-label="Buscar" aria-describedby="search-addon">
+    </div>
+
+    <!-- Iconos del Header -->
+    <div class="d-flex align-items-center">
+        <a href="#" class="text-secondary me-4"><i class="fas fa-bell fs-5"></i></a>
+        <a href="#" class="text-secondary"><i class="fas fa-user-circle fs-5"></i></a>
+    </div>
+</header>
+
+<!-- Área de Contenido Principal -->
+<main class="p-4 p-md-5">
+    <h1 class="h2 fw-bold mb-4">¿Qué Usuarios Desea Gestionar hoy?</h1>
+
+    <div class="row g-4">
+        <!-- Columna de Tarjetas de Gestión -->
+        <div class="col-lg-8">
+            <div class="row g-4">
+                <!-- Tarjeta Profesores -->
+                <div class="col-md-6">
+                    <a href="#" class="card text-decoration-none h-100 shadow-sm border-0 text-center p-4 hover-lift">
+                        <div class="card-body">
+                            <div class="d-inline-block bg-primary bg-opacity-10 text-primary rounded-circle p-3 mb-3">
+                                <i class="fas fa-briefcase fs-2"></i>
+                            </div>
+                            <h3 class="h5 card-title fw-bold text-dark">Profesores</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Tarjeta Estudiantes -->
+                <div class="col-md-6">
+                    <a href="#" class="card text-decoration-none h-100 shadow-sm border-0 text-center p-4 hover-lift">
+                        <div class="card-body">
+                            <div class="d-inline-block bg-success bg-opacity-10 text-success rounded-circle p-3 mb-3">
+                                <i class="fas fa-user-graduate fs-2"></i>
+                            </div>
+                            <h3 class="h5 card-title fw-bold text-dark">Estudiantes</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Tarjeta Administradores -->
+                <div class="col-12">
+                    <a href="#" class="card text-decoration-none h-100 shadow-sm border-0 text-center p-4 hover-lift">
+                        <div class="card-body">
+                             <div class="d-inline-block bg-warning bg-opacity-10 text-warning rounded-circle p-3 mb-3">
+                                <i class="fas fa-pen-fancy fs-2"></i>
+                            </div>
+                            <h3 class="h5 card-title fw-bold text-dark">Administradores<br>Institucionales</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna del Panel de Información -->
+        <div class="col-lg-4">
+            <div class="card bg-dark text-white h-100 border-0 shadow-lg">
+                <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-4">
+                    <img src="https://placehold.co/300x180/495057/FFFFFF?text=Ilustracion" class="img-fluid rounded mb-4" alt="Ilustración">
+                    <h3 class="h5 fw-bold">Crea y Asigna Roles</h3>
+                    <p class="text-white-50 mb-4">Define nuevos perfiles de usuario y gestiona sus permisos dentro del sistema de forma sencilla.</p>
+                    <a href="#" class="btn btn-light fw-bold w-100">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Crear nuevo Rol
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+        {% endblock%}
+   
+</body>
+</html>

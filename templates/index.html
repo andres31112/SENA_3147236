@@ -1,44 +1,48 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <title>Animación Navbar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Public</title>
 </head>
 <body>
     
 <header>
     <ul class="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
     </ul>
 
-    <nav class="navbar">
-        <div class="logo-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
-                <circle cx="8" cy="8" r="8"/>
-            </svg>
-        </div>
-        <div class="nav-links">
-            <a href="#">Inicio</a>
-            <a href="#">Quienes Somos</a>
-            <a href="#">Comunidad</a>
-            <a href="#">Contactos</a>
-        </div>
-        <div>
-            <button class="icon-profile">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand logo-center" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8"/>
                 </svg>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+                    <a class="nav-link" href="#">Inicio</a>
+                    <a class="nav-link" href="#">Quienes Somos</a>
+                    <a class="nav-link" href="#">Comunidad</a>
+                    <a class="nav-link" href="#">Contactos</a>
+                </div>
+                <div class="d-flex">
+                     <button class="icon-profile btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 </header>
@@ -48,8 +52,10 @@
         <div class="banner-content">
             <div class="welcome-message">
                 <h1>Mensaje de bienvenida</h1>
-                  <a href="{{ url_for('login') }}">
-                <button class="btn-login">Iniciar Sesión</button>
+                <button  class="btn-login">
+                    <A href="{{ url_for('login') }}"> Iniciar Sesión</A>
+
+                    </button>
             </div>
             
             <div class="statistics">
@@ -82,30 +88,239 @@
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.985876896238!2d-74.083789385238!3d4.699996996652438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9ad1a57a5f6d%3A0x955979929e7c5b9e!2sBogot%C3%A1!5e0!3m2!1ses!2sco!4v1622080302191!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
-        <div class="advertisement_panel">
-            <p>Panel de Anuncio</p>
-            <div>
-                <div>
-                    <p>Mensaje del Anuncio</p>
-                    <div><img src="" alt=""></div>
+          <!-- 2. Copia y pega este bloque donde quieras que aparezca el carrusel -->
+    <!-- INICIO DEL COMPONENTE CARRUSEL -->
+    <div id="mi-carrusel-1" class="carousel-component">
+        <div class="slides-wrapper">
+            <div class="slides-container">
+                <!-- Tarjeta 1 -->
+                <div class="carousel-slide">
+                    <div class="card">
+                        <div class="card-image-wrapper">
+                           <img class="card-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop" alt="Desarrollo Web">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Desarrollo Web</h3>
+                            <p class="card-text">Explora las últimas tecnologías y frameworks para la web.</p>
+                            <a href="#" class="card-button btn-blue">Leer más</a>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <p>Mensaje del anuncio</p>
-                    <div><img src="" alt=""></div>
+                <!-- Tarjeta 2 -->
+                <div class="carousel-slide">
+                     <div class="card">
+                        <div class="card-image-wrapper">
+                           <img class="card-image" src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop" alt="Bases de Datos">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Bases de Datos</h3>
+                            <p class="card-text">Aprende a gestionar y optimizar tus datos de forma eficiente.</p>
+                            <a href="#" class="card-button btn-red">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 3 -->
+                <div class="carousel-slide">
+                    <div class="card">
+                        <div class="card-image-wrapper">
+                           <img class="card-image" src="https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=2070&auto=format&fit=crop" alt="React y Hooks">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">React y Hooks</h3>
+                            <p class="card-text">Domina la librería más popular para interfaces de usuario.</p>
+                            <a href="#" class="card-button btn-sky">Leer más</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 4 -->
+                <div class="carousel-slide">
+                    <div class="card">
+                        <div class="card-image-wrapper">
+                           <img class="card-image" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop" alt="Calidad de Código">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Calidad de Código</h3>
+                            <p class="card-text">Escribe código limpio, mantenible y escalable.</p>
+                            <a href="#" class="card-button btn-green">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 5 -->
+                <div class="carousel-slide">
+                     <div class="card">
+                        <div class="card-image-wrapper">
+                           <img class="card-image" src="https://images.unsplash.com/photo-1526379095098-d64658e0f94b?q=80&w=2070&auto=format&fit=crop" alt="Ciberseguridad">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Ciberseguridad</h3>
+                            <p class="card-text">Protege tus aplicaciones de las amenazas más comunes.</p>
+                            <a href="#" class="card-button btn-gray">Leer más</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 6 -->
+                <div class="carousel-slide">
+                    <div class="card">
+                        <div class="card-image-wrapper">
+                           <img class="card-image" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2069&auto=format&fit=crop" alt="Despliegue">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Despliegue</h3>
+                            <p class="card-text">Lleva tus proyectos a producción de forma automatizada.</p>
+                            <a href="#" class="card-button btn-purple">Ver detalles</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div>
-        </div>
-    </section>
+
+        <!-- Botones de Navegación -->
+        <button class="nav-button prev-button">
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+        </button>
+        <button class="nav-button next-button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+        </button>
+    </div>
+    <!-- FIN DEL COMPONENTE CARRUSEL -->
+        </section>
     
     <div style="height: 1000px; background: #e0e0e0; padding: 40px; text-align: center;">
         <h2>Más contenido de la página</h2>
     </div>
 </main>
- <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
 
+<script>
+    const header = document.querySelector('header');
+    const navbar = document.querySelector('.navbar');
+
+    window.addEventListener('scroll', function() {
+        // Si el scroll es mayor a 50px...
+        if (window.scrollY > 50) {
+            // Solo añade la clase 'scrolled' si no la tiene ya.
+            // Esto activa la animación hacia abajo gracias al CSS.
+            if (!navbar.classList.contains('scrolled')) {
+                navbar.classList.add('scrolled');
+            }
+        } else {
+            // Si el scroll es menor o igual a 50px y la barra está en modo 'scrolled'...
+            if (navbar.classList.contains('scrolled')) {
+                // 1. Añadimos una clase al header para DESACTIVAR las transiciones en el CSS.
+                header.classList.add('no-transition-on-return');
+                
+                // 2. Quitamos la clase 'scrolled'. El cambio será INSTANTÁNEO.
+                navbar.classList.remove('scrolled');
+
+                // 3. Usamos requestAnimationFrame para quitar la clase de anulación en el siguiente
+                //    "frame" del navegador. Esto asegura que el cambio de estilo se complete
+                //    antes de reactivar las transiciones para futuros scrolls hacia abajo.
+                requestAnimationFrame(() => {
+                    header.classList.remove('no-transition-on-return');
+                });
+            }
+        }
+    });
+    function initCarousel(carouselId) {
+            const carouselComponent = document.getElementById(carouselId);
+            if (!carouselComponent) {
+                console.error(`No se encontró el carrusel con el ID: ${carouselId}`);
+                return;
+            }
+
+            const slidesContainer = carouselComponent.querySelector('.slides-container');
+            const prevButton = carouselComponent.querySelector('.prev-button');
+            const nextButton = carouselComponent.querySelector('.next-button');
+            
+            const slideItems = Array.from(carouselComponent.querySelectorAll('.carousel-slide'));
+            const slidesVisible = 2;
+            const slideCount = slideItems.length;
+            let isTransitioning = false;
+            let autoSlideInterval;
+
+            if (slideCount === 0) return;
+
+            // --- LÓGICA MEJORADA PARA BUCLE INFINITO ---
+
+            // Clonar el final al principio y el principio al final
+            const lastClones = slideItems.slice(-slidesVisible).map(item => item.cloneNode(true));
+            const firstClones = slideItems.slice(0, slidesVisible).map(item => item.cloneNode(true));
+            
+            lastClones.reverse().forEach(clone => slidesContainer.prepend(clone));
+            firstClones.forEach(clone => slidesContainer.appendChild(clone));
+
+            // Empezar en el primer slide real
+            let slideIndex = slidesVisible;
+            
+            function updateSlidePosition(withTransition = true) {
+                if (withTransition) {
+                    slidesContainer.style.transition = 'transform 0.5s ease-in-out';
+                } else {
+                    slidesContainer.style.transition = 'none';
+                }
+                const offset = -slideIndex * (100 / slidesVisible);
+                slidesContainer.style.transform = `translateX(${offset}%)`;
+            }
+            
+            // Posición inicial sin transición
+            updateSlidePosition(false);
+
+            slidesContainer.addEventListener('transitionend', () => {
+                isTransitioning = false;
+
+                // Si llegamos a los clones del final, saltamos al principio
+                if (slideIndex >= slideCount + slidesVisible) {
+                    slideIndex = slidesVisible;
+                    updateSlidePosition(false);
+                }
+                
+                // Si llegamos a los clones del principio, saltamos al final
+                if (slideIndex <= 0) {
+                    slideIndex = slideCount;
+                    updateSlidePosition(false);
+                }
+            });
+
+            function shiftSlide(n) {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                slideIndex += n;
+                updateSlidePosition();
+            }
+            
+            function startAutoSlide() {
+                stopAutoSlide();
+                autoSlideInterval = setInterval(() => shiftSlide(slidesVisible), 3000);
+            }
+
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+            
+            nextButton.addEventListener('click', () => {
+                stopAutoSlide();
+                shiftSlide(slidesVisible);
+                startAutoSlide();
+            });
+
+            prevButton.addEventListener('click', () => {
+                stopAutoSlide();
+                shiftSlide(-slidesVisible);
+                startAutoSlide();
+            });
+
+            carouselComponent.addEventListener('mouseenter', stopAutoSlide);
+            carouselComponent.addEventListener('mouseleave', startAutoSlide);
+
+            startAutoSlide();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCarousel('mi-carrusel-1');
+        });
+
+   
+</script>
 
 </body>
 </html>
