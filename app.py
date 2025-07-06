@@ -42,16 +42,17 @@ def login():
 
 @app.route('/forgot_password')
 def forgot_password():
-        return render_template('forgot_password.html')
-
-
+    return render_template('forgot_password.html')
+    
+#-------RUTAS ADMIN-------    
 @app.route('/PANEL_ADMIN')
 def gestion():
-        return render_template('superadmin/dashboard.html')
+    return render_template('superadmin/dashboard.html')
     
-@app.route('/logout')
-def logout():
-    return render_template('index.html')
+#------RUTAS GESTION USUARIOS/ROLES------
+@app.route('/Profesores')
+def Profesores():
+    return render_template('superadmin/profesores.html')
 
 
 
