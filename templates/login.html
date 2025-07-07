@@ -38,7 +38,8 @@
                 </svg>
                 <input autocomplete="off" id="logpass" placeholder="Password" class="input-field" name="password" type="password" required>
             </div>
-            <button class="btn" type="submit">Login</button>
+            <button class="btn" type="submit"><a href="{{ url_for('gestion') }}" >
+Login</button>
             <a href="{{ url_for('forgot_password') }}" class="btn-link">Forgot your password?</a>
         </form>
     </div>

@@ -1,0 +1,38 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.main-container {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.form-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+
+.form-check-label {
+    font-size: 0.95rem;
+}
+
+.image-placeholder {
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    border-radius: 0.5rem;
+}
+
+.image-placeholder .fa-image {
+    font-size: 5rem;
+    color: #adb5bd;
+}

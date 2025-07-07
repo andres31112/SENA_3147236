@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Profesores</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/gestion_usuarios/profesores.css') }}">
 
-    <style>
-
-    </style>
-</head>
 <body>
+       {% extends "superadmin/base.html" %}
+        {% block content %}
 
     <header class="main-header">
         <h1>Gestion de usuarios/roles</h1>
@@ -24,7 +23,7 @@
         <section class="page-header">
             <div class="title-action">
                 <h2 class="page-title">Lista de Profesores</h2>
-                <a href="#" class="btn-create">Crear Nuevo Usuario</a>
+                <a href="{{ url_for('crear_usuario') }}" class="btn-create">Crear Nuevo Usuario</a>
             </div>
             <div class="placeholder-image">
                 <i class="fa-solid fa-image"></i>
@@ -155,13 +154,9 @@
         </section>
     </main>
 
-    <footer class="os-activation-footer">
-        <p>Activar Windows</p>
-        <p>Ve a Configuración para activar Windows.</p>
-    </footer>
-    
-    <script>
-      
-    </script>
+    <script src="{{ url_for('static', filename='js/superadmin/profesores.js') }}"></script>
+
+       {% endblock%}
+ 
 </body>
 </html>

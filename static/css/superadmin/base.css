@@ -18,11 +18,12 @@
             .sidebar {
                 margin-left: -100%;
             }
+
             .sidebar.active {
                 margin-left: 0;
             }
         }
-        
+
         .sidebar .nav-link {
             color: #c5c5c5;
             font-weight: 500;
@@ -32,7 +33,7 @@
             color: #fff;
             background-color: #4a5568;
         }
-        
+
         .sidebar .nav-link.active {
             color: #fff;
             background-color: #4a5568;
@@ -48,10 +49,11 @@
         }
 
         .main-content {
-            padding-left: 280px; /* Sidebar width */
+            padding-left: 280px;
+            /* Sidebar width */
             transition: all 0.3s ease-in-out;
         }
-        
+
         @media (max-width: 991.98px) {
             .main-content {
                 padding-left: 0;

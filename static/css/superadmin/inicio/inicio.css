@@ -1,0 +1,40 @@
+/* --- Estilos para las tarjetas del dashboard --- */
+
+/* Círculo para los íconos */
+.icon-circle {
+    height: 64px;
+    width: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* Colores de fondo suaves para los círculos */
+.bg-primary-soft { background-color: rgba(13, 110, 253, 0.1); }
+.bg-success-soft { background-color: rgba(25, 135, 84, 0.1); }
+.bg-info-soft { background-color: rgba(13, 202, 240, 0.1); }
+.bg-danger-soft { background-color: rgba(220, 53, 69, 0.1); }
+
+/* Estilo para que toda la tarjeta sea un enlace y tenga animación */
+.card-link-style {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-link-style:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Placeholder para la ilustración/icono grande */
+.illustration-placeholder {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+}

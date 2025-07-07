@@ -85,8 +85,9 @@
             background-color: #fff;
             border-radius: 8px;
             padding: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            overflow-x: auto; /* Para mejor visualización en pantallas pequeñas */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+            /* Para mejor visualización en pantallas pequeñas */
         }
 
         .table-controls {
@@ -110,14 +111,15 @@
         }
 
         .dropdown-menu {
-            display: none; /* Oculto por defecto */
+            display: none;
+            /* Oculto por defecto */
             position: absolute;
             top: 100%;
             left: 0;
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             padding: 0.5rem 0;
             min-width: 180px;
@@ -129,12 +131,14 @@
             color: #333;
             text-decoration: none;
         }
+
         .dropdown-menu a:hover {
             background-color: #f1f1f1;
         }
 
         .dropdown-menu.show {
-            display: block; /* Visible con JS */
+            display: block;
+            /* Visible con JS */
         }
 
         /* Barra de Búsqueda */
@@ -145,7 +149,8 @@
 
         .search-bar input {
             width: 100%;
-            padding: 0.5rem 1rem 0.5rem 2.5rem; /* Espacio para el ícono */
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            /* Espacio para el ícono */
             border: 1px solid #ced4da;
             border-radius: 5px;
             box-sizing: border-box;
@@ -165,12 +170,14 @@
             border-collapse: collapse;
         }
 
-        .user-table th, .user-table td {
+        .user-table th,
+        .user-table td {
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid #e9ecef;
             vertical-align: middle;
-            white-space: nowrap; /* Evita que el texto se parta en varias líneas */
+            white-space: nowrap;
+            /* Evita que el texto se parta en varias líneas */
         }
 
         .user-table th {
@@ -189,7 +196,7 @@
             text-decoration: none;
             font-weight: bold;
         }
-        
+
         .avatar {
             width: 32px;
             height: 32px;
@@ -214,10 +221,9 @@
             color: #555;
             border: 1px solid #ccc;
         }
-        
+
         .tag-new {
             background-color: #f1f1f1;
             color: #888;
             border: 1px solid #ddd;
         }
-

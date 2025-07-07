@@ -21,7 +21,6 @@ db.init_app(app)
 # --- [PASO 1] CONFIGURACIÓN DE FLASK-LOGIN ---
 login_manager = LoginManager()
 login_manager.init_app(app)
-# Si un usuario no logueado intenta ir a una página protegida, lo redirige aquí
 login_manager.login_view = 'login' 
 login_manager.login_message = 'Por favor, inicia sesión para acceder a esta página.'
 login_manager.login_message_category = 'info'
@@ -47,14 +46,31 @@ def forgot_password():
 #-------RUTAS ADMIN-------    
 @app.route('/PANEL_ADMIN')
 def gestion():
-    return render_template('superadmin/dashboard.html')
+    return render_template('superadmin/gestion_usuarios/dashboard.html')
+@app.route('/inicio')
+def inicio():
+    return render_template('superadmin/inicio/inicio.html')
     
 #------RUTAS GESTION USUARIOS/ROLES------
 @app.route('/Profesores')
 def Profesores():
-    return render_template('superadmin/profesores.html')
+    return render_template('superadmin/gestion_usuarios/profesores.html')
 
+@app.route('/crear_rol')
+def crear_rol():
+    return render_template('superadmin/gestion_usuarios/crear_rol.html')
 
+@app.route('/lista_rol')
+def lista_rol():
+    return render_template('superadmin/gestion_usuarios/lista_rol.html')
+
+@app.route('/editar_rol')
+def editar_rol():
+    return render_template('superadmin/gestion_usuarios/editar_rol.html')
+
+@app.route('/crear_usuario')
+def crear_usuario():
+    return render_template('superadmin/gestion_usuarios/crear_usuario.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
