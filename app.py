@@ -50,7 +50,16 @@ def gestion():
 @app.route('/inicio')
 def inicio():
     return render_template('superadmin/inicio/inicio.html')
-    
+
+#-------RUTAS GESTION INCENTARIO-------
+@app.route('/Gestion_Inventario')
+def gestion_i():
+    return render_template('superadmin/gestion_inventario/gi.html')
+
+@app.route('/Equipos')
+def equipos():
+    return render_template('superadmin/gestion_inventario/equipos.html')
+
 #------RUTAS GESTION USUARIOS/ROLES------
 @app.route('/Profesores')
 def Profesores():
