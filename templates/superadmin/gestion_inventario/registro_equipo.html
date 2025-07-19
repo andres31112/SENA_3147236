@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de equipo</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/gestion_usuarios/dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+        {% extends "superadmin/base.html" %}
+        {% block content %}
+<main class="container p-4 p-md-5">
+    <h1 class="h3 mb-4">Registro de equipo</h1>
+    <form class="row g-3">
+        <div class="col-12 col-md-6">
+            <label for="referencia" class="form-label">ID/Referencia</label>
+            <input type="text" class="form-control" id="referencia" placeholder="Ingrese la ID o referencia del equipo">
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="nombre" class="form-label">Nombre del equipo</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre del equipo">
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="tipo_equipo" class="form-label">Tipo de equipo</label>
+            <select class="form-select" id="tipo_equipo">
+                <option selected>Seleccione el tipo de equipo</option>
+                <option value="computadora">Computadora</option>
+                <option value="impresora">Impresora</option>
+                <option value="proyector">Proyector</option>
+                <option value="otro">Otro</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="estado" class="form-label">Estado del equipo</label>
+            <select class="form-select" id="estado">
+                <option selected>Seleccione el estado</option>
+                <option value="activo">Activo</option>
+                <option value="inactivo">Fuera de servicio</option>
+                <option value="en_revision">En revisión</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="usuario" class="form-label">Usuario asignado</label>
+            <input type="text" class="form-control" id="usuario" placeholder="Ingrese el nombre del usuario">
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="fecha_adquisicion" class="form-label">Fecha de ingreso</label>
+            <input type="date" class="form-control" id="fecha_adquisicion">
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" rows="3" placeholder="Ingrese una descripción del equipo"></textarea>
+        </div>
+    </form>
+    <div class="d-flex justify-content-initial gap-2 mt-4 flex-wrap">
+        <button class="btn btn-secondary me-md-2 col-12 col-md-1" type="button">Volver</button>
+        <button type="submit" class="btn btn-primary col-12 col-md-2">Registrar equipo</button>
+    </div>
+</main>
+        {% endblock%}
+    
+</body>
+</html>
