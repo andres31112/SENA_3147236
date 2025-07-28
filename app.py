@@ -64,6 +64,10 @@ def equipos():
 def registro_equipo():
     return render_template('superadmin/gestion_inventario/registro_equipo.html')
 
+@app.route('/Registro_Incidente')
+def registro_incidente():
+    return render_template('superadmin/gestion_inventario/registro_incidente.html')
+
 #------RUTAS GESTION USUARIOS/ROLES------
 @app.route('/Profesores')
 def Profesores():

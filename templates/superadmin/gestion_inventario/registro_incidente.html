@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios/Roles</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/gestion_usuarios/profesores.css') }}">
+</head>
+
+<body>
+    {% extends "superadmin/base.html" %}
+    {% block content %}
+    <header class="main-header">
+        <h1>Registro de Incidentes</h1>
+        <div class="header-icons">
+            <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-user"></i>
+        </div>
+    </header>
+    <main class="content-area">
+        <section class="table-container">
+            <div class="table-controls">
+                <div class="dropdown ">
+                    <button class="dropdown-toggle d-none" id="dropdownBtn">Mas Opciones <i
+                            class="fa-solid fa-chevron-down"></i></button>
+                    <div class="dropdown-menu d-none" id="dropdownMenu">
+                        <a href="#">Exportar a CSV</a>
+                        <a href="#">Eliminar seleccionados</a>
+                        <a href="#">Asignar curso en bloque</a>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="search-bar d-flex align-items-center">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="search" placeholder="Buscar Equipos">
+                    </div>
+                </div>
+            </div>
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>ID/Referencia</th>
+                        <th>Nombre del equipo</th>
+                        <th>Usuario asignado</th>
+                        <th>Estado del equipo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="clickable-row" style="cursor: pointer;">
+                        <td>EQ-001</td>
+                        <td>LAB1-PC01</td>
+                        <td>Elena Rodríguez</td>
+                        <td><span class="badge bg-success fs-6">Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td>EQ-002</td>
+                        <td>LAB1-PC02</td>
+                        <td>Elena Rodriguez</td>
+                        <td><span class="badge bg-danger fs-6">En revisión</span></td>
+                    </tr>
+                    <tr>
+                        <td>EQ-003</td>
+                        <td>LAB2-PC01</td>
+                        <td>Elena Rodriguez</td>
+                        <td><span class="badge bg-secondary fs-6">Fuera de servicio</span></td>
+                    </tr>
+                    <tr>
+                        <td>EQ-004</td>
+                        <td>LAB2-PC02</td>
+                        <td>Elena Rodriguez</td>
+                        <td><span class="badge bg-success fs-6">Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td>EQ-005</td>
+                        <td>LAB1-PC03</td>
+                        <td>Elena Rodriguez</td>
+                        <td><span class="badge bg-secondary fs-6">Fuera de servicio</span></td>
+                    </tr>
+                    <tr>
+                        <td>EQ-006</td>
+                        <td>LAB2-PC03</td>
+                        <td>Elena Rodriguez</td>
+                        <td><span class="badge bg-danger fs-6">En revisión</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <!-- Modals-->
+    <div class="modal fade" id="incidenteModal" tabindex="-1" aria-labelledby="incidenteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Historial de Incidentes</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <table class="table table-hover text-center align-middle">
+                    <thead class="text-center align-middle">
+                        <tr>
+                            <th>Fecha del reporte</th>
+                            <th>Hora del reporte</th>
+                            <th>Detalles del incidente</th>
+                            <th>Reportado por</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10-05-2023</td>
+                            <td>10:30 AM</td>
+                            <td>Problema de conexión a la red.</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>22-07-2023</td>
+                            <td>02:15 PM</td>
+                            <td>Fallo en el disco duro, reemplazado.</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>15-09-2023</td>
+                            <td>11:00 AM</td>
+                            <td>Problema de software, reinstalación necesaria.</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2"
+                        data-bs-toggle="modal">Registrar Incidente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModalToggle2" tabindex="-1" aria-labelledby="exampleModalToggleLabel2"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="formIncidente">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="incidenteModalLabel">Registrar Incidente</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="equipo-id" name="equipo_id">
+
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="hora" class="form-label">Hora</label>
+                                <input type="time" class="form-control" id="hora" name="hora" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción del incidente</label>
+                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
+                                    required></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tecnico" class="form-label">Quien lo reporta</label>
+                                <input type="text" class="form-control" id="tecnico" name="tecnico" required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Registrar incidente</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll(".clickable-row").forEach(row => {
+            row.addEventListener("click", function () {
+                const idEquipo = this.querySelector("td:nth-child(2)").textContent.trim(); // Asume que la 2da columna es ID
+                document.getElementById("equipo-id").value = idEquipo; // Asigna el ID al campo oculto del modal
+                const modal = new bootstrap.Modal(document.getElementById("incidenteModal"));
+                modal.show();
+            });
+        });
+        document.getElementById("formIncidente").addEventListener("submit", function (e) {
+            e.preventDefault(); // evita que se envíe al servidor
+            location.reload();  // recarga la página
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/superadmin/profesores.js') }}"></script>
+
+    {% endblock%}
+
+</body>
+
+</html>
