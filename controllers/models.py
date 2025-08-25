@@ -1,19 +1,45 @@
+# basesdatos/models.py
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
+# Tabla de asociación para la relación muchos a muchos entre Rol y Permiso
 rol_permisos = db.Table('rol_permisos',
     db.Column('id_rol_fk', db.Integer, db.ForeignKey('roles.id_rol'), primary_key=True),
     db.Column('id_permiso_fk', db.Integer, db.ForeignKey('permisos.id_permiso'), primary_key=True)
 )
 
+# Tabla de asociación para la relación muchos a muchos entre Comunicado y Usuario (Destinatario)
 destinatario_comunicado = db.Table('destinatario_comunicado',
     db.Column('id_comunicado_fk', db.Integer, db.ForeignKey('comunicados.id_comunicado'), primary_key=True),
     db.Column('id_destinatario_fk', db.Integer, db.ForeignKey('usuarios.id_usuario'), primary_key=True),
     db.Column('leido', db.Boolean, default=False)
 )
+
+class Permiso(db.Model):
+    __tablename__ = 'permisos'
+    id_permiso = db.Column(db.Integer, primary_key=True)
+    nombre_permiso = db.Column(db.String(100), unique=True, nullable=False)
+    descripcion = db.Column(db.Text, nullable=True)
+
+    def __repr__(self):
+        return f"<Permiso '{self.nombre_permiso}'>"
+
+class Rol(db.Model):
+    __tablename__ = 'roles'
+    id_rol = db.Column(db.Integer, primary_key=True)
+    nombre_rol = db.Column(db.String(50), unique=True, nullable=False)
+    descripcion = db.Column(db.Text, nullable=True)
+
+    # Relación muchos a muchos con Permiso
+    permisos = db.relationship('Permiso', secondary=rol_permisos, backref=db.backref('roles', lazy='dynamic'))
+    # Relación uno a muchos con Usuario (un Rol tiene muchos Usuarios)
+    usuarios = db.relationship('Usuario', back_populates='rol_obj') # Cambiado de 'rol' a 'rol_obj' para evitar conflicto con el atributo 'rol' de Usuario.
+
+    def __repr__(self):
+        return f"<Rol '{self.nombre_rol}'>"
 
 class Usuario(db.Model, UserMixin):
     __tablename__ = 'usuarios'
@@ -29,7 +55,8 @@ class Usuario(db.Model, UserMixin):
     estado_cuenta = db.Column(db.Enum('activa', 'inactiva', name='estado_cuenta_enum'), nullable=False, default='activa')
     id_rol_fk = db.Column(db.Integer, db.ForeignKey('roles.id_rol'), nullable=False)
 
-    rol = db.relationship('Rol', back_populates='usuarios')
+    # Relación muchos a uno con Rol (un Usuario tiene un Rol)
+    rol_obj = db.relationship('Rol', back_populates='usuarios') # Cambiado de 'rol' a 'rol_obj' para evitar conflicto con el atributo 'rol' de Usuario.
 
     def get_id(self):
         return str(self.id_usuario)
@@ -38,25 +65,28 @@ class Usuario(db.Model, UserMixin):
         self.contrasena_hash = generate_password_hash(password)
 
     def check_password(self, password):
+        # LÍNEA DE DEPURACIÓN AÑADIDA AQUÍ
+        print(f"Comparando en models.py: Contraseña ingresada='{password}' con hash de DB='{self.contrasena_hash}'")
         return check_password_hash(self.contrasena_hash, password)
     
+    # --- Método para verificar si el usuario tiene un ROL específico ---
     def has_role(self, role_name):
-        return self.rol.nombre_rol == role_name
+        return self.rol_obj and self.rol_obj.nombre_rol == role_name
 
-class Rol(db.Model):
-    __tablename__ = 'roles'
-    id_rol = db.Column(db.Integer, primary_key=True)
-    nombre_rol = db.Column(db.String(50), unique=True, nullable=False)
-    descripcion = db.Column(db.Text, nullable=True)
+    # --- Método para verificar si el usuario tiene un PERMISO específico ---
+    def has_permission(self, permission_name):
+        if not self.rol_obj:
+            return False
+        # Itera sobre los permisos del rol asignado al usuario
+        for permission in self.rol_obj.permisos:
+            if permission.nombre_permiso == permission_name:
+                return True
+        return False
 
-    usuarios = db.relationship('Usuario', back_populates='rol')
-    permisos = db.relationship('Permiso', secondary=rol_permisos, backref=db.backref('roles', lazy='dynamic'))
+    def __repr__(self):
+        return f"Usuario('{self.nombre_completo}', '{self.correo_electronico}')"
 
-class Permiso(db.Model):
-    __tablename__ = 'permisos'
-    id_permiso = db.Column(db.Integer, primary_key=True)
-    nombre_permiso = db.Column(db.String(100), unique=True, nullable=False)
-    descripcion = db.Column(db.Text, nullable=True)
+# --- Resto de tus modelos, sin cambios si no se relacionan con Usuario, Rol o Permiso ---
 
 class Sede(db.Model):
     __tablename__ = 'sedes'

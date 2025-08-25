@@ -1,93 +1,111 @@
-# --- IMPORTACIONES ---
-# Añadimos las importaciones necesarias de flask_login
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from basesdatos.models import db, Usuario # Asumo que tu archivo de modelos se llama así
+#IMPORTACIONES NECESARIAS
+from flask import Flask
+from flask_login import LoginManager
+from controllers.models import db, Usuario, Rol, Permiso
+from routes.auth import auth_bp
+from routes.main import main_bp
+from routes.admin import admin_bp
+from config import Config
 
 # --- INICIALIZACIÓN DE LA APP ---
 app = Flask(__name__)
 
 # --- CONFIGURACIÓN ---
-# 1. Configuración de la Base de Datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/institucion_db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(Config)
 
-# 2. SECRET_KEY para que flash() y las sesiones de login funcionen
-app.config['SECRET_KEY'] = 'una-llave-secreta-para-proteger-las-sesiones'
-
-# 3. Inicializar la base de datos con la app
 db.init_app(app)
 
-# --- [PASO 1] CONFIGURACIÓN DE FLASK-LOGIN ---
+# --- CONFIGURACIÓN DE FLASK-LOGIN ---
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login' 
+login_manager.login_view = 'auth.login'
 login_manager.login_message = 'Por favor, inicia sesión para acceder a esta página.'
 login_manager.login_message_category = 'info'
 
 @login_manager.user_loader
 def load_user(user_id):
-    """Carga el usuario desde la base de datos para mantener la sesión."""
     return Usuario.query.get(int(user_id))
 
-# --- RUTAS PÚBLICAS ---
-@app.route('/')
-def index():
-    return render_template('index.html')
+# --- FUNCIÓN DE INICIALIZACIÓN DE ROLES, PERMISOS Y SUPER ADMIN ---
+def create_initial_data():
+    with app.app_context():
+        # Crear la base de datos y las tablas si no existen
+        db.create_all()
+        print("Base de datos y tablas verificadas/creadas.")
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+        # PERMISOS SUPER ADMIN
+        permissions_to_create = {
+            'gestion_usuarios': 'Acceso a la gestión de usuarios (CRUD)',
+            'gestion_asignaturas': 'Acceso a la gestión de asignaturas',
+            'registro_calificaciones': 'Acceso al registro y edición de calificaciones',
+            'gestion_comunicados': 'Acceso a la gestión de comunicados',
+            'gestion_inventario': 'Acceso a la gestión de inventario',
+            'gestion_matriculas': 'Acceso a la gestión de matrículas',
+            'gestion_electoral': 'Acceso a la gestión electoral',
+            'crear_roles': 'Permiso para crear roles',
+            'ver_roles': 'Permiso para ver roles',
+            'editar_roles': 'Permiso para editar roles',
+            'eliminar_roles': 'Permiso para eliminar roles'
+        }
+        
+        for name, desc in permissions_to_create.items():
+            if not Permiso.query.filter_by(nombre_permiso=name).first():
+                new_permission = Permiso(nombre_permiso=name, descripcion=desc)
+                db.session.add(new_permission)
+                print(f"Permiso '{name}' creado.")
+        db.session.commit()
 
-@app.route('/forgot_password')
-def forgot_password():
-    return render_template('forgot_password.html')
-    
-#-------RUTAS ADMIN-------    
-@app.route('/PANEL_ADMIN')
-def gestion():
-    return render_template('superadmin/gestion_usuarios/dashboard.html')
-@app.route('/inicio')
-def inicio():
-    return render_template('superadmin/inicio/inicio.html')
+        # ROLES BÁSICOS
+        roles_to_create = ['Super Admin', 'Profesor', 'Estudiante', 'Usuario Estándar']
+        for role_name in roles_to_create:
+            if not Rol.query.filter_by(nombre_rol=role_name).first():
+                if role_name == 'Super Admin':
+                    # Asigna todos los permisos al rol de 'Super Admin'
+                    all_permissions = Permiso.query.all()
+                    super_admin_role = Rol(nombre_rol='Super Admin', descripcion='Administrador con todos los permisos')
+                    super_admin_role.permisos = all_permissions
+                    db.session.add(super_admin_role)
+                    print("Rol 'Super Admin' creado con todos los permisos.")
+                elif role_name == 'Profesor':
+                    teacher_role = Rol(nombre_rol='Profesor', descripcion='Acceso a funciones docentes')
+                    db.session.add(teacher_role)
+                    print("Rol 'Profesor' creado.")
+                elif role_name == 'Estudiante':
+                    student_role = Rol(nombre_rol='Estudiante', descripcion='Acceso a funciones estudiantiles')
+                    db.session.add(student_role)
+                    print("Rol 'Estudiante' creado.")
+                elif role_name == 'Usuario Estándar':
+                    default_role = Rol(nombre_rol='Usuario Estándar', descripcion='Rol por defecto para usuarios sin rol específico.')
+                    db.session.add(default_role)
+                    print("Rol 'Usuario Estándar' creado.")
+        db.session.commit()
 
-#-------RUTAS GESTION INCENTARIO-------
-@app.route('/Gestion_Inventario')
-def gestion_i():
-    return render_template('superadmin/gestion_inventario/gi.html')
+        # USUARIO SUPERADMIN
+        if not Usuario.query.filter_by(numero_identidad='000000000').first():
+            super_admin_role = Rol.query.filter_by(nombre_rol='Super Admin').first()
+            if super_admin_role:
+                super_admin = Usuario(
+                    numero_identidad='000000000',
+                    tipo_documento='cc',
+                    nombre_completo='Super Administrador',
+                    correo_electronico='superadmin@institucion.com',
+                    telefono_celular='3001234567',
+                    estado_cuenta='activa',
+                    rol_obj=super_admin_role
+                )
+                super_admin.set_password('admin123')
+                db.session.add(super_admin)
+                db.session.commit()
+                print("Usuario 'Super Administrador' creado con contraseña 'admin123'.")
+            else:
+                print("Rol 'Super Admin' no encontrado. No se pudo crear el usuario superadmin.")
 
-@app.route('/Equipos')
-def equipos():
-    return render_template('superadmin/gestion_inventario/equipos.html')
 
-@app.route('/Registro_Equipo')
-def registro_equipo():
-    return render_template('superadmin/gestion_inventario/registro_equipo.html')
-
-@app.route('/Registro_Incidente')
-def registro_incidente():
-    return render_template('superadmin/gestion_inventario/registro_incidente.html')
-
-#------RUTAS GESTION USUARIOS/ROLES------
-@app.route('/Profesores')
-def Profesores():
-    return render_template('superadmin/gestion_usuarios/profesores.html')
-
-@app.route('/crear_rol')
-def crear_rol():
-    return render_template('superadmin/gestion_usuarios/crear_rol.html')
-
-@app.route('/lista_rol')
-def lista_rol():
-    return render_template('superadmin/gestion_usuarios/lista_rol.html')
-
-@app.route('/editar_rol')
-def editar_rol():
-    return render_template('superadmin/gestion_usuarios/editar_rol.html')
-
-@app.route('/crear_usuario')
-def crear_usuario():
-    return render_template('superadmin/gestion_usuarios/crear_usuario.html')
+app.register_blueprint(main_bp)
+app.register_blueprint(auth_bp)
+app.register_blueprint(admin_bp)
 
 if __name__ == '__main__':
+    with app.app_context():
+        create_initial_data()
     app.run(debug=True)

@@ -7,11 +7,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/gestion_usuarios/lista_rol.css') }}">
-
 </head>
 <body>
-            {% extends "superadmin/base.html" %}
-        {% block content %}
+    {% extends "superadmin/base.html" %}
+    {% block content %}
 
     <div class="container-fluid px-4">
         <header class="d-flex justify-content-between align-items-center py-3">
@@ -22,62 +21,81 @@
             </div>
         </header>
 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         <div class="main-container">
             <div class="row">
                 <div class="col-lg-7">
-                    <ul class="nav nav-tabs mb-4">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('crear_rol') }}">Crear Nuevo Rol</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ url_for('lista_rol') }}">Lista de Roles</a>
-                        </li>
-                    </ul>
+                    <h2 class="h5 mb-4">Lista de Roles</h2>
+                    {% if roles %}
+                        {% for rol in roles %}
+                            <div class="card mb-3 shadow-sm">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title mb-1">{{ rol.nombre_rol }}</h5>
+                                        <p class="card-text text-muted small">{{ rol.descripcion }}</p>
+                                        <div class="dropdown">
+                                            <button class="btn btn-light border btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Lista de Permisos
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                {% if rol.permisos %}
+                                                    {% for permiso in rol.permisos %}
+                                                        <li><a class="dropdown-item" href="#">{{ permiso.nombre_permiso }}</a></li>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <li><span class="dropdown-item-text text-muted">No hay permisos asignados.</span></li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <a href="{{ url_for('editar_rol', id_rol=rol.id_rol) }}" class="btn btn-sm btn-info me-2" title="Editar Rol">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ rol.id_rol }}" title="Eliminar Rol">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
 
-                    <div class="d-flex justify-content-end mb-3">
-                        <a class="btn btn-secondary" href="{{ url_for('editar_rol')}}" role="button">Editar</a>
-                    </div>
-
-                    <div>
-                        <div class="role-list-header">
-                            <input class="form-check-input" type="checkbox">
-                            <span>ID</span>
-                            <span>Nombre del Rol</span>
-                            <span>Permisos</span>
-                        </div>
-
-                        <div class="role-list-item">
-                            <input class="form-check-input" type="checkbox" checked>
-                            <span>1</span>
-                            <span>Estudiante</span>
-                            <div class="dropdown">
-                                <button class="btn btn-light border btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Lista de Permisos
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">registro de asistencia</a></li>
-                                    <li><a class="dropdown-item" href="#">acceso a reportes</a></li>
-                                </ul>
+                                        <div class="modal fade" id="confirmDeleteModal{{ rol.id_rol }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{ rol.id_rol }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="confirmDeleteModalLabel{{ rol.id_rol }}">Confirmar Eliminación</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ¿Estás seguro de que quieres eliminar el rol "{{ rol.nombre_rol }}"? Esta acción no se puede deshacer y los usuarios con este rol podrían verse afectados.
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        <form action="{{ url_for('eliminar_rol', id_rol=rol.id_rol) }}" method="POST" style="display:inline;">
+                                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            No hay roles registrados en el sistema.
+                            <a href="{{ url_for('crear_rol') }}" class="alert-link">Crea uno ahora.</a>
                         </div>
-
-                        <div class="role-list-item">
-                            <input class="form-check-input" type="checkbox">
-                            <span>2</span>
-                            <span>Profesor</span>
-                            <div class="dropdown">
-                                <button class="btn btn-light border btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Lista de Permisos
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">gestión de asignaturas</a></li>
-                                    <li><a class="dropdown-item" href="#">registro de calificaciones</a></li>
-                                    <li><a class="dropdown-item" href="#">registro de asistencia</a></li>
-                                    <li><a class="dropdown-item" href="#">gestión de horarios</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
                 
                 <div class="col-lg-5 d-none d-lg-flex align-items-center justify-content-center">
@@ -88,9 +106,9 @@
             </div>
         </div>
     </div>
+    <a href="{{ url_for('gestion') }}" class="btn btn-secondary w-100 py-2 mt-3" role="button">Atrás</a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
     {%endblock%}
 </body>
 </html>

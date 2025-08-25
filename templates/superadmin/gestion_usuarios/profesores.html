@@ -3,160 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Profesores</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/gestion_usuarios/profesores.css') }}">
-
-<body>
-       {% extends "superadmin/base.html" %}
-        {% block content %}
-
-    <header class="main-header">
-        <h1>Gestion de usuarios/roles</h1>
-        <div class="header-icons">
-            <i class="fa-solid fa-bell"></i>
-            <i class="fa-solid fa-user"></i>
-        </div>
-    </header>
-
-    <main class="content-area">
-        <section class="page-header">
-            <div class="title-action">
-                <h2 class="page-title">Lista de Profesores</h2>
-                <a href="{{ url_for('crear_usuario') }}" class="btn-create">Crear Nuevo Usuario</a>
-            </div>
-            <div class="placeholder-image">
-                <i class="fa-solid fa-image"></i>
-            </div>
-        </section>
-
-        <section class="table-container">
-            <div class="table-controls">
-                <div class="dropdown">
-                    <button class="dropdown-toggle" id="dropdownBtn">Mas Opciones <i class="fa-solid fa-chevron-down"></i></button>
-                    <div class="dropdown-menu" id="dropdownMenu">
-                        <a href="#">Exportar a CSV</a>
-                        <a href="#">Eliminar seleccionados</a>
-                        <a href="#">Asignar curso en bloque</a>
-                    </div>
-                </div>
-                <div class="search-bar">
-                    <i class="fa-solid fa-search"></i>
-                    <input type="search" placeholder="Buscar Profesores">
-                </div>
-            </div>
-
-            <table class="user-table">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" id="selectAllCheckbox"></th>
-                        <th>No. Identidad</th>
-                        <th>Avatar</th>
-                        <th>Nombre completo</th>
-                        <th>Correo</th>
-                        <th>Rol</th>
-                        <th>Curso Asignado</th>
-                        <th>Materia/Area</th>
-                        <th>Sede Asignada</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
-                        <td>1234567891</td>
-                        <td><span class="avatar"><i class="fa-solid fa-user"></i></span></td>
-                        <td><a href="#">Elena Rodriguez</a></td>
-                        <td>elena.r@school.edu.co</td>
-                        <td><span class="tag tag-profesor">Profesor</span></td>
-                        <td>701</td>
-                        <td>Matematicas, Fisica</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
-                        <td>1234567890</td>
-                        <td><span class="avatar"><i class="fa-solid fa-user"></i></span></td>
-                        <td>David</td>
-                        <td>david.c@school.edu.co</td>
-                        <td><span class="tag tag-profesor">Profesor</span></td>
-                        <td>1101</td>
-                        <td>Español, Filosofia, Plan Lector</td>
-                        <td>A</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
-                        <td>1034567891</td>
-                        <td><span class="avatar"><i class="fa-solid fa-user"></i></span></td>
-                        <td>Sophia</td>
-                        <td>sophia.k@school.edu.co</td>
-                        <td><span class="tag tag-profesor">Profesor</span></td>
-                        <td>none</td>
-                        <td>Content</td>
-                        <td>B</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
-                        <td></td>
-                        <td><span class="avatar"><i class="fa-solid fa-user"></i></span></td>
-                        <td>Michael</td>
-                        <td>michel.b@school.edu.co</td>
-                        <td><span class="tag tag-new">New tag</span></td>
-                        <td>Content</td>
-                        <td>Content</td>
-                        <td>Content</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
-                        <td></td>
-                        <td><span class="avatar"><i class="fa-solid fa-user"></i></span></td>
-                        <td>Ethan</td>
-                        <td>ethan.d@school.edu.co</td>
-                        <td><span class="tag tag-new">New tag</span></td>
-                        <td>Content</td>
-                        <td>Content</td>
-                        <td>Content</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
-                        <td></td>
-                        <td><span class="avatar"><i class="fa-solid fa-user"></i></span></td>
-                        <td>Ava Wilson</td>
-                        <td>ava.w@school.edu.co</td>
-                        <td><span class="tag tag-new">New tag</span></td>
-                        <td>Content</td>
-                        <td>Content</td>
-                        <td>Content</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
-                        <td></td>
-                        <td><span class="avatar"><i class="fa-solid fa-user"></i></span></td>
-                        <td>Noah Martinez</td>
-                        <td>noah.m@school.edu.co</td>
-                        <td><span class="tag tag-new">New tag</span></td>
-                        <td>Content</td>
-                        <td>Content</td>
-                        <td>Content</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
-                        <td>474,000</td>
-                        <td><span class="avatar"><i class="fa-solid fa-user"></i></span></td>
-                        <td>Isabella Lee</td>
-                        <td>isabella.l@school.edu.co</td>
-                        <td><span class="tag tag-new">New tag</span></td>
-                        <td>Content</td>
-                        <td>Content</td>
-                        <td>Content</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
-
-    <script src="{{ url_for('static', filename='js/superadmin/profesores.js') }}"></script>
-
-       {% endblock%}
+    <title>Profesores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css"/>
+    <link href="https://cdn.datatables.net/v/dt/dt-2.3.3/datatables.min.css" rel="stylesheet" integrity="sha384-C0ogMvg31Mu1GWzYxEEobPIlBlGbp/DY94Le4M9y/HFd9VGLT1zWL7MErNMsM2x6" crossorigin="anonymous">
  
+<script src="https://cdn.datatables.net/v/dt/dt-2.3.3/datatables.min.js" integrity="sha384-qyN6ZT87DHLvgCDC+GYE3myTUDGpz3swpW19cYxOh4oa/8GNSGPMteQwbyM6Ot0D" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+
+    {% extends "base.html" %}
+
+    {% block title %}Gestión de Profesores{% endblock %}
+
+    {% block content %}
+    <div class="container-fluid py-4">
+        <h2 class="mb-4">Gestión de Profesores</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Lista de Profesores</h5>
+                <a href="{{ url_for('admin.crear_usuario') }}" class="btn btn-light btn-sm"><i class="fas fa-user-plus me-2"></i>Añadir Nuevo Profesor</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped" id="profesoresTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Número de Identidad</th>
+                                <th>Nombre Completo</th>
+                                <th>Correo Electrónico</th>
+                                <th>Teléfono Celular</th>
+                                <th>Rol</th>
+                                <th>Estado de Cuenta</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-2.3.2/datatables.min.js" integrity="sha384-JRUjeYWWUGO171YFugrU0ksSC6CaWnl4XzwP6mNjnnDh4hfFGRyYbEXwryGwLsEp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Inicializar DataTables con la opción de AJAX
+            $('#profesoresTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/2.3.3/i18n/es-ES.json"
+                },
+                "pagingType": "full_numbers",
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                "order": [[ 0, "asc" ]],
+                // Configurar la fuente de datos para que sea tu API
+                "ajax": {
+                    "url": "{{ url_for('admin.api_profesores') }}",
+                    "dataSrc": "data" // Indica a DataTables que el array de datos está bajo la clave 'data'
+                },
+                // Definir las columnas y el mapeo con los datos de la API
+                "columns": [
+                    { "data": "id_usuario" },
+                    { "data": "numero_identidad" },
+                    { "data": "nombre_completo" },
+                    { "data": "correo_electronico" },
+                    { "data": "telefono_celular" },
+                    { "data": "rol" },
+                    { "data": "estado_cuenta" },
+                    {
+                        "data": null,
+                        "defaultContent": '',
+                        "orderable": false,
+                        "searchable": false,
+                        "className": "text-center",
+                        "render": function(data, type, row) {
+                            // Construir los enlaces y botones dinámicamente
+                            let editUrl = `/admin/editar_usuario/${row.id_usuario}`;
+                            let deleteModalId = `confirmDeleteModal${row.id_usuario}`;
+                            
+                            // Retornar el HTML de los botones
+                            return `
+                                <a href="${editUrl}" class="btn btn-sm btn-info me-1" title="Editar Profesor"><i class="fas fa-edit"></i></a>
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#${deleteModalId}" title="Eliminar Profesor"><i class="fas fa-trash-alt"></i></button>
+                            `;
+                        }
+                    }
+                ]
+            });
+
+            $('#profesoresTable').on('click', '.btn-danger', function() {
+                const rowData = $('#profesoresTable').DataTable().row($(this).parents('tr')).data();
+                const userId = rowData.id_usuario;
+                const userName = rowData.nombre_completo;
+                const modalId = `confirmDeleteModal${userId}`;
+                
+                const formActionUrl = `/admin/eliminar_usuario/${userId}`;
+
+                const modalHtml = `
+                    <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="${modalId}Label" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-danger text-white">
+                                    <h5 class="modal-title" id="${modalId}Label">Confirmar Eliminación</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de que quieres eliminar al profesor <strong>"${userName}"</strong>? Esta acción no se puede deshacer.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <form action="${formActionUrl}" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                $('body').append(modalHtml);
+                $(`#${modalId}`).modal('show');
+            });
+            
+            $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).remove();
+            });
+        });
+    </script>
+
+    {% endblock %}
 </body>
-</html>
+</html>          
