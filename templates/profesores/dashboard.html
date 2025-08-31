@@ -1,0 +1,115 @@
+{% extends "profesor_base.html" %}
+
+{% block title %}Panel de Profesor{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4">Dashboard de Profesor</h2>
+
+    <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="card bg-primary text-white shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <p class="mb-0 fw-semibold text-white-50">Estudiantes a cargo</p>
+                            <h3 class="card-title fw-bold">125</h3>
+                        </div>
+                        <i class="fas fa-users fa-3x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card bg-success text-white shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <p class="mb-0 fw-semibold text-white-50">Asignaturas</p>
+                            <h3 class="card-title fw-bold">4</h3>
+                        </div>
+                        <i class="fas fa-book fa-3x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card bg-warning text-dark shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <p class="mb-0 fw-semibold text-black-50">Pendientes</p>
+                            <h3 class="card-title fw-bold">8</h3>
+                        </div>
+                        <i class="fas fa-tasks fa-3x text-black-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card bg-info text-white shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <p class="mb-0 fw-semibold text-white-50">Mensajes sin leer</p>
+                            <h3 class="card-title fw-bold">3</h3>
+                        </div>
+                        <i class="fas fa-envelope fa-3x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-3">
+        <div class="col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Anuncios Recientes</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <p class="fw-semibold mb-1">Nueva directiva de evaluación</p>
+                            <small class="text-muted d-block"><i class="fas fa-clock me-1"></i> Publicado hace 2 horas</small>
+                            <small>Por favor, revisen los nuevos criterios de evaluación para el segundo trimestre.</small>
+                        </li>
+                        <li class="list-group-item">
+                            <p class="fw-semibold mb-1">Reunión de profesores</p>
+                            <small class="text-muted d-block"><i class="fas fa-clock me-1"></i> Publicado ayer</small>
+                            <small>Reunión en sala de profesores a las 10:00 AM.</small>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white text-end">
+                    <a href="{{ url_for('profesor.comunicaciones') }}" class="btn btn-sm btn-outline-secondary">Ver todos los anuncios</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Mis Clases Próximas</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <p class="fw-semibold mb-1">Matemáticas Básicas</p>
+                            <small class="text-muted d-block"><i class="fas fa-calendar-alt me-1"></i> Lunes, 8:00 AM - 9:30 AM</small>
+                            <small><i class="fas fa-map-marker-alt me-1"></i> Salón 101</small>
+                        </li>
+                        <li class="list-group-item">
+                            <p class="fw-semibold mb-1">Ciencias Naturales</p>
+                            <small class="text-muted d-block"><i class="fas fa-calendar-alt me-1"></i> Lunes, 9:45 AM - 11:15 AM</small>
+                            <small><i class="fas fa-map-marker-alt me-1"></i> Laboratorio C</small>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white text-end">
+                    <a href="{{ url_for('profesor.ver_horario_clases') }}" class="btn btn-sm btn-outline-secondary">Ver horario completo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,9 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
-from flask_login import login_required, current_user
-from controllers.decorators import permission_required, role_required
-from controllers.forms import RoleForm, RegistrationForm, UserEditForm
-from controllers.models import Rol, Usuario, Permiso, db
-
+from flask import *
+from flask_login import *
+from controllers.decorators import *
+from controllers.forms import *
+from controllers.models import *
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 @admin_bp.route('/dashboard')
@@ -238,3 +237,35 @@ def eliminar_usuario(user_id):
     db.session.commit()
     flash(f'Usuario "{user.nombre_completo}" eliminado exitosamente.', 'success')
     return redirect(url_for('admin.profesores'))
+
+
+
+
+
+def registro():
+    if request.method == 'POST':
+        nombres = request.form.get('nombres')
+        apellidos = request.form.get('apellidos')
+        correo_personal = request.form.get('correoPersonal')
+        contrasena = request.form.get('contrasena')
+        num_doc = request.form.get('numDoc')
+        telefono = request.form.get('telefono')
+        direccion = request.form.get('direccion')
+        rol = request.form.get('rol')
+
+        if not all([nombres, apellidos, correo_personal, contrasena, num_doc, telefono, rol,direccion]):
+            flash('Por favor, completa todos los campos requeridos.', 'danger')
+            return render_template('registro.html')
+
+        try:
+            print(f"Usuario registrado: {nombres} {apellidos}, Rol: {rol}")
+            
+            flash('✅ Los datos se han guardado exitosamente.', 'success')
+            
+            return redirect(url_for('registro'))
+            
+        except Exception as e:
+            print(f"Error al registrar usuario: {e}")
+            flash('Ocurrió un error al guardar los datos. Inténtalo de nuevo.', 'danger')
+
+    return render_template('registro.html')

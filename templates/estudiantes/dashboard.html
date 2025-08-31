@@ -1,0 +1,84 @@
+{% extends "/estudiantes/base.html" %}
+
+{% block title %}Panel de Estudiante{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Dashboard de Estudiante</h1>
+            <p class="lead text-muted">¡Bienvenido de nuevo, **{{ current_user.nombre_completo }}**!</p>
+            <p>Aquí tienes un resumen rápido de tu situación académica.</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-4">
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-primary"><i class="fas fa-poll me-2"></i>Calificaciones Recientes</h5>
+                    <p class="card-text">Consulta tus últimas notas publicadas.</p>
+                    <ul class="list-group list-group-flush flex-grow-1">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Matemáticas II
+                            <span class="badge bg-success rounded-pill">A-</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Historia del Arte
+                            <span class="badge bg-warning text-dark rounded-pill">B+</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Programación
+                            <span class="badge bg-danger rounded-pill">C</span>
+                        </li>
+                    </ul>
+                    <a href="{{ url_for('estudiante.ver_calificaciones') }}" class="btn btn-outline-primary btn-sm mt-3">Ver todas las calificaciones</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-info"><i class="fas fa-calendar-alt me-2"></i>Próximos Eventos</h5>
+                    <p class="card-text">No te pierdas tus próximas clases o exámenes.</p>
+                    <ul class="list-group list-group-flush flex-grow-1">
+                        <li class="list-group-item">
+                            <h6 class="mb-1">Examen de Física I</h6>
+                            <p class="small mb-1"><i class="far fa-clock me-1"></i>Viernes, 1 de septiembre - 10:00 AM</p>
+                            <p class="small text-muted mb-0"><i class="fas fa-map-marker-alt me-1"></i>Salón 201</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h6 class="mb-1">Clase de Laboratorio</h6>
+                            <p class="small mb-1"><i class="far fa-clock me-1"></i>Martes, 5 de septiembre - 2:00 PM</p>
+                            <p class="small text-muted mb-0"><i class="fas fa-map-marker-alt me-1"></i>Laboratorio de Química</p>
+                        </li>
+                    </ul>
+                    <a href="{{ url_for('estudiante.ver_horario') }}" class="btn btn-outline-info btn-sm mt-3">Ver horario completo</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-warning"><i class="fas fa-bullhorn me-2"></i>Anuncios Importantes</h5>
+                    <p class="card-text">Mantente al tanto de las últimas noticias de la universidad.</p>
+                    <ul class="list-group list-group-flush flex-grow-1">
+                        <li class="list-group-item">
+                            <h6 class="mb-1">Reapertura de la biblioteca</h6>
+                            <p class="small text-muted mb-0">La biblioteca central reabrirá con horario extendido a partir de la próxima semana.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h6 class="mb-1">Taller de Orientación Profesional</h6>
+                            <p class="small text-muted mb-0">Inscripciones abiertas para el taller del 15 de septiembre.</p>
+                        </li>
+                    </ul>
+                    <a href="#" class="btn btn-outline-warning btn-sm mt-3">Ver todos los anuncios</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

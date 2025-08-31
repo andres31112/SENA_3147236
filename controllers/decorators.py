@@ -22,19 +22,13 @@ def role_required(role_name):
     return decorator
 
 def permission_required(permission_name):
-    """
-    Decorador que verifica si el usuario actual tiene el permiso especificado.
-    """
-    def decorator(f):
+    def decorated_function(f):
         @wraps(f)
-        def decorated_function(*args, **kwargs):
-            if not current_user.is_authenticated:
-                flash('Por favor, inicia sesión para acceder a esta página.', 'info')
-                return redirect(url_for('login', next=request.url))
-            # Utiliza el método has_permission actualizado del modelo Usuario
+        def wrapper(*args, **kwargs):
             if not current_user.has_permission(permission_name):
-                flash(f'No tienes el permiso necesario ({permission_name}) para acceder a esta página.', 'danger')
-                return redirect(url_for('gestion')) # Redirige a una página de inicio o acceso denegado
+                flash('No tienes permiso para acceder a esta página.', 'danger')
+                # Usa el nombre completo del endpoint. Se asume que quieres redirigir a 'admin.inicio'.
+                return redirect(url_for('admin.inicio')) 
             return f(*args, **kwargs)
-        return decorated_function
-    return decorator
+        return wrapper
+    return decorated_function

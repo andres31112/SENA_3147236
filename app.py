@@ -5,9 +5,13 @@ from controllers.models import db, Usuario, Rol, Permiso
 from routes.auth import auth_bp
 from routes.main import main_bp
 from routes.admin import admin_bp
+from routes.estudiantes import estudiante_bp
+from routes.profesor import profesor_bp
+from routes.padres import padre_bp
 from config import Config
 
 # --- INICIALIZACIÓN DE LA APP ---
+
 app = Flask(__name__)
 
 # --- CONFIGURACIÓN ---
@@ -33,52 +37,56 @@ def create_initial_data():
         db.create_all()
         print("Base de datos y tablas verificadas/creadas.")
 
-        # PERMISOS SUPER ADMIN
-        permissions_to_create = {
-            'gestion_usuarios': 'Acceso a la gestión de usuarios (CRUD)',
-            'gestion_asignaturas': 'Acceso a la gestión de asignaturas',
-            'registro_calificaciones': 'Acceso al registro y edición de calificaciones',
-            'gestion_comunicados': 'Acceso a la gestión de comunicados',
-            'gestion_inventario': 'Acceso a la gestión de inventario',
-            'gestion_matriculas': 'Acceso a la gestión de matrículas',
-            'gestion_electoral': 'Acceso a la gestión electoral',
-            'crear_roles': 'Permiso para crear roles',
-            'ver_roles': 'Permiso para ver roles',
-            'editar_roles': 'Permiso para editar roles',
-            'eliminar_roles': 'Permiso para eliminar roles'
+        # PERMISOS POR ROL
+        permissions_for_roles = {
+            'Super Admin': [
+                'gestion_usuarios', 'gestion_asignaturas', 'registro_calificaciones',
+                'gestion_comunicados', 'gestion_inventario', 'gestion_matriculas',
+                'gestion_electoral', 'crear_roles', 'ver_roles', 'editar_roles',
+                'eliminar_roles'
+            ],
+            'Profesor': [
+                'ver_calificaciones_propias', 'ver_horario_clases', 'ver_lista_estudiantes',
+                'registrar_calificaciones', 'gestion_comunicados_profesor'
+            ],
+            'Estudiante': [
+                'ver_calificaciones', 'ver_horario', 'ver_historial_academico',
+                'inscripcion_materias', 'ver_comunicaciones_estudiante', 'ver_estado_cuenta',
+                'editar_perfil', 'acceso_soporte'
+            ],
+            'Padre': [
+                'ver_calificaciones_hijo', 'ver_horario_hijo', 'ver_comunicaciones_padre',
+                'acceso_soporte'
+            ],
         }
+
+        # CREAR TODOS LOS PERMISOS
+        all_permissions_to_create = set()
+        for perms in permissions_for_roles.values():
+            all_permissions_to_create.update(perms)
         
-        for name, desc in permissions_to_create.items():
+        for name in all_permissions_to_create:
             if not Permiso.query.filter_by(nombre_permiso=name).first():
-                new_permission = Permiso(nombre_permiso=name, descripcion=desc)
+                new_permission = Permiso(nombre_permiso=name, descripcion=f"Permiso para '{name}'")
                 db.session.add(new_permission)
                 print(f"Permiso '{name}' creado.")
         db.session.commit()
 
-        # ROLES BÁSICOS
-        roles_to_create = ['Super Admin', 'Profesor', 'Estudiante', 'Usuario Estándar']
+        # CREAR Y ASIGNAR PERMISOS A LOS ROLES
+        roles_to_create = ['Super Admin', 'Profesor', 'Estudiante', 'Padre']
         for role_name in roles_to_create:
-            if not Rol.query.filter_by(nombre_rol=role_name).first():
-                if role_name == 'Super Admin':
-                    # Asigna todos los permisos al rol de 'Super Admin'
-                    all_permissions = Permiso.query.all()
-                    super_admin_role = Rol(nombre_rol='Super Admin', descripcion='Administrador con todos los permisos')
-                    super_admin_role.permisos = all_permissions
-                    db.session.add(super_admin_role)
-                    print("Rol 'Super Admin' creado con todos los permisos.")
-                elif role_name == 'Profesor':
-                    teacher_role = Rol(nombre_rol='Profesor', descripcion='Acceso a funciones docentes')
-                    db.session.add(teacher_role)
-                    print("Rol 'Profesor' creado.")
-                elif role_name == 'Estudiante':
-                    student_role = Rol(nombre_rol='Estudiante', descripcion='Acceso a funciones estudiantiles')
-                    db.session.add(student_role)
-                    print("Rol 'Estudiante' creado.")
-                elif role_name == 'Usuario Estándar':
-                    default_role = Rol(nombre_rol='Usuario Estándar', descripcion='Rol por defecto para usuarios sin rol específico.')
-                    db.session.add(default_role)
-                    print("Rol 'Usuario Estándar' creado.")
-        db.session.commit()
+            role = Rol.query.filter_by(nombre_rol=role_name).first()
+            if not role:
+                role = Rol(nombre_rol=role_name, descripcion=f"Rol de {role_name}")
+                db.session.add(role)
+                db.session.commit() # Necesario para obtener el ID del rol
+
+            # Asignar permisos al rol
+            role_permissions = [Permiso.query.filter_by(nombre_permiso=name).first() 
+                                for name in permissions_for_roles.get(role_name, [])]
+            role.permisos = role_permissions
+            db.session.commit()
+            print(f"Permisos asignados al rol '{role_name}'.")
 
         # USUARIO SUPERADMIN
         if not Usuario.query.filter_by(numero_identidad='000000000').first():
@@ -100,10 +108,12 @@ def create_initial_data():
             else:
                 print("Rol 'Super Admin' no encontrado. No se pudo crear el usuario superadmin.")
 
-
 app.register_blueprint(main_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
+app.register_blueprint(estudiante_bp)
+app.register_blueprint(padre_bp)
+app.register_blueprint(profesor_bp)
 
 if __name__ == '__main__':
     with app.app_context():

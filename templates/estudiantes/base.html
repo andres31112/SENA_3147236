@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Sistema General{% endblock %}</title>
+    <title>{% block title %}Sistema de Estudiante{% endblock %}</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -65,52 +65,84 @@
             padding: 20px;
             flex-grow: 1;
         }
+        .nav-link.dropdown-toggle::after {
+            display: inline-block;
+            margin-left: .255em;
+            vertical-align: .255em;
+            content: "";
+            border-top: .3em solid;
+            border-right: .3em solid transparent;
+            border-bottom: 0;
+            border-left: .3em solid transparent;
+        }
+        .nav-link[aria-expanded="true"]::after {
+            transform: rotate(-180deg);
+        }
+        .collapse.show .nav-link,
+        .collapsing .nav-link {
+            padding-left: 3rem !important;
+        }
     </style>
 </head>
 <body class="bg-light">
 
     <aside id="sidebar" class="sidebar bg-dark text-white d-flex flex-column">
         <div class="sidebar-header p-4 d-flex align-items-center justify-content-center" style="background-color: #212529;">
-            <h1 class="fs-4 fw-bold text-uppercase m-0">ADMIN</h1>
+            <h1 class="fs-4 fw-bold text-uppercase m-0">ESTUDIANTE</h1>
         </div>
 
         <nav class="nav flex-column flex-grow-1 p-3">
-            <a href="{{ url_for('admin.inicio') }}" class="nav-link rounded my-1 {% if request.endpoint == 'admin.inicio' %}active{% endif %}">
+            <a href="{{ url_for('estudiante.estudiante_panel') }}" class="nav-link rounded my-1 {% if request.endpoint == 'estudiante.dashboard' %}active{% endif %}">
                 <i class="fas fa-home fa-fw me-2"></i>Inicio
             </a>
-            {% if current_user.has_permission('gestion_usuarios') or current_user.has_permission('ver_roles') or current_user.has_permission('crear_roles') or current_user.has_permission('editar_roles') or current_user.has_permission('eliminar_roles') %}
-            <a href="{{ url_for('admin.admin_panel') }}" class="nav-link rounded my-1 {% if 'gestion_usuarios' in request.endpoint or 'rol' in request.endpoint %}active{% endif %}">
-                <i class="fas fa-user-cog fa-fw me-2"></i>Gestión de Usuarios/Roles
+            
+            <a class="nav-link rounded my-1 dropdown-toggle" href="#academicaSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="{% if 'academica' in request.endpoint or 'calificaciones' in request.endpoint or 'horario' in request.endpoint or 'inscripcion' in request.endpoint %}true{% else %}false{% endif %}">
+                <i class="fas fa-book-open fa-fw me-2"></i>Gestión Académica
+            </a>
+            <div class="collapse {% if 'academica' in request.endpoint or 'calificaciones' in request.endpoint or 'horario' in request.endpoint or 'inscripcion' in request.endpoint %}show{% endif %}" id="academicaSubmenu">
+                {% if current_user.has_permission('ver_calificaciones') %}
+                <a href="" class="nav-link rounded my-1">
+                    <i class="fas fa-poll fa-fw me-2"></i>Calificaciones
+                </a>
+                {% endif %}
+                {% if current_user.has_permission('ver_horario') %}
+                <a href="" class="nav-link rounded my-1">
+                    <i class="fas fa-calendar-alt fa-fw me-2"></i>Horario de Clases
+                </a>
+                {% endif %}
+                {% if current_user.has_permission('ver_historial_academico') %}
+                <a href="" class="nav-link rounded my-1">
+                    <i class="fas fa-history fa-fw me-2"></i>Historial Académico
+                </a>
+                {% endif %}
+                {% if current_user.has_permission('inscripcion_materias') %}
+                <a href="" class="nav-link rounded my-1">
+                    <i class="fas fa-plus-square fa-fw me-2"></i>Inscripción de Materias
+                </a>
+                {% endif %}
+            </div>
+
+            {% if current_user.has_permission('ver_comunicaciones_estudiante') %}
+            <a href="" class="nav-link rounded my-1 {% if 'comunicaciones' in request.endpoint %}active{% endif %}">
+                <i class="fas fa-bullhorn fa-fw me-2"></i>Comunicaciones
             </a>
             {% endif %}
-            {% if current_user.has_permission('gestion_asignaturas') or current_user.has_permission('registro_calificaciones') or current_user.has_permission('registro_asistencia') or current_user.has_permission('gestion_horarios') %}
-<a href="{{ url_for('admin.gestion_i') }}" class="nav-link rounded my-1 {% if 'academica' in request.endpoint %}active{% endif %}">
-                    <i class="fas fa-book-open fa-fw me-2"></i>Gestión Académica
+
+            {% if current_user.has_permission('ver_estado_cuenta') %}
+            <a href="" class="nav-link rounded my-1 {% if 'estado_cuenta' in request.endpoint %}active{% endif %}">
+                <i class="fas fa-dollar-sign fa-fw me-2"></i>Estado de Cuenta
             </a>
             {% endif %}
-            {% if current_user.has_permission('gestion_inventario') %}
-            <a href="{{ url_for('admin.gestion_i') }}" class="nav-link rounded my-1 {% if 'inventario' in request.endpoint %}active{% endif %}">
-                <i class="fas fa-boxes fa-fw me-2"></i>Gestión de Inventarios
+
+            {% if current_user.has_permission('editar_perfil') %}
+            <a href="" class="nav-link rounded my-1 {% if 'perfil' in request.endpoint %}active{% endif %}">
+                <i class="fas fa-user-circle fa-fw me-2"></i>Mi Perfil
             </a>
             {% endif %}
-            {% if current_user.has_permission('gestion_comunicaciones') %}
-            <a href="#" class="nav-link rounded my-1">
-                <i class="fas fa-bullhorn fa-fw me-2"></i>Gestión de Comunicaciones
-            </a>
-            {% endif %}
-            {% if current_user.has_permission('gestion_mantenimientos') %}
-            <a href="#" class="nav-link rounded my-1">
-                <i class="fas fa-tools fa-fw me-2"></i>Gestión de Mantenimientos
-            </a>
-            {% endif %}
-            {% if current_user.has_permission('acceso_configuracion_sistema') %}
-            <a href="#" class="nav-link rounded my-1">
-                <i class="fas fa-cogs fa-fw me-2"></i>Configuración del Sistema
-            </a>
-            {% endif %}
-            {% if current_user.has_permission('acceso_reportes') %}
-            <a href="#" class="nav-link rounded my-1">
-                <i class="fas fa-chart-bar fa-fw me-2"></i>Reportes
+            
+            {% if current_user.has_permission('acceso_soporte') %}
+            <a href="" class="nav-link rounded my-1 {% if 'soporte' in request.endpoint %}active{% endif %}">
+                <i class="fas fa-question-circle fa-fw me-2"></i>Soporte
             </a>
             {% endif %}
         </nav>
@@ -133,7 +165,7 @@
                 <button class="btn btn-outline-secondary me-3" type="button" id="sidebarToggle">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h5 class="m-0">{{ self.title() | default('Panel de Control') }}</h5>
+                <h5 class="m-0">{{ self.title() | default('Panel de Estudiante') }}</h5>
             </div>
         </header>
 

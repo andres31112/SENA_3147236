@@ -19,8 +19,19 @@ def login():
         if user and user.check_password(password):
             login_user(user)
             flash('Inicio de sesión exitoso.', 'success')
-            next_page = request.args.get('next')
-            return redirect(next_page or url_for('admin.admin_panel')) # Corregido para usar el nuevo blueprint
+            
+            # --- Lógica de redirección por rol ---
+            if user.rol_obj.nombre_rol == 'Super Admin':
+                return redirect(url_for('admin.admin_panel'))
+            elif user.rol_obj.nombre_rol == 'Profesor':
+                return redirect(url_for('profesor.dashboard'))
+            elif user.rol_obj.nombre_rol == 'Estudiante':
+                return redirect(url_for('estudiante.estudiante_panel'))
+            elif user.rol_obj.nombre_rol == 'Padre':
+                return redirect(url_for('padre.dashboard'))
+            else:
+                # Redirección por defecto para roles no especificados
+                return redirect(url_for('main.index'))
         else:
             flash('Inicio de sesión fallido. Por favor, revisa tu correo electrónico y contraseña.', 'danger')
     return render_template('login.html', form=form)
@@ -30,7 +41,7 @@ def login():
 def logout():
     logout_user()
     flash('¡Has cerrado sesión!', 'info')
-    return redirect(url_for('main.index')) # Corregido para usar el nuevo blueprint
+    return redirect(url_for('main.index'))
 
 @auth_bp.route('/forgot_password')
 def forgot_password():
