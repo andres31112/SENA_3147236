@@ -1,6 +1,6 @@
 # forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, widgets
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, widgets, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField 
 from controllers.models import * 
@@ -119,4 +119,40 @@ class UserEditForm(FlaskForm):
             if user:
                 raise ValidationError('Ese correo electrónico ya está registrado. Por favor, elige uno diferente.')
             
-            
+from wtforms.validators import DataRequired, Length, NumberRange
+
+class SalonForm(FlaskForm):
+    id_sede_fk = SelectField(
+        'Sede',
+        choices=[(1, 'Sede A'), (2, 'Sede B')],
+        coerce=int,
+        validators=[DataRequired()]
+    )
+
+    nombre_salon = StringField(
+        'Nombre del Salón',
+        validators=[DataRequired(), Length(max=50)]
+    )
+
+    capacidad = IntegerField('Capacidad', validators=[DataRequired(), NumberRange(min=1)])
+    tipo_salon = SelectField(
+        'Tipo de Salón',
+        choices=[
+            ('aula', 'Aula'),
+            ('laboratorio', 'Laboratorio'),
+            ('auditorio', 'Auditorio'),
+            ('sala_computo', 'Sala de Cómputo')
+        ],
+        validators=[DataRequired()]
+    )
+    cantidad_sillas = IntegerField(
+        'Cantidad de Sillas',
+        validators=[NumberRange(min=0)]
+    )
+
+    cantidad_mesas = IntegerField(
+        'Cantidad de Mesas',
+        validators=[NumberRange(min=0)]
+    )
+
+    submit = SubmitField('Crear Sala')

@@ -121,7 +121,10 @@
                 <div>
                     <p class="fw-semibold m-0">{{ current_user.nombre_completo }}</p>
                     <p class="small text-white-50 m-0">{{ current_user.rol_obj.nombre_rol if current_user.is_authenticated and current_user.rol_obj else 'Invitado' }}</p>
-                    <a href="{{ url_for('auth.logout') }}" class="text-white-50 small mt-1 d-block"><i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión</a>
+                    <a href="#" id="logoutBtn" class="text-white-50 small mt-1 d-block text-decoration-none">
+                        <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
+                    </a>
+
                 </div>
             </div>
         </div>
@@ -154,25 +157,49 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/superadmin/base.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const sidebarToggle = document.getElementById('sidebarToggle');
-            const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
 
-            if (sidebarToggle && sidebar) {
-                sidebarToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('show');
-                });
-            }
-
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth < 992 && sidebar.classList.contains('show') && !sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-                    sidebar.classList.remove('show');
-                }
+        if (sidebarToggle && sidebar) {
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('show');
             });
+        }
+
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth < 992 && sidebar.classList.contains('show') && !sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                sidebar.classList.remove('show');
+            }
         });
-    </script>
+
+        
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                Swal.fire({
+                    title: '¿Cerrar sesión?',
+                    text: "Tu sesión actual se cerrará.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ url_for('auth.logout') }}";
+                    }
+                });
+            });
+        }
+    });
+</script>
+
 </body>
 </html>

@@ -4,9 +4,7 @@ from flask import flash, redirect, url_for, request
 from flask_login import current_user
 
 def role_required(role_name):
-    """
-    Decorador que verifica si el usuario actual tiene el rol especificado.
-    """
+
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):

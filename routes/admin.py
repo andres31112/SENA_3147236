@@ -29,6 +29,54 @@ def gestion_i():
 def equipos():
     return render_template('superadmin/gestion_inventario/equipos.html')
 
+@admin_bp.route('/salones')
+@login_required
+@permission_required('gestion_inventario')
+def salones():
+    return render_template('superadmin/gestion_inventario/salones.html')
+
+@admin_bp.route("/gestion-salones")
+def gestion_salones():
+    # Filtrar por sede
+    salones_a = Salon.query.filter_by(id_sede_fk=1).all()
+    salones_b = Salon.query.filter_by(id_sede_fk=2).all()
+
+    return render_template(
+        "superadmin/gestion_inventario/salones.html",
+        total_salones=total_salones,
+        salas_computo=salas_computo,
+        aulas=aulas,
+        salones_a=salones_a,
+        salones_b=salones_b
+    )
+
+@admin_bp.route('/registro_salon', methods=['GET', 'POST'])
+@login_required
+@permission_required('gestion_inventario')
+def registro_salon():
+    form = SalonForm()  
+    
+    if form.validate_on_submit():
+        nuevo_salon = Salon(
+            id_sede_fk=form.id_sede_fk.data,
+            nombre_salon=form.nombre_salon.data,
+            capacidad=form.capacidad.data,
+            tipo_salon=form.tipo_salon.data,
+            cantidad_sillas=form.cantidad_sillas.data,
+            cantidad_mesas=form.cantidad_mesas.data
+        )
+        db.session.add(nuevo_salon)
+        db.session.commit()
+        
+        flash("Sala creada exitosamente ✅", "success")
+        return redirect(url_for('admin.salones'))  
+
+    return render_template(
+        'superadmin/gestion_inventario/registro_salon.html',
+        title='Crear Nueva Sala',
+        form=form
+    )
+
 @admin_bp.route('/registro_equipo')
 def registro_equipo():
     return render_template('superadmin/gestion_inventario/registro_equipo.html')

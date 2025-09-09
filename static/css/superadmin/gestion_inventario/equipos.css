@@ -1,0 +1,125 @@
+/* --- ========================================== --- */
+/* ---             PALETA Y FUENTES               --- */
+/* --- ========================================== --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+    /* Paleta de Colores */
+    --color-primario: #0078ad;
+    --color-primario-oscuro: #00628e;
+    --color-texto-principal: #2c3e50;
+    --color-texto-secundario: #7f8c8d;
+    --color-blanco: #FFFFFF;
+    --color-fondo-seccion: #f8f9fa;
+    --color-borde-suave: #ecf0f1;
+
+    /* Fuentes */
+    --fuente-principal: 'Montserrat', sans-serif;
+    --fuente-secundaria: 'Inter', sans-serif;
+
+    /* Transiciones */
+    --transicion-rapida: 0.3s ease-in-out;
+    --transicion-lenta: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+/* --- ========================================== --- */
+/* ---             ESTILO BASE                    --- */
+/* --- ========================================== --- */
+body{
+    font-family: 'Monserrat', sans-serif;
+    background-color: var(--color-texto-principal);
+}
+h1, h2, h3, h4, h5 .texto-principal{
+    color: var(--color-texto-principal);
+}
+/* --- ========================================== --- */
+/* ---             TARJETAS                       --- */
+/* --- ========================================== --- */
+.summary-card{
+    background-color: var(--color-blanco);
+    border: 1px solid var(--color-borde-suave);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    transition: transform 0.2 ease-in-out;
+    padding: 0.75rem;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 20px;
+}
+.summary-card p{
+    text-align: center;
+}
+.summary-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 4px 10px rgba(0,0,0,.1);
+}
+.summary-card .icon{
+    font-size: 1.5rem;
+    color: var(--color-primario);
+}
+.summary-card .number{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-texto-principal);
+}
+/* --- ========================================== --- */
+/* ---             PANEL EQUIPOS                  --- */
+/* --- ========================================== --- */
+.panel-content{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.table-container{
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 250px;
+}
+.table{
+    margin-bottom: 0;
+}
+.table th, .table td{
+    text-align: center;
+    vertical-align: middle;
+}
+.table-hover tbody tr{
+    cursor: pointer;
+}
+.table thead th{
+    position: sticky;
+    top: 0;
+    background-color: var(--color-blanco);
+    z-index: 1;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -94,6 +94,8 @@ class Sede(db.Model):
     nombre_sede = db.Column(db.String(100), unique=True, nullable=False)
     direccion = db.Column(db.String(255), nullable=False)
 
+    salones = db.relationship("Salon", back_populates="sede")
+
 class Curso(db.Model):
     __tablename__ = 'cursos'
     id_curso = db.Column(db.Integer, primary_key=True)
@@ -112,12 +114,14 @@ class Asignatura(db.Model):
 class Salon(db.Model):
     __tablename__ = 'salones'
     id_salon = db.Column(db.Integer, primary_key=True)
-    id_sede_fk = db.Column(db.Integer, db.ForeignKey('sedes.id_sede'), nullable=False)
+    id_sede_fk = db.Column(db.Integer, db.ForeignKey("sedes.id_sede"), nullable=False)
     nombre_salon = db.Column(db.String(50), nullable=False)
     capacidad = db.Column(db.Integer, nullable=True)
     tipo_salon = db.Column(db.Enum('aula', 'laboratorio', 'auditorio', 'sala_computo', name='tipo_salon_enum'), nullable=False, default='aula')
     cantidad_sillas = db.Column(db.Integer, nullable=True)
-    cantidad_mesas = db.Column(db.Integer, nullable=True)
+    cantidad_mesas = db.Column(db.Integer, nullable=True)        
+        
+    sede = db.relationship("Sede", back_populates="salones")
 
 class Periodo(db.Model):
     __tablename__ = 'periodos'
