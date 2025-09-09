@@ -1,0 +1,162 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  background-color: #f4f5f7;
+}
+
+header {
+  background-color: #1a73e8;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.container {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+
+aside {
+  width: 250px;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+aside button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1a73e8;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+aside button:hover {
+  background-color: #155ab6;
+}
+
+aside h3 {
+  margin-top: 20px;
+  font-size: 1em;
+  color: #333;
+}
+
+aside ul {
+  list-style: none;
+  padding: 0;
+}
+
+aside li {
+  background-color: #f1f3f4;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+aside li.new {
+  font-weight: bold;
+  color: #1a73e8;
+}
+
+main {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.email-card {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.email-card:hover {
+  background-color: #f1f3f4;
+}
+
+.email-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.email-info span {
+  font-size: 0.9em;
+}
+
+.email-actions button {
+  background-color: #e53935;
+  border: none;
+  padding: 5px 8px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.email-actions button:hover {
+  background-color: #b71c1c;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+form button {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+form button:hover {
+  background-color: #155ab6;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  aside {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+  }
+  aside button {
+    flex: 1;
+    margin-right: 5px;
+  }
+}

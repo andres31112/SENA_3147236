@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Correo Institucional</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Correo Institucional</h1>
+    <p id="usuarioNombre" data-id="{{ usuario.IdUsuario }}">
+      Usuario: {{ usuario.Nombre }} {{ usuario.Apellido }} ({{ usuario.Correo }})
+    </p>
+  </header>
+
+  <div class="container">
+    <aside>
+      <button onclick="mostrarInbox()">Bandeja de entrada</button>
+      <button onclick="mostrarSent()">Enviados</button>
+      <button onclick="mostrarCompose()">Redactar</button>
+      <button onclick="mostrarDeleted()">Eliminados</button>
+      <h3>Mensajes recientes</h3>
+      <ul id="mensajes-recientes"></ul>
+    </aside>
+
+    <main id="contenido"></main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administrador</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Panel de Administrador</h1>
+
+    <!-- Control de Horario de Votación -->
+    <h2>Control de Horario de Votación</h2>
+    <div id="horario-control">
+      <label>Hora de inicio:
+        <input type="time" id="hora-inicio">
+      </label>
+      <label>Hora de fin:
+        <input type="time" id="hora-fin">
+      </label>
+      <button id="guardar-horario">Guardar Horario</button>
+    </div>
+
+    <!-- Formulario para agregar candidatos -->
+    <form id="form-candidato">
+      <input type="text" id="nombre" placeholder="Nombre del candidato" required>
+      <input type="number" id="tarjeton" placeholder="Número de tarjetón" required>
+      <textarea id="propuesta" placeholder="Propuesta" required></textarea>
+      <select id="categoria" required>
+        <option value="">Selecciona categoría</option>
+        <option value="personero">Personero</option>
+        <option value="contralor">Contralor</option>
+        <option value="cabildante">Cabildante</option>
+      </select>
+      <input type="file" id="foto" accept="image/*" required>
+      <button type="submit">Agregar Candidato</button>
+    </form>
+
+    <h2>Lista de Candidatos</h2>
+    <div id="lista-candidatos"></div>
+
+    <h2>Resultados</h2>
+    <div id="resultados"></div>
+  </div>
+  <script src="admin.js"></script>
+</body>
+</html>

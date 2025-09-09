@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendario de Eventos</title>
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+</head>
+<body>
+    <h1>Calendario de Eventos</h1>
+
+    <div id="eventForm">
+        <h2>Crear Evento</h2>
+        <input type="text" id="title" placeholder="Título del evento">
+        <textarea id="description" placeholder="Descripción del evento"></textarea>
+        <input type="date" id="date">
+        <input type="time" id="time">
+        <select id="roleSelect">
+            <option value="Estudiante">Estudiantes</option>
+            <option value="Profesor">Profesores</option>
+        </select>
+        <button onclick="addEvent()">Agregar Evento</button>
+    </div>
+
+    <div id="calendar"></div>
+
+    <div id="eventDetails" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="detailTitle"></h3>
+            <p id="detailDate"></p>
+            <p id="detailDescription"></p>
+            <button id="deleteBtn">🗑️ Eliminar</button>
+        </div>
+    </div>
+
+<script src="{{url_for('static',filename='js/script.js')}}"></script>
+</body>
+</html>
