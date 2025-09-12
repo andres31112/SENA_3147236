@@ -1,6 +1,7 @@
 # basesdatos/models.py
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
@@ -11,10 +12,11 @@ rol_permisos = db.Table('rol_permisos',
     db.Column('id_permiso_fk', db.Integer, db.ForeignKey('permisos.id_permiso'), primary_key=True)
 )
 
-# Tabla de asociación para la relación muchos a muchos entre Comunicado y Usuario (Destinatario)
-destinatario_comunicado = db.Table('destinatario_comunicado',
+# --- Tabla intermedia para comunicados (múltiples destinatarios)
+destinatario_comunicado = db.Table(
+    'destinatario_comunicado',
     db.Column('id_comunicado_fk', db.Integer, db.ForeignKey('comunicados.id_comunicado'), primary_key=True),
-    db.Column('id_destinatario_fk', db.Integer, db.ForeignKey('usuarios.id_usuario'), primary_key=True),
+    db.Column('id_usuario_fk', db.Integer, db.ForeignKey('usuarios.id_usuario'), primary_key=True),
     db.Column('leido', db.Boolean, default=False)
 )
 
@@ -242,13 +244,31 @@ class RegistroMantenimiento(db.Model):
 
 class Comunicado(db.Model):
     __tablename__ = 'comunicados'
+
     id_comunicado = db.Column(db.Integer, primary_key=True)
     id_remitente_fk = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'), nullable=False)
     asunto = db.Column(db.String(255), nullable=False)
     contenido = db.Column(db.Text, nullable=False)
     fecha_envio = db.Column(db.DateTime, nullable=False, server_default=db.func.current_timestamp())
     id_comunicado_inicial_fk = db.Column(db.Integer, db.ForeignKey('comunicados.id_comunicado'), nullable=True)
-    destinatarios = db.relationship('Usuario', secondary=destinatario_comunicado, backref='comunicaciones_recibidas')
+
+    # Relaciones
+    remitente = db.relationship("Usuario", backref="comunicados_enviados", foreign_keys=[id_remitente_fk])
+    destinatarios = db.relationship("Usuario", secondary=destinatario_comunicado, backref="comunicados_recibidos")
+
+
+class Comunicacion(db.Model):
+    __tablename__ = 'comunicacion'
+
+    IdComunicacion = db.Column(db.Integer, primary_key=True)
+    IdUsuarioRemitente = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'), nullable=False)
+    IdUsuarioDestinatario = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'), nullable=False)
+    Mensaje = db.Column(db.Text, nullable=False)
+    FechaHora = db.Column(db.DateTime, default=datetime.now)
+    Eliminado = db.Column(db.Boolean, default=False)
+
+    remitente = db.relationship('Usuario', foreign_keys=[IdUsuarioRemitente], backref='comunicaciones_enviadas')
+    destinatario = db.relationship('Usuario', foreign_keys=[IdUsuarioDestinatario], backref='comunicaciones_recibidas')
 
 class Reaccion(db.Model):
     __tablename__ = 'reaccion'

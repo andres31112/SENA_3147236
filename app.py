@@ -1,22 +1,26 @@
-#IMPORTACIONES NECESARIAS
-from flask import Flask
+# IMPORTACIONES NECESARIAS
+from flask import Flask, render_template, request, jsonify
 from flask_login import LoginManager
-from controllers.models import db, Usuario, Rol, Permiso
+from datetime import datetime
+
+# MODELOS Y DB
+from controllers.models import db, Usuario, Rol, Permiso, Comunicado,Evento
+
+# BLUEPRINTS
 from routes.auth import auth_bp
 from routes.main import main_bp
 from routes.admin import admin_bp
 from routes.estudiantes import estudiante_bp
 from routes.profesor import profesor_bp
 from routes.padres import padre_bp
+
 from config import Config
 
 # --- INICIALIZACIÓN DE LA APP ---
-
 app = Flask(__name__)
 
 # --- CONFIGURACIÓN ---
 app.config.from_object(Config)
-
 db.init_app(app)
 
 # --- CONFIGURACIÓN DE FLASK-LOGIN ---
@@ -108,6 +112,146 @@ def create_initial_data():
             else:
                 print("Rol 'Super Admin' no encontrado. No se pudo crear el usuario superadmin.")
 
+# --- RUTAS ---
+@app.route('/')
+def index():
+    usuario = Usuario.query.first()  # Usuario logueado ejemplo
+    return render_template('index.html', usuario=usuario)
+
+@app.route('/mensajes/<int:id_usuario>')
+def inbox(id_usuario):
+    # Bandeja de entrada
+    mensajes = Comunicado.query.filter_by(IdUsuarioDestinatario=id_usuario, Eliminado=False).all()
+    result = []
+    for m in mensajes:
+        result.append({
+            'Id': m.Id,
+            'Mensaje': m.Mensaje,
+            'FechaHora': m.FechaHora.strftime("%Y-%m-%d %H:%M"),
+            'nombre_rem': m.remitente.nombre_completo if m.remitente else 'Desconocido'
+        })
+    return jsonify(result)
+
+@app.route('/enviados/<int:id_usuario>')
+def enviados(id_usuario):
+    # Bandeja de enviados
+    mensajes = Comunicado.query.filter_by(IdUsuarioRemitente=id_usuario, Eliminado=False).all()
+    result = []
+    for m in mensajes:
+        result.append({
+            'Id': m.Id,
+            'Mensaje': m.Mensaje,
+            'FechaHora': m.FechaHora.strftime("%Y-%m-%d %H:%M"),
+            'destinatario': m.destinatario.correo_electronico if m.destinatario else 'Desconocido'
+        })
+    return jsonify(result)
+
+@app.route('/eliminados/<int:id_usuario>')
+def eliminados(id_usuario):
+    # Bandeja de eliminados
+    mensajes = Comunicado.query.filter(
+        ((Comunicado.IdUsuarioRemitente==id_usuario) | (Comunicado.IdUsuarioDestinatario==id_usuario)),
+        Comunicado.Eliminado==True
+    ).all()
+    result = []
+    for m in mensajes:
+        result.append({
+            'Id': m.Id,
+            'Mensaje': m.Mensaje,
+            'FechaHora': m.FechaHora.strftime("%Y-%m-%d %H:%M"),
+            'nombre_rem': m.remitente.nombre_completo if m.remitente else 'Desconocido'
+        })
+    return jsonify(result)
+
+@app.route('/enviar', methods=['POST'])
+def enviar():
+    # Enviar mensaje
+    data = request.get_json()
+    remitente_id = data['remitente_id']
+    correo_destinatario = data['destinatario']
+    mensaje = data['mensaje']
+
+    destinatario = Usuario.query.filter_by(correo_electronico=correo_destinatario).first()
+    if not destinatario:
+        return jsonify({'error': 'El destinatario no existe'})
+
+    nuevo = Comunicado(
+        IdUsuarioRemitente=remitente_id,
+        IdUsuarioDestinatario=destinatario.id,
+        Mensaje=mensaje,
+        FechaHora=datetime.now(),
+        Eliminado=False
+    )
+    db.session.add(nuevo)
+    db.session.commit()
+    return jsonify({'mensaje': 'Correo enviado correctamente'})
+
+@app.route('/correo/<int:id_correo>')
+def ver_correo(id_correo):
+    # Ver un correo en detalle
+    correo = Comunicado.query.get(id_correo)
+    return jsonify({
+        'Id': correo.Id,
+        'Mensaje': correo.Mensaje,
+        'FechaHora': correo.FechaHora.strftime("%Y-%m-%d %H:%M"),
+        'nombre_rem': correo.remitente.nombre_completo if correo.remitente else "Desconocido",
+        'destinatario': correo.destinatario.correo_electronico if correo.destinatario else "Desconocido"
+    })
+
+@app.route('/eliminar/<int:id_correo>', methods=['POST'])
+def eliminar(id_correo):
+    # Eliminar (mover a eliminados)
+    correo = Comunicado.query.get(id_correo)
+    correo.Eliminado = True
+    db.session.commit()
+    return jsonify({'mensaje': 'Correo eliminado'})
+
+@app.route('/recuperar/<int:id_correo>', methods=['POST'])
+def recuperar(id_correo):
+    # Recuperar de eliminados
+    correo = Comunicado.query.get(id_correo)
+    correo.Eliminado = False
+    db.session.commit()
+    return jsonify({'mensaje': 'Correo recuperado'})
+
+@app.route("/eventos", methods=["GET"])
+def obtener_eventos():
+    eventos = Evento.query.all()
+    return jsonify([e.to_dict() for e in eventos])
+
+@app.route("/eventos/<rol>", methods=["GET"])
+def obtener_eventos_por_rol(rol):
+    eventos = Evento.query.filter_by(RolDestino=rol).all()
+    return jsonify([e.to_dict() for e in eventos])
+
+@app.route("/eventos", methods=["POST"])
+def crear_evento():
+    data = request.json
+    try:
+        nuevo_evento = Evento(
+            Nombre=data["Nombre"],
+            Descripcion=data["Descripcion"],
+            Fecha=datetime.strptime(data["Fecha"], "%Y-%m-%d").date(),
+            Hora=datetime.strptime(data["Hora"], "%H:%M").time(),
+            RolDestino=data["RolDestino"]
+        )
+        db.session.add(nuevo_evento)
+        db.session.commit()
+        return jsonify({"mensaje": "Evento creado correctamente"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+@app.route("/eventos/<int:id>", methods=["DELETE"])
+def eliminar_evento(id):
+    evento = Evento.query.get(id)
+    if not evento:
+        return jsonify({"error": "Evento no encontrado"}), 404
+    db.session.delete(evento)
+    db.session.commit()
+    return jsonify({"mensaje": "Evento eliminado correctamente"}), 200
+
+# --- REGISTRO DE BLUEPRINTS ---
 app.register_blueprint(main_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
@@ -115,7 +259,8 @@ app.register_blueprint(estudiante_bp)
 app.register_blueprint(padre_bp)
 app.register_blueprint(profesor_bp)
 
+# --- MAIN ---
 if __name__ == '__main__':
     with app.app_context():
         create_initial_data()
-    app.run(debug=True)
+    app.run(debug=True) 

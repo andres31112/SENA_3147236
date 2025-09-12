@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Administrador</title>
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="{{url_for('static',filename='css/superadmin/sistemav/votacionA.css')}}">
 </head>
 <body>
   <div class="container">
@@ -43,6 +43,6 @@
     <h2>Resultados</h2>
     <div id="resultados"></div>
   </div>
-  <script src="admin.js"></script>
+  <script src="{{url_for('static',filename='js/superadmin/votacionA')}}"></script>
 </body>
 </html>

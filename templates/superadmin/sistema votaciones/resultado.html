@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de Votación</title>
-    <link rel="stylesheet" href="resultado.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/superadmin/sistemav/votacionA')}}">
 </head>
 <body>
     <div class="contenedor">
@@ -15,6 +15,6 @@
         <button onclick="window.location.href='admin.html'">Volver al panel</button>
     </div>
 
-    <script src="resultado.js"></script>
+    <script src="{{url_for('static',filename='js/superadmin/resultado')}}"></script>
 </body>
 </html>
