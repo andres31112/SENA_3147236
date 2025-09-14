@@ -1,0 +1,647 @@
+
+        :root {
+            --color-primario: #0078ad;
+            --color-primario-oscuro: #00628e;
+            --color-texto-principal: #2c3e50;
+            --color-texto-secundario: #7f8c8d;
+            --color-blanco: #FFFFFF;
+            --color-fondo-seccion: #f8f9fa;
+            --color-borde-suave: #ecf0f1;
+            --color-presente: #28a745;
+            --color-ausente: #dc3545;
+            --color-ausente-claro: #f8d7da;
+            --color-tarde: #ffc107;
+            --color-hoy: #ffc107;
+        }
+
+        /* --- General Styles --- */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-fondo-seccion);
+            margin: 0;
+            color: var(--color-texto-principal);
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            background-color: var(--color-blanco);
+            border-bottom: 1px solid var(--color-borde-suave);
+            box-shadow: 0 .125rem .25rem rgba(0,0,0,.08);
+            padding: 10px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 0.75rem;
+        }
+
+        .navbar-brand .logo-circle {
+            width: 30px;
+            height: 30px;
+            background-color: var(--color-primario);
+            border-radius: 50%;
+        }
+
+        .navbar-brand h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-texto-principal);
+            margin: 0;
+        }
+        
+        .page-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* --- Main Content --- */
+        main {
+            padding: 20px 50px;
+        }
+
+        .main-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar-large {
+            width: 90px;
+            height: 90px;
+            background-color: var(--color-borde-suave);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5em;
+            color: var(--color-texto-secundario);
+        }
+
+        .profile-info h2 {
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--color-texto-principal);
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            color: var(--color-texto-secundario);
+        }
+
+        .info-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--color-blanco);
+            border: 1px solid var(--color-borde-suave);
+            border-radius: 0.75rem;
+            padding: 15px;
+            min-width: 220px;
+            box-shadow: 0 2px 5px rgba(0,0,0,.05);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 10px rgba(0,0,0,.1);
+        }
+
+        .students-card .card-title {
+            margin: 0;
+            color: var(--color-texto-secundario);
+            font-weight: 600;
+        }
+
+        .students-card .card-content {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--color-texto-principal);
+            margin: 10px 0;
+        }
+
+        .students-card .card-footer {
+            margin: 0;
+            color: var(--color-texto-secundario);
+        }
+
+        .course-card {
+            padding: 20px;
+        }
+        .course-card p {
+            margin: 5px 0;
+        }
+
+        /* --- Content Tabs --- */
+        .content-tabs {
+            margin-top: 30px;
+            border-bottom: 1px solid var(--color-borde-suave);
+        }
+
+        .tab-link {
+            text-decoration: none;
+            color: var(--color-texto-secundario);
+            padding: 10px 20px;
+            display: inline-block;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .tab-link.active, .tab-link:hover {
+            color: var(--color-primario);
+            border-bottom: 3px solid var(--color-primario);
+        }
+
+
+        /* --- Attendance & Grades Section --- */
+        .content-section {
+            background-color: var(--color-blanco);
+            border: 1px solid var(--color-borde-suave);
+            border-radius: 0.75rem;
+            margin-top: 20px;
+            padding: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,.05);
+        }
+        
+        .attendance-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .attendance-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            color: var(--color-texto-principal);
+        }
+        
+        .month-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+        .month-navigation .nav-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--color-primario);
+            cursor: pointer;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .back-button {
+            padding: 9px 20px;
+            background-color: var(--color-fondo-seccion);
+            border: 1px solid var(--color-borde-suave);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: var(--color-texto-principal);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .back-button:hover {
+            background-color: #e9ecef;
+        }
+
+        /* --- Summary Cards --- */
+        .summary-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 0.75rem;
+            background-color: var(--color-fondo-seccion);
+            border: 1px solid var(--color-borde-suave);
+            font-weight: 600;
+        }
+        .summary-card .count {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .summary-card.present .count { color: var(--color-presente); }
+        .summary-card.absent .count { color: var(--color-ausente); }
+        .summary-card.late .count { color: var(--color-tarde); }
+
+        /* --- Monthly List View --- */
+        .monthly-list-container {
+            overflow-x: auto;
+        }
+        .monthly-grid-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        .monthly-grid-table th, .monthly-grid-table td {
+            border: 1px solid var(--color-borde-suave);
+            text-align: center;
+            padding: 5px;
+        }
+        .monthly-grid-table thead th {
+            padding: 10px 5px;
+            font-weight: 700;
+            background-color: var(--color-fondo-seccion);
+            position: sticky;
+            top: 0;
+        }
+        .monthly-grid-table th.student-name-header {
+            text-align: left;
+            min-width: 200px;
+            position: sticky;
+            left: 0;
+            z-index: 2;
+        }
+        .monthly-grid-table td.student-name-cell {
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            left: 0;
+            background-color: var(--color-blanco);
+            z-index: 1;
+            transition: background-color 0.3s;
+        }
+        .monthly-grid-table tr.highlight-absentee td.student-name-cell {
+            background-color: var(--color-ausente-claro);
+            color: var(--color-ausente);
+        }
+        .monthly-grid-table th.day-header {
+            min-width: 40px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .monthly-grid-table th.day-header:hover {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+        }
+        .monthly-grid-table th.today {
+            background-color: var(--color-hoy);
+            color: var(--color-texto-principal);
+        }
+        .monthly-grid-table .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: auto;
+            position: relative;
+        }
+        .status-indicator.present { background-color: var(--color-presente); }
+        .status-indicator.absent { background-color: var(--color-ausente); }
+        .status-indicator.late { background-color: var(--color-tarde); }
+        
+        .excuse-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background-color: var(--color-primario);
+            border-radius: 50%;
+            border: 1px solid var(--color-blanco);
+        }
+
+        /* --- Daily Student List --- */
+        .student-list {
+            margin-top: 25px;
+            overflow-x: auto;
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            color: var(--color-texto-secundario);
+            font-weight: 600;
+            padding: 0 20px 10px 20px;
+            border-bottom: 2px solid var(--color-borde-suave);
+            min-width: 650px;
+        }
+
+        .student-name-header-daily {
+            flex-basis: 40%;
+        }
+        
+        .attendance-status-header {
+            flex-basis: 60%;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .student-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--color-borde-suave);
+            min-width: 650px;
+        }
+
+        .student-row:last-child {
+            border-bottom: none;
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-basis: 40%;
+        }
+
+        .avatar-small {
+            width: 35px;
+            height: 35px;
+            background-color: var(--color-borde-suave);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: var(--color-texto-secundario);
+            flex-shrink: 0;
+        }
+
+        .attendance-controls {
+            display: flex;
+            gap: 10px;
+            flex-basis: 60%;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .status-btn {
+            padding: 6px 18px;
+            border-radius: 15px;
+            border: 1px solid var(--color-borde-suave);
+            background-color: var(--color-blanco);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--color-texto-secundario);
+        }
+
+        .status-btn:hover {
+            background-color: var(--color-fondo-seccion);
+            border-color: #d4d9db;
+        }
+
+        .status-btn.selected.present { background-color: var(--color-presente); border-color: var(--color-presente); color: var(--color-blanco); }
+        .status-btn.selected.absent { background-color: var(--color-ausente); border-color: var(--color-ausente); color: var(--color-blanco); }
+        .status-btn.selected.late { background-color: var(--color-tarde); border-color: var(--color-tarde); color: var(--color-texto-principal); }
+
+        .excuse-container {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+            transition: opacity 0.3s ease;
+        }
+        .excuse-label {
+            font-weight: 600;
+            color: var(--color-texto-secundario);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .excuse-checkbox {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* --- Grades Section --- */
+        .grades-summary-cards {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .grades-summary-card {
+            border: 1px solid var(--color-borde-suave);
+            padding: 15px;
+            border-radius: 0.75rem;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        .grades-summary-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primario);
+        }
+        .grades-summary-card .label {
+            color: var(--color-texto-secundario);
+            font-weight: 600;
+        }
+        .grades-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .grades-settings {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .grades-settings label {
+            font-weight: 600;
+        }
+        .grades-settings input {
+            width: 60px;
+            padding: 4px 8px;
+            border-radius: 0.5rem;
+            border: 1px solid var(--color-borde-suave);
+        }
+        .grades-table-container {
+            overflow-x: auto;
+        }
+        .grades-table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+        }
+        .grades-table th, .grades-table td {
+            border: 1px solid var(--color-borde-suave);
+            padding: 8px 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .grades-table thead th {
+            background-color: var(--color-fondo-seccion);
+            font-weight: 700;
+        }
+        .grades-table .student-name-cell {
+            text-align: left;
+            font-weight: 600;
+        }
+        .grades-table tr.failing-student td.student-name-cell, .grades-table .average-cell.failing {
+            color: var(--color-ausente);
+            font-weight: 700;
+        }
+        .grades-table tr.failing-student td.student-name-cell {
+            background-color: var(--color-ausente-claro);
+        }
+        .grades-table input.grade-input {
+            width: 50px;
+            border: 1px solid transparent;
+            text-align: center;
+            border-radius: 4px;
+            padding: 4px;
+        }
+        .grades-table input.grade-input:focus {
+            outline: none;
+            border-color: var(--color-primario);
+            background-color: #eef;
+        }
+        .grades-table .assignment-actions i {
+            cursor: pointer;
+            margin: 0 4px;
+            color: var(--color-texto-secundario);
+            transition: color 0.2s;
+        }
+        .grades-table .assignment-actions i:hover {
+            color: var(--color-primario);
+        }
+        .grades-table .delete-assignment-icon:hover {
+            color: var(--color-ausente);
+        }
+
+        /* --- Footer Action --- */
+        .save-footer {
+            text-align: right;
+            margin-top: 25px;
+        }
+
+        .save-button {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 0.5rem;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .save-button:hover {
+            background-color: var(--color-primario-oscuro);
+        }
+
+        .save-button i {
+            margin-left: 8px;
+        }
+
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: var(--color-blanco);
+            padding: 25px;
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+        .modal-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: var(--color-texto-principal);
+        }
+        .modal-content p {
+            margin-bottom: 25px;
+        }
+        .modal-footer {
+            text-align: center;
+        }
+        .modal-input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 0.5rem;
+            border: 1px solid var(--color-borde-suave);
+            margin-bottom: 15px;
+        }
+    

@@ -1,7 +1,7 @@
-# proyecto_sena/routes/auth.py
-
+# routes/auth.py
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required
+from app import db
 from controllers.models import Usuario
 from controllers.forms import LoginForm
 
@@ -11,27 +11,21 @@ auth_bp = Blueprint('auth', __name__)
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        email = form.correo_electronico.data
+        email = form.correo.data
         password = form.password.data
-
-        user = Usuario.query.filter_by(correo_electronico=email).first()
-
+        user = db.session.query(Usuario).filter_by(correo=email).first()
         if user and user.check_password(password):
             login_user(user)
             flash('Inicio de sesión exitoso.', 'success')
-            
-            # --- Lógica de redirección por rol ---
-            if user.rol_obj.nombre_rol == 'Super Admin':
+            if user.rol == 'administrador':
                 return redirect(url_for('admin.admin_panel'))
-            elif user.rol_obj.nombre_rol == 'Profesor':
+            elif user.rol == 'profesor':
                 return redirect(url_for('profesor.dashboard'))
-            elif user.rol_obj.nombre_rol == 'Estudiante':
+            elif user.rol == 'estudiante':
                 return redirect(url_for('estudiante.estudiante_panel'))
-            elif user.rol_obj.nombre_rol == 'Padre':
+            elif user.rol == 'padre':
                 return redirect(url_for('padre.dashboard'))
-            else:
-                # Redirección por defecto para roles no especificados
-                return redirect(url_for('main.index'))
+            return redirect(url_for('main.index'))
         else:
             flash('Inicio de sesión fallido. Por favor, revisa tu correo electrónico y contraseña.', 'danger')
     return render_template('login.html', form=form)

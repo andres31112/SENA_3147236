@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Asistencia y Calificaciones</title>
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profesor/Gestion_LC.css') }}">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a class="navbar-brand" href="#">
+                <div class="logo-circle"></div>
+                <h1>Gestión Académica</h1>
+            </a>
+        </div>
+    </nav>
+    <div class="page-container">
+        <div class="container">
+            <main>
+                <section class="main-header">
+                    <div class="profile-card">
+                        <div class="avatar-large">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2>Nombre Profesor</h2>
+                            <p>Sede Correspondiente</p>
+                            <p><strong>Rol:</strong> Profesor</p>
+                        </div>
+                    </div>
+                    <div class="info-cards">
+                        <div class="card students-card">
+                            <div class="card-body">
+                                <p class="card-title">Estudiantes</p>
+                                <p class="card-content">10</p>
+                                <p class="card-footer mb-0 text-muted small">Total de estudiantes</p>
+                            </div>
+                        </div>
+                        <div class="card course-card">
+                             <div class="card-body">
+                                <p class="fw-bold mb-1">Curso</p>
+                                <p class="mb-1">702 - Director de Curso: Juan Pérez</p>
+                                <p class="mb-0 text-muted small">Representante de curso: Cielo Rubio</p>
+                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <nav class="content-tabs">
+                    <a id="attendance-tab" class="tab-link active">Asistencia</a>
+                    <a id="grades-tab" class="tab-link">Calificaciones</a>
+                </nav>
+
+                <div id="attendance-content">
+                    <!-- Monthly List View (Default) -->
+                    <section id="monthly-view" class="content-section">
+                        <div class="attendance-header">
+                            <div class="month-navigation">
+                                <button id="prev-month-btn" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+                                <h2 id="month-year-display"></h2>
+                                <button id="next-month-btn" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <div class="controls">
+                               <button id="go-to-today-btn" class="save-button">Tomar Asistencia de Hoy</button>
+                            </div>
+                        </div>
+                        <div class="monthly-list-container">
+                            <table class="monthly-grid-table">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Daily Attendance View (Hidden by default) -->
+                    <section id="daily-view" class="content-section" style="display: none;">
+                        <div class="attendance-header">
+                            <h2 id="daily-view-title">Asistencia</h2>
+                            <div class="controls">
+                                <button id="back-to-monthly-btn" class="back-button">Volver al Mes</button>
+                            </div>
+                        </div>
+
+                        <div class="summary-cards">
+                            <div class="summary-card present">
+                                <span class="count" id="present-count">0</span>
+                                <span>Presentes</span>
+                            </div>
+                            <div class="summary-card absent">
+                                <span class="count" id="absent-count">0</span>
+                                <span>Ausentes</span>
+                            </div>
+                            <div class="summary-card late">
+                                <span class="count" id="late-count">0</span>
+                                <span>Tardes</span>
+                            </div>
+                        </div>
+
+                        <div class="student-list">
+                            <!-- Student Rows will be populated by JS -->
+                        </div>
+
+                        <div class="save-footer">
+                            <button id="save-daily-attendance-btn" class="save-button">Guardar Asistencia <i class="fas fa-check-circle"></i></button>
+                        </div>
+                    </section>
+                </div>
+
+                <div id="grades-content" style="display: none;">
+                    <section class="content-section">
+                        <div class="grades-summary-cards">
+                            <div class="grades-summary-card">
+                                <div id="lowest-grade" class="value">0</div>
+                                <div class="label">Calificación Más Baja</div>
+                            </div>
+                            <div class="grades-summary-card">
+                                <div id="highest-grade" class="value">0</div>
+                                <div class="label">Calificación Más Alta</div>
+                            </div>
+                            <div class="grades-summary-card">
+                                <div id="average-grade" class="value">0</div>
+                                <div class="label">Promedio de Clase</div>
+                            </div>
+                        </div>
+                        <div class="grades-actions">
+                             <div class="grades-settings">
+                                <label for="min-grade">Nota Mín:</label>
+                                <input type="number" id="min-grade" value="0">
+                                <label for="max-grade">Nota Máx:</label>
+                                <input type="number" id="max-grade" value="100">
+                                <label for="passing-grade">Nota Aprob:</label>
+                                <input type="number" id="passing-grade" value="60">
+                            </div>
+                            <div>
+                                <button id="generate-report-btn" class="back-button">Generar Reporte</button>
+                                <button id="export-grades-btn" class="back-button">Exportar</button>
+                                <button id="add-assignment-btn" class="save-button">Añadir Asignación</button>
+                            </div>
+                        </div>
+                        <div class="grades-table-container">
+                            <table class="grades-table">
+                                <thead>
+                                    <!-- Headers generated by JS -->
+                                </thead>
+                                <tbody>
+                                    <!-- Grade rows will be populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+
+            </main>
+        </div>
+    </div>
+    
+    <!-- Custom Modals -->
+    <div id="alertModal" class="modal-overlay">
+        <div class="modal-content">
+            <h5 class="modal-title">Notificación</h5>
+            <p id="alertModalBody"></p>
+            <div class="modal-footer">
+                <button id="alertModalAcceptBtn" class="save-button">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="promptModal" class="modal-overlay">
+        <div class="modal-content">
+            <h5 id="promptModalTitle" class="modal-title"></h5>
+            <p id="promptModalBody"></p>
+            <input type="text" id="promptModalInput" class="modal-input">
+            <div class="modal-footer">
+                <button id="promptModalCancelBtn" class="back-button">Cancelar</button>
+                <button id="promptModalConfirmBtn" class="save-button">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal-overlay">
+        <div class="modal-content">
+            <h5 class="modal-title">Confirmar Acción</h5>
+            <p id="confirmModalBody"></p>
+            <div class="modal-footer">
+                <button id="confirmModalCancelBtn" class="back-button">Cancelar</button>
+                <button id="confirmModalConfirmBtn" class="save-button">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+<script src="{{ url_for('static', filename='js/profesor/Gestion_LC.js') }}"></script>
+</body>
+</html>
