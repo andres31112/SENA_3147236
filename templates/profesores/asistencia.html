@@ -9,18 +9,11 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profesor/asistencia_notas.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/gestion_usuarios/profesores.css') }}">
 </head>
 <body>
     {% extends "./base.html" %}
     {% block content %}
-    <header class="main-header">
-        <h1>asistencia y notas</h1>
-        <div class="header-icons">
-            <i class="fa-solid fa-bell"></i>
-            <i class="fa-solid fa-user"></i>
-        </div>
-    </header>
+   
     <a href="{{ url_for('profesor.cursos') }}" class="back-btn"><i class="fas fa-arrow-left"></i> Volver a la de asignaturas</a>
     
     <div class="page-container">
