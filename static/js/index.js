@@ -1,127 +1,127 @@
-// Script para el carrusel de galería "coverflow" - VERSIÓN FINAL Y OPTIMIZADA
-document.addEventListener('DOMContentLoaded', (event) => {
-    const wrap = document.getElementById('galleryWrap');
-    if (!wrap) return; // Salir si el contenedor principal no existe
+// index.js
 
-    const track = document.getElementById('galleryTrack');
-    const prevBtn = document.getElementById('galleryPrev');
-    const nextBtn = document.getElementById('galleryNext');
+const header = document.querySelector('header');
+const navbar = document.querySelector('.navbar');
 
-    let originals = Array.from(track.children);
-    const N = originals.length;
-    if (N === 0) return;
+window.addEventListener('scroll', function () {
+    // Si el scroll es mayor a 50px...
+    if (window.scrollY > 50) {
+        // Solo añade la clase 'scrolled' si no la tiene ya.
+        if (!navbar.classList.contains('scrolled')) {
+            navbar.classList.add('scrolled');
+        }
+    } else {
+        // Si el scroll es menor o igual a 50px y la barra está en modo 'scrolled'...
+        if (navbar.classList.contains('scrolled')) {
+            // 1. Añadimos una clase al header para DESACTIVAR las transiciones.
+            // Esto crea un efecto de "snap" al volver arriba.
+            header.classList.add('no-transition-on-return');
 
-    // Clonar los elementos para el bucle infinito
-    for (let i = 0; i < N; i++) track.appendChild(originals[i].cloneNode(true));
-    for (let i = N - 1; i >= 0; i--) track.insertBefore(originals[i].cloneNode(true), track.firstChild);
+            // 2. Quitamos la clase 'scrolled'. El cambio será INSTANTÁNEO.
+            navbar.classList.remove('scrolled');
 
-    let items = Array.from(track.children);
-    let currentIndex = N + Math.floor(N / 2); // Iniciar en la mitad de la sección original
-    const AUTO_MS = 4000;
-    const TRANSITION_DURATION = 700;
-    const TRANSITION = `transform ${TRANSITION_DURATION}ms cubic-bezier(.2,.9,.3,1)`;
+            // 3. Usamos setTimeout para quitar la clase de anulación después
+            // de que el navegador haya procesado la eliminación de 'scrolled'.
+            // Esto previene un parpadeo y asegura que las animaciones
+            // para futuros scrolls funcionen correctamente.
+            setTimeout(() => {
+                header.classList.remove('no-transition-on-return');
+            }, 10);
+        }
+    }
+});
+
+
+function initCarousel(carouselId) {
+    const carouselComponent = document.getElementById(carouselId);
+    if (!carouselComponent) {
+        console.error(`No se encontró el carrusel con el ID: ${carouselId}`);
+        return;
+    }
+
+    const slidesContainer = carouselComponent.querySelector('.slides-container');
+    const prevButton = carouselComponent.querySelector('.prev-button');
+    const nextButton = carouselComponent.querySelector('.next-button');
+
+    const slideItems = Array.from(carouselComponent.querySelectorAll('.carousel-slide'));
+    const slidesVisible = window.innerWidth <= 768 ? 1 : 2; // Mostrar 1 en móviles, 2 en pantallas más grandes
+    const slideCount = slideItems.length;
+
+    if (slideCount === 0) return;
+
+    // Lógica para el bucle infinito
+    // Clona el final y el principio de las diapositivas
+    const lastClones = slideItems.slice(-slidesVisible).map(item => item.cloneNode(true));
+    const firstClones = slideItems.slice(0, slidesVisible).map(item => item.cloneNode(true));
+
+    lastClones.reverse().forEach(clone => slidesContainer.prepend(clone));
+    firstClones.forEach(clone => slidesContainer.appendChild(clone));
+
+    // El índice inicial está en la primera diapositiva "real" (después de los clones)
+    let slideIndex = slidesVisible;
     let isTransitioning = false;
-    let autoTimer = null;
-    let resizeTimer = null;
+    let autoSlideInterval;
 
-    function applyClasses() {
-        items.forEach((it, i) => {
-            const dist = Math.abs(i - currentIndex);
-            it.classList.remove('large', 'medium', 'small');
-            if (dist === 0) it.classList.add('large');
-            else if (dist === 1) it.classList.add('medium');
-            else it.classList.add('small');
-        });
+    function updateSlidePosition(withTransition = true) {
+        slidesContainer.style.transition = withTransition ? 'transform 0.5s ease-in-out' : 'none';
+        const offset = -slideIndex * (100 / slidesVisible);
+        slidesContainer.style.transform = `translateX(${offset}%)`;
     }
 
-    function setTransform(animate = true) {
-        track.style.transition = animate ? TRANSITION : 'none';
-        
-        const centralItem = items[currentIndex];
-        const centralItemWidth = centralItem ? centralItem.offsetWidth : 0;
-        
-        const offset = (currentIndex - N) * (items[0].offsetWidth + 24);
-        const delta = (wrap.offsetWidth / 2) - offset - (centralItemWidth / 2);
-        
-        track.style.transform = `translateX(${delta}px)`;
-    }
+    // Posición inicial sin transición
+    updateSlidePosition(false);
 
-    function moveBy(dir) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        currentIndex += dir;
+    slidesContainer.addEventListener('transitionend', () => {
+        isTransitioning = false;
 
-        applyClasses();
-        setTransform();
+        // Si llegamos a los clones del final, saltamos al primer slide real
+        if (slideIndex >= slideCount + slidesVisible) {
+            slideIndex = slidesVisible;
+            updateSlidePosition(false);
+        }
 
-        setTimeout(() => {
-            isTransitioning = false;
-            if (currentIndex >= 2 * N) {
-                track.style.transition = 'none';
-                currentIndex -= N;
-                setTransform(false);
-            } else if (currentIndex < N) {
-                track.style.transition = 'none';
-                currentIndex += N;
-                setTransform(false);
-            }
-        }, TRANSITION_DURATION);
-        restartAuto();
-    }
-
-    // Agregar validación para evitar errores si los botones no existen
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => moveBy(-1));
-    }
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => moveBy(1));
-    }
-    
-    function startAuto() {
-        stopAuto();
-        autoTimer = setInterval(() => moveBy(1), AUTO_MS);
-    }
-    function stopAuto() {
-        if (autoTimer) clearInterval(autoTimer);
-        autoTimer = null;
-    }
-    function restartAuto() {
-        stopAuto();
-        startAuto();
-    }
-
-    wrap.addEventListener('mouseenter', stopAuto);
-    wrap.addEventListener('mouseleave', startAuto);
-
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            setTransform(false);
-            applyClasses();
-        }, 140);
+        // Si llegamos a los clones del principio, saltamos al último slide real
+        if (slideIndex <= 0) {
+            slideIndex = slideCount;
+            updateSlidePosition(false);
+        }
     });
 
-    function init() {
-        setTransform(false);
-        applyClasses();
-        setTimeout(startAuto, 500);
+    function shiftSlide(n) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        slideIndex += n;
+        updateSlidePosition();
     }
 
-    const imgElements = track.querySelectorAll('img');
-    let loadedCount = 0;
-    if (imgElements.length > 0) {
-        imgElements.forEach(img => {
-            if (img.complete) {
-                loadedCount++;
-            } else {
-                img.addEventListener('load', () => {
-                    loadedCount++;
-                    if (loadedCount === imgElements.length) init();
-                });
-            }
-        });
-        if (loadedCount === imgElements.length) init();
-    } else {
-        init();
+    function startAutoSlide() {
+        stopAutoSlide();
+        autoSlideInterval = setInterval(() => shiftSlide(slidesVisible), 3000);
     }
+
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+    }
+
+    nextButton.addEventListener('click', () => {
+        stopAutoSlide();
+        shiftSlide(slidesVisible);
+        startAutoSlide();
+    });
+
+    prevButton.addEventListener('click', () => {
+        stopAutoSlide();
+        shiftSlide(-slidesVisible);
+        startAutoSlide();
+    });
+
+    carouselComponent.addEventListener('mouseenter', stopAutoSlide);
+    carouselComponent.addEventListener('mouseleave', startAutoSlide);
+
+    startAutoSlide();
+}
+
+// Inicializar el carrusel cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+    initCarousel('mi-carrusel-1');
 });

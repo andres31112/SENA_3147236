@@ -10,7 +10,18 @@
 </head>
 <body>
 
+<<<<<<< Updated upstream
 {% extends "base.html" %}
+=======
+    
+        {% extends "base.html" %}
+        {% block content %}
+   <header class="bg-white shadow-sm p-3 d-none d-lg-flex justify-content-between align-items-center">
+    <div class="input-group" style="max-width: 400px;">
+        <span class="input-group-text bg-light border-end-0" id="search-addon"><i class="fas fa-search"></i></span>
+        <input type="search" class="form-control border-start-0" placeholder="Buscar estudiantes, informes, etc..." aria-label="Buscar" aria-describedby="search-addon">
+    </div>
+>>>>>>> Stashed changes
 
 {% block title %}Gestión de Usuarios/Roles{% endblock %}
 
@@ -83,12 +94,9 @@
             <div class="card bg-dark text-white h-100 border-0 shadow-lg">
                 <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-4">
                     <img src="https://placehold.co/300x180/495057/FFFFFF?text=Ilustracion" class="img-fluid rounded mb-4" alt="Ilustración">
-                    <h3 class="h5 fw-bold">Crea y Asigna Roles</h3>
+                    <h3 class="h5 fw-bold">Crea Usuarios</h3>
                     <p class="text-white-50 mb-4">Define nuevos perfiles de usuario y gestiona sus permisos dentro del sistema de forma sencilla.</p>
-                    <a href="{{ url_for('admin.crear_rol') }}" class="btn btn-light fw-bold w-100">
-                        <i class="fas fa-user-plus me-2"></i>
-                        Crear nuevo Rol
-                    </a>
+               
                     <br>
                     <a href="{{ url_for('admin.crear_usuario') }}" class="btn btn-light fw-bold w-100 mt-2">
                         <i class="fas fa-user-plus me-2"></i>

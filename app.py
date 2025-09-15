@@ -1,73 +1,91 @@
-# app.py
+# ===============================
+# IMPORTACIONES NECESARIAS
+# ===============================
 from flask import Flask
 from flask_login import LoginManager
+from controllers.models import db, Usuario, Rol
+from routes.auth import auth_bp
+from routes.main import main_bp
+from routes.admin import admin_bp
+from routes.estudiantes import estudiante_bp
+from routes.profesor import profesor_bp
+from routes.padres import padre_bp
 from config import Config
-from extensions import db   
 
+# ===============================
+# INICIALIZACIÓN DE LA APP
+# ===============================
+app = Flask(__name__)
+app.config.from_object(Config)
+db.init_app(app)
 
-# Inicialización de la base de datos
+# ===============================
+# CONFIGURACIÓN DE FLASK-LOGIN
+# ===============================
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'auth.login'
+login_manager.login_message = 'Por favor, inicia sesión para acceder a esta página.'
+login_manager.login_message_category = 'info'
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
+@login_manager.user_loader
+def load_user(user_id):
+    return Usuario.query.get(int(user_id))
 
-    # Inicializar extensiones
-    db.init_app(app)
-    login_manager = LoginManager()
-    login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
-    login_manager.login_message = 'Por favor, inicia sesión para acceder a esta página.'
-    login_manager.login_message_category = 'info'
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        from controllers.models import Usuario
-        return Usuario.query.get(int(user_id))
-
-    # Importar blueprints después de inicializar la app
-    from routes.main import main_bp
-    from routes.auth import auth_bp
-    from routes.admin import admin_bp
-    from routes.estudiantes import estudiantes_bp
-    from routes.profesor import profesor_bp
-    from routes.padres import padre_bp
-
-    # Registrar blueprints
-    app.register_blueprint(main_bp)
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(admin_bp)
-    app.register_blueprint(estudiantes_bp)
-    app.register_blueprint(profesor_bp)
-    app.register_blueprint(padre_bp)
-
-    # Crear tablas
+# ===============================
+# CREACIÓN DE DATOS INICIALES
+# ===============================
+def create_initial_data():
     with app.app_context():
         db.create_all()
+        print("Base de datos y tablas verificadas/creadas.")
 
-    return app
+        # Roles a crear
+        roles_to_create = ['Super Admin', 'Profesor', 'Estudiante', 'Padre']
 
-def create_initial_data(app):
-    from controllers.models import Usuario, Administrador
-    with app.app_context():
-        if not Usuario.query.filter_by(noIdentidad='000000000').first():
-            super_admin = Usuario(
-                tipoDoc='cc',
-                noIdentidad='000000000',
-                nombre='Super',
-                apellido='Administrador',
-                correo='admin@institucion.edu',
-                estado='activo',
-                rol='administrador'
-            )
-            super_admin.set_password('admin123')
-            db.session.add(super_admin)
-            db.session.commit()
-            admin = Administrador(usuarioId=super_admin.id)
-            db.session.add(admin)
-            db.session.commit()
-            print("Usuario 'Super Administrador' creado con contraseña 'admin123'.")
+        for role_name in roles_to_create:
+            role = Rol.query.filter_by(nombre=role_name).first()
+            if not role:
+                role = Rol(nombre=role_name)
+                db.session.add(role)
+                db.session.commit()
+                print(f"Rol '{role_name}' creado.")
 
+        # Crear superadmin si no existe
+        if not Usuario.query.filter_by(no_identidad='000000000').first():
+            super_admin_role = Rol.query.filter_by(nombre='Super Admin').first()
+            if super_admin_role:
+                super_admin = Usuario(
+                    no_identidad='000000000',
+                    tipo_doc='CC',
+                    nombre='Super',
+                    apellido='Administrador',
+                    correo='superadmin@institucion.com',
+                    telefono='3001234567',
+                    direccion='',
+                    id_rol_fk=super_admin_role.id_rol
+                )
+                super_admin.set_password('admin123')
+                db.session.add(super_admin)
+                db.session.commit()
+                print("Usuario 'Super Administrador' creado con contraseña 'admin123'.")
+            else:
+                print("Rol 'Super Admin' no encontrado. No se pudo crear el usuario superadmin.")
+
+# ===============================
+# REGISTRO DE BLUEPRINTS
+# ===============================
+app.register_blueprint(main_bp)
+app.register_blueprint(auth_bp)
+app.register_blueprint(admin_bp)
+app.register_blueprint(estudiante_bp)
+app.register_blueprint(padre_bp)
+app.register_blueprint(profesor_bp)
+
+# ===============================
+# EJECUCIÓN
+# ===============================
 if __name__ == '__main__':
-    app = create_app()
-    create_initial_data(app)
+    with app.app_context():
+        create_initial_data()
     app.run(debug=True)

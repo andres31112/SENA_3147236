@@ -1,62 +1,79 @@
-# routes/profesor.py
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, abort
 from flask_login import login_required, current_user
-from controllers.decorators import role_required
-from app import db
-from controllers.models import Profesor, Clase, AsignaturaHorario, Matricula, Estudiante, Email
+from functools import wraps
+from controllers.models import db, Usuario, Asignatura, Clase, Matricula, Calificacion
+from controllers.permisos import ROLE_PERMISSIONS
 
 profesor_bp = Blueprint('profesor', __name__, url_prefix='/profesor')
 
+
 @profesor_bp.route('/dashboard')
 @login_required
-@role_required('profesor')
+@role_required(2)
 def dashboard():
-    return render_template('profesores/dashboard.html')
+    """Panel principal del profesor con resúmenes de sus clases y tareas"""
+    # Traer todas las clases del profesor
+    clases = Clase.query.filter_by(profesorId=current_user.id_usuario).all()
+    return render_template('profesor/dashboard.html', clases=clases)
+
 
 @profesor_bp.route('/registrar_calificaciones')
 @login_required
-@role_required('profesor')
+@permission_required('registrar_calificaciones')
 def registrar_calificaciones():
-    profesor = db.session.query(Profesor).filter_by(usuarioId=current_user.id).first()
-    clases = db.session.query(Clase).filter_by(profesorId=profesor.id).all() if profesor else []
-    return render_template('profesores/registrar_calificaciones.html', clases=clases)
+    """Permite al profesor registrar y editar calificaciones de sus estudiantes"""
+    # Traer todas las clases del profesor
+    clases = Clase.query.filter_by(profesorId=current_user.id_usuario).all()
+
+    # Traer calificaciones de los estudiantes de esas clases
+    calificaciones = Calificacion.query.join(Clase, Calificacion.claseId==Clase.id)\
+        .filter(Clase.profesorId==current_user.id_usuario).all()
+
+    return render_template('profesor/registrar_calificaciones.html', calificaciones=calificaciones, clases=clases)
+
 
 @profesor_bp.route('/ver_lista_estudiantes')
 @login_required
-@role_required('profesor')
+@permission_required('ver_lista_estudiantes')
 def ver_lista_estudiantes():
-    profesor = db.session.query(Profesor).filter_by(usuarioId=current_user.id).first()
-    clases = db.session.query(Clase).filter_by(profesorId=profesor.id).all() if profesor else []
-    estudiantes = []
+    """Muestra la lista de estudiantes de las asignaturas del profesor"""
+    # Traer todas las clases del profesor
+    clases = Clase.query.filter_by(profesorId=current_user.id_usuario).all()
+    estudiantes_por_clase = {}
+
     for clase in clases:
-        matriculas = db.session.query(Matricula).filter_by(cursoId=clase.cursoId).all()
-        estudiantes.extend([m.estudiante for m in matriculas])
-    return render_template('profesores/ver_lista_estudiantes.html', estudiantes=estudiantes)
+        estudiantes = Usuario.query.join(Matricula, Usuario.id_usuario==Matricula.estudianteId)\
+            .filter(Matricula.cursoId==clase.cursoId, Usuario.rol.has(nombre='Estudiante')).all()
+        estudiantes_por_clase[clase.id] = estudiantes
+
+    return render_template('profesor/ver_lista_estudiantes.html', estudiantes_por_clase=estudiantes_por_clase, clases=clases)
+
 
 @profesor_bp.route('/ver_horario_clases')
 @login_required
-@role_required('profesor')
+@permission_required('ver_horario_clases')
 def ver_horario_clases():
-    profesor = db.session.query(Profesor).filter_by(usuarioId=current_user.id).first()
-    clases = db.session.query(Clase).filter_by(profesorId=profesor.id).all() if profesor else []
-    horarios = [db.session.query(AsignaturaHorario).filter_by(asignaturaId=clase.asignaturaId).all() for clase in clases]
-    return render_template('profesores/ver_horario_clases.html', horarios=horarios)
+    """Muestra el horario de clases del profesor"""
+    clases = Clase.query.filter_by(profesorId=current_user.id_usuario).all()
+    return render_template('profesor/ver_horario_clases.html', clases=clases)
+
 
 @profesor_bp.route('/comunicaciones')
 @login_required
-@role_required('profesor')
 def comunicaciones():
-    emails = db.session.query(Email).filter_by(destinatarioId=current_user.id).all()
-    return render_template('profesores/comunicaciones.html', emails=emails)
+    """Página para ver y enviar comunicaciones a estudiantes y padres"""
+    return render_template('profesor/comunicaciones.html')
+
 
 @profesor_bp.route('/perfil')
 @login_required
-@role_required('profesor')
 def perfil():
-    return render_template('profesores/perfil.html')
+    """Página para que el profesor gestione la información de su perfil"""
+    return render_template('profesor/perfil.html')
+
 
 @profesor_bp.route('/soporte')
 @login_required
-@role_required('profesor')
 def soporte():
-    return render_template('profesores/soporte.html')
+    """Página de soporte para el profesor"""
+    return render_template('profesor/soporte.html')

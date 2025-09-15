@@ -13,58 +13,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/base.css') }}">
 
     <style>
-        body {
-            display: flex;
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-        }
-        .sidebar {
-            width: 280px;
-            flex-shrink: 0;
-            transition: transform 0.3s ease-in-out;
-            z-index: 1050;
-        }
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-        @media (max-width: 991.98px) {
-            .sidebar {
-                position: fixed;
-                left: -280px;
-                height: 100%;
-            }
-            .sidebar.show {
-                transform: translateX(280px);
-            }
-            .main-content {
-                margin-left: 0;
-            }
-        }
-        .sidebar .nav-link {
-            color: rgba(255, 255, 255, 0.75);
-            padding: 12px 15px;
-            transition: background-color 0.2s, color 0.2s;
-        }
-        .sidebar .nav-link:hover,
-        .sidebar .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-        .sidebar .nav-link i {
-            width: 20px;
-        }
-        .sidebar-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px !important;
-            padding-bottom: 20px !important;
-        }
-        .content-wrapper {
-            padding: 20px;
-            flex-grow: 1;
-        }
+      
     </style>
 </head>
 <body class="bg-light">
@@ -121,10 +70,7 @@
                 <div>
                     <p class="fw-semibold m-0">{{ current_user.nombre_completo }}</p>
                     <p class="small text-white-50 m-0">{{ current_user.rol_obj.nombre_rol if current_user.is_authenticated and current_user.rol_obj else 'Invitado' }}</p>
-                    <a href="#" id="logoutBtn" class="text-white-50 small mt-1 d-block text-decoration-none">
-                        <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
-                    </a>
-
+                    <a href="{{ url_for('auth.logout') }}" class="text-white-50 small mt-1 d-block"><i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -157,49 +103,25 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/superadmin/base.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
 
-        if (sidebarToggle && sidebar) {
-            sidebarToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('show');
-            });
-        }
-
-        document.addEventListener('click', function(event) {
-            if (window.innerWidth < 992 && sidebar.classList.contains('show') && !sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-                sidebar.classList.remove('show');
-            }
-        });
-
-        
-        const logoutBtn = document.getElementById('logoutBtn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', function(event) {
-                event.preventDefault();
-                Swal.fire({
-                    title: '¿Cerrar sesión?',
-                    text: "Tu sesión actual se cerrará.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, salir',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "{{ url_for('auth.logout') }}";
-                    }
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('show');
                 });
-            });
-        }
-    });
-</script>
+            }
 
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth < 992 && sidebar.classList.contains('show') && !sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                    sidebar.classList.remove('show');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

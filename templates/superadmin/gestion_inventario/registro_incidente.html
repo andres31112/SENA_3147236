@@ -8,33 +8,19 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/gestion_usuarios/profesores.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/gestion_inventario/equipos.css') }}">
 </head>
 
 <body>
-    {% extends "base.html" %}
+    {% extends "superadmin/base.html" %}
     {% block content %}
-
     <header class="main-header">
-        <h1>Gestion Inventario</h1>
+        <h1>Registro de Incidentes</h1>
         <div class="header-icons">
             <i class="fa-solid fa-bell"></i>
             <i class="fa-solid fa-user"></i>
         </div>
     </header>
     <main class="content-area">
-        <section class="cards-contrainer mb-4">
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <div class="card shadow-sm border-0 rounded-3">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="fa-solid fa-desktop"></i>
-                            <h5 class="card-title ms-3">Computadoras</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <section class="table-container">
             <div class="table-controls">
                 <div class="dropdown ">
@@ -51,293 +37,167 @@
                         <i class="fa-solid fa-search"></i>
                         <input type="search" placeholder="Buscar Equipos">
                     </div>
-                    <button class="btn btn-danger me-md-2" type="button">Eliminar</button>
                 </div>
             </div>
             <table class="user-table">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" id="selectAllCheckbox"></th>
                         <th>ID/Referencia</th>
                         <th>Nombre del equipo</th>
                         <th>Usuario asignado</th>
                         <th>Estado del equipo</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
+                    <tr class="clickable-row" style="cursor: pointer;">
                         <td>EQ-001</td>
                         <td>LAB1-PC01</td>
-                        <td>Elena Rodriguez</td>
+                        <td>Elena Rodríguez</td>
                         <td><span class="badge bg-success fs-6">Activo</span></td>
-                        <td>
-                            <button class="btn btn-primary me-md-2 editar-btn" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editarModal" data-id="EQ-001" data-nombre="LAB1-PC01"
-                                data-sala="Laboratorio 1" data-usuario="Elena Rodriguez" data-estado="Activo"
-                                data-software="Windows 10" data-ram="8GB" data-disco="256GB SSD"
-                                data-descripcion="Equipo de laboratorio con Windows 10, 8GB RAM y 256GB SSD."
-                                data-fecha="2023-01-15"
-                                data-observaciones="Equipo en buen estado, sin incidencias recientes."
-                                data-tipo="Computadora">Editar</button>
-                            <button class="btn btn-secondary me-md-2 ver-btn" type="button" data-bs-toggle="modal"
-                                data-bs-target="#equipoModal" data-id="EQ-001" data-nombre="LAB1-PC01"
-                                data-sala="Laboratorio 1" data-usuario="Elena Rodriguez" data-estado="Activo"
-                                data-software="Windows 10" data-ram="8GB" data-disco="256GB SSD"
-                                data-descripcion="Equipo de laboratorio con Windows 10, 8GB RAM y 256GB SSD."
-                                data-fecha="2023-01-15"
-                                data-observaciones="Equipo en buen estado, sin incidencias recientes."
-                                data-tipo="Computadora">Ver
-                            </button>
-                        </td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
                         <td>EQ-002</td>
                         <td>LAB1-PC02</td>
                         <td>Elena Rodriguez</td>
                         <td><span class="badge bg-danger fs-6">En revisión</span></td>
-                        <td><button class="btn btn-primary me-md-2" type="button">Editar</button><button
-                                class="btn btn-secondary me-md-2" type="button">Ver</button></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
                         <td>EQ-003</td>
                         <td>LAB2-PC01</td>
                         <td>Elena Rodriguez</td>
                         <td><span class="badge bg-secondary fs-6">Fuera de servicio</span></td>
-                        <td><button class="btn btn-primary me-md-2" type="button">Editar</button><button
-                                class="btn btn-secondary me-md-2" type="button">Ver</button></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
                         <td>EQ-004</td>
                         <td>LAB2-PC02</td>
                         <td>Elena Rodriguez</td>
                         <td><span class="badge bg-success fs-6">Activo</span></td>
-                        <td><button class="btn btn-primary me-md-2" type="button">Editar</button><button
-                                class="btn btn-secondary me-md-2" type="button">Ver</button></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
                         <td>EQ-005</td>
                         <td>LAB1-PC03</td>
                         <td>Elena Rodriguez</td>
                         <td><span class="badge bg-secondary fs-6">Fuera de servicio</span></td>
-                        <td><button class="btn btn-primary me-md-2" type="button">Editar</button><button
-                                class="btn btn-secondary me-md-2" type="button">Ver</button></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" class="row-checkbox"></td>
                         <td>EQ-006</td>
                         <td>LAB2-PC03</td>
                         <td>Elena Rodriguez</td>
                         <td><span class="badge bg-danger fs-6">En revisión</span></td>
-                        <td><button class="btn btn-primary me-md-2" type="button">Editar</button><button
-                                class="btn btn-secondary me-md-2" type="button">Ver</button></td>
                     </tr>
                 </tbody>
             </table>
         </section>
     </main>
-    <!-- Modal para ver detalles del equipo -->
-    <div class="modal fade" id="equipoModal" tabindex="-1" aria-labelledby="equipoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <!-- Modals-->
+    <div class="modal fade" id="incidenteModal" tabindex="-1" aria-labelledby="incidenteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="equipoModalLabel">Detalles del Equipo</h5>
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Historial de Incidentes</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>ID/Referencia:</strong> <span id="modal-id"></span></p>
-                            <p><strong>Nombre del equipo:</strong> <span id="modal-nombre"></span></p>
-                            <p><strong>tipo de equipo</strong> <span id="modal-tipo"></span></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Usuario asignado:</strong> <span id="modal-usuario"></span></p>
-                            <p><strong>Estado del equipo:</strong> <span id="modal-estado"></span></p>
-                            <p><strong>Sala:</strong> <span id="modal-sala"></span></p>
-                        </div>
-                    </div>
-                    <hr>
-                    <h5>Especificaciones Técnicas</h5>
-                    <p><strong>Sistema Operativo:</strong> <span id="modal-software"></span></p>
-                    <p><strong>RAM:</strong> <span id="modal-ram"></span></p>
-                    <p><strong>Disco Duro:</strong> <span id="modal-disco"></span></p>
-                    <p><strong>Fecha de adquisición:</strong> <span id="modal-fecha"></span></p>
-                    <p><strong>Descripción:</strong> <span id="modal-descripcion"></span></p>
-                    <p><strong>Observaciones:</strong> <span id="modal-observaciones"></span></p>
-                    <hr>
-                    <h5>Historial de incidentes</h5>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Descripción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>2023-05-10</td>
-                                <td>Problema de conexión a la red.</td>
-                            </tr>
-                            <tr>
-                                <td>2023-07-22</td>
-                                <td>Fallo en el disco duro, reemplazado.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <hr>
-                    <h5>Historial de mantenimiento</h5>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Descripción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>2023-06-20</td>
-                                <td>Mantenimiento preventivo realizado.</td>
-                            </tr>
-                            <tr>
-                                <td>2023-08-15</td>
-                                <td>Reemplazo de disco duro.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table class="table table-hover text-center align-middle">
+                    <thead class="text-center align-middle">
+                        <tr>
+                            <th>Fecha del reporte</th>
+                            <th>Hora del reporte</th>
+                            <th>Detalles del incidente</th>
+                            <th>Reportado por</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10-05-2023</td>
+                            <td>10:30 AM</td>
+                            <td>Problema de conexión a la red.</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>22-07-2023</td>
+                            <td>02:15 PM</td>
+                            <td>Fallo en el disco duro, reemplazado.</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>15-09-2023</td>
+                            <td>11:00 AM</td>
+                            <td>Problema de software, reinstalación necesaria.</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2"
+                        data-bs-toggle="modal">Registrar Incidente</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal para editar detalles del equipo -->
-    <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="exampleModalToggle2" tabindex="-1" aria-labelledby="exampleModalToggleLabel2"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editarModalLabel">Editar Equipo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editarForm">
-                        <div class="row">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="editar-id" class="form-label">ID/Referencia</label>
-                                    <input type="text" class="form-control" id="editar-id" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="editar-usuario" class="form-label">Usuario asignado</label>
-                                    <input type="text" class="form-control" id="editar-usuario">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="editar-nombre" class="form-label">Nombre del equipo</label>
-                                    <input type="text" class="form-control" id="editar-nombre">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="editar-estado" class="form-label">Estado del equipo</label>
-                                    <select class="form-select" id="editar-estado">
-                                        <option value="operativo">Activo</option>
-                                        <option value="en_mantenimiento">En revisión</option>
-                                        <option value="fuera_de_servicio">Fuera de servicio</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="editar-tipo" class="form-label">Tipo de equipo</label>
-                                    <select class="form-select" id="editar-tipo">
-                                        <option value="computadora">Computadora</option>
-                                        <option value="impresora">Impresora</option>
-                                        <option value="proyector">Proyector</option>
-                                        <option value="otro">Otro</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="editar-sala" class="form-label">Sala</label>
-                                    <input type="text" class="form-control" id="editar-sala">
-                                </div>
+                <form id="formIncidente">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="incidenteModalLabel">Registrar Incidente</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="equipo-id" name="equipo_id">
+
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required>
                             </div>
-                            <hr>
-                            <h5>Especificaciones Técnicas</h5>
-                            <div class="col-md-6 mb-3">
-                                <label for="editar-software" class="form-label">Sistema operativo</label>
-                                <input type="text" class="form-control" id="editar-software">
+
+                            <div class="mb-3">
+                                <label for="hora" class="form-label">Hora</label>
+                                <input type="time" class="form-control" id="hora" name="hora" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="editar-ram" class="form-label">RAM</label>
-                                <input type="text" class="form-control" id="editar-ram">
+
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción del incidente</label>
+                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
+                                    required></textarea>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="editar-disco" class="form-label">Disco duro</label>
-                                <input type="text" class="form-control" id="editar-disco">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="editar-fecha" class="form-label">Fecha de adquisición</label>
-                                <input type="date" class="form-control" id="editar-fecha" readonly>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <label for="editar-descripcion" class="form-label">Descripción</label>
-                                <input type="text" class="form-control" id="editar-descripcion">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="editar-observaciones" class="form-label">Observaciones</label>
-                                <textarea class="form-control" id="editar-observaciones" rows="3"></textarea>
+
+                            <div class="mb-3">
+                                <label for="tecnico" class="form-label">Quien lo reporta</label>
+                                <input type="text" class="form-control" id="tecnico" name="tecnico" required>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" form="editarForm">Guardar cambios</button>
-                </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Registrar incidente</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.editar-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.getElementById('editar-id').value = btn.getAttribute('data-id');
-                document.getElementById('editar-nombre').value = btn.getAttribute('data-nombre');
-                document.getElementById('editar-sala').value = btn.getAttribute('data-sala');
-                document.getElementById('editar-usuario').value = btn.getAttribute('data-usuario');
-                document.getElementById('editar-estado').value = btn.getAttribute('data-estado');
-                document.getElementById('editar-software').value = btn.getAttribute('data-software');
-                document.getElementById('editar-ram').value = btn.getAttribute('data-ram');
-                document.getElementById('editar-disco').value = btn.getAttribute('data-disco');
-                document.getElementById('editar-descripcion').value = btn.getAttribute('data-descripcion');
-                document.getElementById('editar-fecha').value = btn.getAttribute('data-fecha');
-                document.getElementById('editar-observaciones').value = btn.getAttribute('data-observaciones');
-                document.getElementById('editar-tipo').value = btn.getAttribute('data-tipo');
+        document.querySelectorAll(".clickable-row").forEach(row => {
+            row.addEventListener("click", function () {
+                const idEquipo = this.querySelector("td:nth-child(2)").textContent.trim(); // Asume que la 2da columna es ID
+                document.getElementById("equipo-id").value = idEquipo; // Asigna el ID al campo oculto del modal
+                const modal = new bootstrap.Modal(document.getElementById("incidenteModal"));
+                modal.show();
             });
         });
-
-        document.querySelectorAll('.ver-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.getElementById('modal-id').textContent = btn.getAttribute('data-id');
-                document.getElementById('modal-nombre').textContent = btn.getAttribute('data-nombre');
-                document.getElementById('modal-sala').textContent = btn.getAttribute('data-sala');
-                document.getElementById('modal-usuario').textContent = btn.getAttribute('data-usuario');
-                document.getElementById('modal-estado').textContent = btn.getAttribute('data-estado');
-                document.getElementById('modal-software').textContent = btn.getAttribute('data-software');
-                document.getElementById('modal-ram').textContent = btn.getAttribute('data-ram');
-                document.getElementById('modal-disco').textContent = btn.getAttribute('data-disco');
-                document.getElementById('modal-descripcion').textContent = btn.getAttribute('data-descripcion');
-                document.getElementById('modal-fecha').textContent = btn.getAttribute('data-fecha');
-                document.getElementById('modal-observaciones').textContent = btn.getAttribute('data-observaciones');
-                document.getElementById('modal-tipo').textContent = btn.getAttribute('data-tipo');
-            });
+        document.getElementById("formIncidente").addEventListener("submit", function (e) {
+            e.preventDefault(); // evita que se envíe al servidor
+            location.reload();  // recarga la página
         });
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/superadmin/profesores.js') }}"></script>
-
 
     {% endblock%}
 

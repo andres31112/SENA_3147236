@@ -19,11 +19,19 @@ body {
     left: 0;
     bottom: 0;
     width: 280px; /* ¡IMPORTANTE! Define el ancho del sidebar */
+<<<<<<< Updated upstream
+    background-color: #438ad1; /* ¡IMPORTANTE! Color de fondo para que sea visible (gris oscuro) */
+    color: #c5c5c5; /* Color de texto para el sidebar */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    padding: 0; /* Elimina padding por defecto si lo hubiera */
+    box-shadow: 0 2px 5px 0 rgba(246, 226, 226, 0.05), 0 2px 10px 0 rgba(0, 0, 0, 0.05);
+=======
     background-color: #343a40; /* ¡IMPORTANTE! Color de fondo para que sea visible (gris oscuro) */
     color: #c5c5c5; /* Color de texto para el sidebar */
     z-index: 1000; /* Asegura que esté por encima de otros elementos */
     padding: 0; /* Elimina padding por defecto si lo hubiera */
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05), 0 2px 10px 0 rgba(0, 0, 0, 0.05);
+>>>>>>> Stashed changes
     transition: all 0.3s ease-in-out;
     display: flex; /* Usa flexbox para organizar el contenido interno del sidebar */
     flex-direction: column; /* Organiza los elementos internos verticalmente */
@@ -35,7 +43,11 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+<<<<<<< Updated upstream
+    border-bottom: 1px solid rgba(243, 231, 231, 0.1);
+=======
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+>>>>>>> Stashed changes
     color: #fff;
     font-size: 1.25rem;
 }

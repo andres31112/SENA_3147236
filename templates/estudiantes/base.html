@@ -123,7 +123,7 @@
             </div>
 
             {% if current_user.has_permission('ver_comunicaciones_estudiante') %}
-            <a href="{{ url_for('comunicaciones.index') }}" class="nav-link rounded my-1 {% if 'comunicaciones' in request.endpoint %}active{% endif %}">
+            <a href="" class="nav-link rounded my-1 {% if 'comunicaciones' in request.endpoint %}active{% endif %}">
                 <i class="fas fa-bullhorn fa-fw me-2"></i>Comunicaciones
             </a>
             {% endif %}

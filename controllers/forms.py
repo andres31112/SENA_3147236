@@ -1,13 +1,22 @@
-# controllers/forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app import db
-from controllers.models import Usuario
+from wtforms_sqlalchemy.fields import QuerySelectField
+from controllers.models import Usuario, Rol
 
+# ================================
+# Funciones para QuerySelect
+# ================================
+def get_all_roles():
+    return Rol.query.order_by(Rol.nombre).all()
+
+
+# ================================
+# Formulario de Registro
+# ================================
 class RegistrationForm(FlaskForm):
-    noIdentidad = StringField('Número de Identidad', validators=[DataRequired(), Length(min=5, max=20)])
-    tipoDoc = SelectField('Tipo de Documento', choices=[
+    no_identidad = StringField('Número de Identidad', validators=[DataRequired(), Length(min=5, max=25)])
+    tipo_doc = SelectField('Tipo de Documento', choices=[
         ('cc', 'Cédula de Ciudadanía'),
         ('ti', 'Tarjeta de Identidad'),
         ('ce', 'Cédula de Extranjería'),
@@ -15,39 +24,61 @@ class RegistrationForm(FlaskForm):
         ('pep', 'Permiso Especial de Permanencia'),
         ('registro_civil', 'Registro Civil')
     ], validators=[DataRequired()])
-    nombre = StringField('Nombre', validators=[DataRequired(), Length(min=2, max=100)])
-    apellido = StringField('Apellido', validators=[DataRequired(), Length(min=2, max=100)])
+    nombre = StringField('Nombre', validators=[DataRequired(), Length(min=2, max=50)])
+    apellido = StringField('Apellido', validators=[DataRequired(), Length(min=2, max=50)])
     correo = StringField('Correo Electrónico', validators=[DataRequired(), Email()])
+    telefono = StringField('Teléfono Celular', validators=[Length(max=20)])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     confirm_password = PasswordField('Confirmar Contraseña', validators=[DataRequired(), EqualTo('password')])
-    noCelular = StringField('Teléfono Celular', validators=[Length(max=20)])
-    rol = SelectField('Rol del Usuario', choices=[
-        ('estudiante', 'Estudiante'),
-        ('profesor', 'Profesor'),
-        ('administrador', 'Administrador'),
-        ('padre', 'Padre')
-    ], validators=[DataRequired()])
+    rol = QuerySelectField('Rol del Usuario', query_factory=get_all_roles,
+                           get_pk=lambda r: r.id_rol,
+                           get_label=lambda r: r.nombre,
+                           allow_blank=True, blank_text='Selecciona un Rol...')
     submit = SubmitField('Registrar Usuario')
 
-    def validate_noIdentidad(self, noIdentidad):
-        user = db.session.query(Usuario).filter_by(noIdentidad=noIdentidad.data).first()
-        if user:
-            raise ValidationError('Ese número de identidad ya está registrado.')
+    def validate_no_identidad(self, no_identidad):
+        if Usuario.query.filter_by(no_identidad=no_identidad.data).first():
+            raise ValidationError('Ese número de identidad ya está registrado. Por favor, elige uno diferente.')
 
     def validate_correo(self, correo):
-        user = db.session.query(Usuario).filter_by(correo=correo.data).first()
-        if user:
-            raise ValidationError('Ese correo electrónico ya está registrado.')
+        if Usuario.query.filter_by(correo=correo.data).first():
+            raise ValidationError('Ese correo electrónico ya está registrado. Por favor, elige uno diferente.')
 
+
+# ================================
+# Formulario de Login
+# ================================
 class LoginForm(FlaskForm):
     correo = StringField('Correo Electrónico', validators=[DataRequired(), Email()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     remember = BooleanField('Recordarme')
     submit = SubmitField('Iniciar Sesión')
 
+
+# ================================
+# Formulario de Roles
+# ================================
+class RoleForm(FlaskForm):
+    nombre = StringField('Nombre del Rol', validators=[DataRequired(), Length(min=2, max=50)])
+    descripcion = TextAreaField('Descripción del Rol', validators=[Length(max=255)])
+    submit = SubmitField('Guardar Rol')
+
+    def __init__(self, original_nombre=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.original_nombre = original_nombre
+
+    def validate_nombre(self, nombre):
+        if nombre.data != self.original_nombre:
+            if Rol.query.filter_by(nombre=nombre.data).first():
+                raise ValidationError('Este nombre de rol ya existe. Por favor, elige uno diferente.')
+
+
+# ================================
+# Formulario de Edición de Usuario
+# ================================
 class UserEditForm(FlaskForm):
-    noIdentidad = StringField('Número de Identidad', validators=[DataRequired(), Length(min=5, max=20)])
-    tipoDoc = SelectField('Tipo de Documento', choices=[
+    no_identidad = StringField('Número de Identidad', validators=[DataRequired(), Length(min=5, max=25)])
+    tipo_doc = SelectField('Tipo de Documento', choices=[
         ('cc', 'Cédula de Ciudadanía'),
         ('ti', 'Tarjeta de Identidad'),
         ('ce', 'Cédula de Extranjería'),
@@ -55,49 +86,31 @@ class UserEditForm(FlaskForm):
         ('pep', 'Permiso Especial de Permanencia'),
         ('registro_civil', 'Registro Civil')
     ], validators=[DataRequired()])
-    nombre = StringField('Nombre', validators=[DataRequired(), Length(min=2, max=100)])
-    apellido = StringField('Apellido', validators=[DataRequired(), Length(min=2, max=100)])
+    nombre = StringField('Nombre', validators=[DataRequired(), Length(min=2, max=50)])
+    apellido = StringField('Apellido', validators=[DataRequired(), Length(min=2, max=50)])
     correo = StringField('Correo Electrónico', validators=[DataRequired(), Email()])
-    noCelular = StringField('Teléfono Celular', validators=[Length(max=20)])
-    estado = SelectField('Estado de la Cuenta', choices=[
-        ('activo', 'Activo'),
-        ('inactivo', 'Inactivo')
+    telefono = StringField('Teléfono Celular', validators=[Length(max=20)])
+    estado_cuenta = SelectField('Estado de la Cuenta', choices=[
+        ('activa', 'Activa'),
+        ('inactiva', 'Inactiva')
     ], validators=[DataRequired()])
-    rol = SelectField('Rol del Usuario', choices=[
-        ('estudiante', 'Estudiante'),
-        ('profesor', 'Profesor'),
-        ('administrador', 'Administrador'),
-        ('padre', 'Padre')
-    ], validators=[DataRequired()])
+    rol = QuerySelectField('Rol del Usuario', query_factory=get_all_roles,
+                           get_pk=lambda r: r.id_rol,
+                           get_label=lambda r: r.nombre,
+                           allow_blank=True, blank_text='Selecciona un Rol...')
     submit = SubmitField('Actualizar Usuario')
 
-    def __init__(self, original_noIdentidad, original_correo, *args, **kwargs):
+    def __init__(self, original_no_identidad=None, original_correo=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.original_noIdentidad = original_noIdentidad
+        self.original_no_identidad = original_no_identidad
         self.original_correo = original_correo
 
-    def validate_noIdentidad(self, noIdentidad):
-        if noIdentidad.data != self.original_noIdentidad:
-            user = db.session.query(Usuario).filter_by(noIdentidad=noIdentidad.data).first()
-            if user:
-                raise ValidationError('Ese número de identidad ya está en uso.')
+    def validate_no_identidad(self, no_identidad):
+        if no_identidad.data != self.original_no_identidad:
+            if Usuario.query.filter_by(no_identidad=no_identidad.data).first():
+                raise ValidationError('Ese número de identidad ya está en uso. Por favor, elige uno diferente.')
 
     def validate_correo(self, correo):
         if correo.data != self.original_correo:
-            user = db.session.query(Usuario).filter_by(correo=correo.data).first()
-            if user:
-                raise ValidationError('Ese correo electrónico ya está registrado.')
-
-class SalonForm(FlaskForm):
-    sede = SelectField('Sede', choices=[], validators=[DataRequired()])
-    nombreSalon = StringField('Nombre del Salón', validators=[DataRequired(), Length(max=100)])
-    tipo = SelectField('Tipo de Salón', choices=[
-        ('sala_computo', 'Sala de Cómputo'),
-        ('sala_general', 'Sala General'),
-        ('sala_especial', 'Sala Especial')
-    ], validators=[DataRequired()])
-    submit = SubmitField('Crear Sala')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.sede.choices = [(s.id, s.nombre) for s in db.session.query(Sede).all()]
+            if Usuario.query.filter_by(correo=correo.data).first():
+                raise ValidationError('Ese correo electrónico ya está registrado. Por favor, elige uno diferente.')

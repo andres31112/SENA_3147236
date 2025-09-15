@@ -3,225 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colegio Naciones Unidas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Colegio Naciones Unidas - Inicio</title>
 </head>
 <body>
     
-<header>
-    <ul class="circles">
-        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-    </ul>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand logo-center" href="{{ url_for('main.index') }}" aria-label="Volver a la página de inicio"></a>>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8"/></svg>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Quienes Somos</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Horizonte Institucional</a></li>
-                            <li><a class="dropdown-item" href="#">Nuestro Equipo</a></li>
-                            <li><a class="dropdown-item" href="matriculas.html">Matrículas</a></li>
-                            <li><a class="dropdown-item" href="#">Documentos</a></li>
-                            <li><a class="dropdown-item" href="#">Nosotros</a></li>
-                            <li><a class="dropdown-item" href="#">Galería</a></li>
-                            <li><a class="dropdown-item" href="#">Servicios</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Comunidad</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Estudiantes</a></li>
-                            <li><a class="dropdown-item" href="#">Docentes</a></li>
-                            <li><a class="dropdown-item" href="#">Inclusión</a></li>
-                            <li><a class="dropdown-item" href="#">Orientación Escolar</a></li>
-                            <li><a class="dropdown-item" href="#">Administrativos</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contactos</a></li>
-                </ul>
-                <div class="d-flex">
-                    <button class="icon-profile btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
-                    </button>
+    <header class="main-header">
+        <ul class="circles" aria-hidden="true">
+            <li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li>
+        </ul>
+
+        <nav class="navbar navbar-expand-lg fixed-top" aria-label="Navegación principal">
+            <div class="container-fluid">
+                <a class="navbar-brand logo-center" href="{{ url_for('main.index') }}" aria-label="Volver a la página de inicio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                        <circle cx="8" cy="8" r="8"/>
+                    </svg>
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+                        <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Quienes Somos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Comunidad</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Contactos</a></li>
+                    </ul>
+                    <div class="d-flex">
+                        <a href="{{ url_for('auth.login') }}" class="icon-profile btn" aria-label="Iniciar Sesión">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </header>
 
-<main class="content">
-    <section class="banner">
-        <div class="banner-content">
-            <div class="welcome-message">
-                <h1>Mensaje de bienvenida</h1>
-                <a class="btn-login" href="{{ url_for('auth.login') }}" role="button">Iniciar Sesión</a>
+    <main class="content">
+        <section class="banner">
+            <div class="banner-content">
+                <div class="welcome-message">
+                    <h1>Mensaje de bienvenida</h1>
+                    <a href="{{ url_for('auth.login') }}" class="btn-login" role="button">Iniciar Sesión</a>
+                </div>
+                
+                <div class="statistics">
+                    <div class="statistic-item">
+                        <h3>3+</h3>
+                        <p>Administrativos</p>
+                    </div>
+                    <div class="statistic-item">
+                        <h3>22+</h3>
+                        <p>Servicios y <br> Vigilancia</p>
+                    </div>
+                    <div class="statistic-item">
+                        <h3>53+</h3>
+                        <p>Docentes</p>
+                    </div>
+                    <div class="statistic-item">
+                        <h3>983+</h3>
+                        <p>Estudiantes</p>
+                    </div>
+                </div>
             </div>
-            <div class="statistics">
-                <div class="statistic-item"><h3>3+</h3><p>Administrativos</p></div>
-                <div class="statistic-item"><h3>22+</h3><p>Servicios y <br> Vigilancia</p></div>
-                <div class="statistic-item"><h3>53+</h3><p>Docentes</p></div>
-                <div class="statistic-item"><h3>983+</h3><p>Estudiantes</p></div>
+        </section>
+        
+        <section class="banner-secondary">
+            <div class="banner-content2">
+                <div class="information-contacts">
+                    <p>Educacion, Ciencia, Cultura y Deporte para trascender</p>
+                    <h2>COLEGIO NACIONES UNIDAS</h2>
+                    <button class="contact-button">Contactanos</button>
+                </div>
+                <div class="map-container">
+ <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.241315830026!2d-74.09312642571089!3d4.729188041355447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9b23b184284b%3A0xc47e3a9c7b949673!2sIED%20Naciones%20Unidas%20Sede%20A!5e0!3m2!1ses!2sco!4v1714577840131!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                </div>
             </div>
-        </div>
-        <div class="banner-content2">
-            <div class="information-contacts">
-                <p>Educacion, Ciencia, Cultura y Deporte para trascender</p>
-                <h2>COLEGIO NACIONES UNIDAS</h2>
-                <button>Contactanos</button>
-            </div>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.571995423851!2d-74.0593882852377!3d4.670692996614457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a6e1b8f1c7b%3A0x1cfa3612502b0e6e!2sColegio%20Naciones%20Unidas!5e0!3m2!1ses-419!2sco!4v1663363073255!5m2!1ses-419!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <div class="carousel-wrapper">
-        <div class="panel-title">Panel de Anuncios</div>
-        <div id="multiCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="30000" aria-label="Carrusel de anuncios">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#multiCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#multiCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#multiCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active carousel-anuncio-item">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-6">
-                            <div class="anuncio-card">
-                                <div class="anuncio-body">
-                                    <h3 class="anuncio-title">Título 1</h3>
-                                    <p class="anuncio-desc">Descripción breve del anuncio 1. Información clara y concisa.</p>
-                                </div>
-                                <img class="anuncio-img" src="https://picsum.photos/id/1011/1200/900" alt="Imagen 1">
+        <section id="mi-carrusel-1" class="carousel-component" aria-labelledby="carousel-title">
+            <h2 id="carousel-title" class="sr-only">Nuestros Programas y Cursos</h2>
+            <div class="slides-wrapper">
+                <div class="slides-container">
+                    <div class="carousel-slide">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img class="card-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop" alt="Desarrollo Web">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">Desarrollo Web</h3>
+                                <p class="card-text">Explora las últimas tecnologías y frameworks para la web.</p>
+                                <a href="#" class="card-button btn-blue">Leer más</a>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="anuncio-card">
-                                <div class="anuncio-body">
-                                    <h3 class="anuncio-title">Título 2</h3>
-                                    <p class="anuncio-desc">Descripción breve del anuncio 2. Más detalles si se requieren.</p>
-                                </div>
-                                <img class="anuncio-img" src="https://picsum.photos/id/1012/1200/900" alt="Imagen 2">
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img class="card-image" src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop" alt="Bases de Datos">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">Bases de Datos</h3>
+                                <p class="card-text">Aprende a gestionar y optimizar tus datos de forma eficiente.</p>
+                                <a href="#" class="card-button btn-red">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img class="card-image" src="https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=2070&auto=format&fit=crop" alt="React y Hooks">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">React y Hooks</h3>
+                                <p class="card-text">Domina la librería más popular para interfaces de usuario.</p>
+                                <a href="#" class="card-button btn-sky">Leer más</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img class="card-image" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop" alt="Calidad de Código">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">Calidad de Código</h3>
+                                <p class="card-text">Escribe código limpio, mantenible y escalable.</p>
+                                <a href="#" class="card-button btn-green">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img class="card-image" src="https://images.unsplash.com/photo-1526379095098-d64658e0f94b?q=80&w=2070&auto=format&fit=crop" alt="Ciberseguridad">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">Ciberseguridad</h3>
+                                <p class="card-text">Protege tus aplicaciones de las amenazas más comunes.</p>
+                                <a href="#" class="card-button btn-gray">Leer más</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="card">
+                            <div class="card-image-wrapper">
+                                <img class="card-image" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2069&auto=format&fit=crop" alt="Despliegue">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">Despliegue</h3>
+                                <p class="card-text">Lleva tus proyectos a producción de forma automatizada.</p>
+                                <a href="#" class="card-button btn-purple">Ver detalles</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item carousel-anuncio-item">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-6">
-                            <div class="anuncio-card">
-                                <div class="anuncio-body">
-                                    <h3 class="anuncio-title">Título 3</h3>
-                                    <p class="anuncio-desc">Descripción breve del anuncio 3.</p>
-                                </div>
-                                <img class="anuncio-img" src="https://picsum.photos/id/1015/1200/900" alt="Imagen 3">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="anuncio-card">
-                                <div class="anuncio-body">
-                                    <h3 class="anuncio-title">Título 4</h3>
-                                    <p class="anuncio-desc">Descripción breve del anuncio 4.</p>
-                                </div>
-                                <img class="anuncio-img" src="https://picsum.photos/id/1016/1200/900" alt="Imagen 4">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item carousel-anuncio-item">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-6">
-                            <div class="anuncio-card">
-                                <div class="anuncio-body">
-                                    <h3 class="anuncio-title">Título 5</h3>
-                                    <p class="anuncio-desc">Descripción breve del anuncio 5.</p>
-                                </div>
-                                <img class="anuncio-img" src="https://picsum.photos/id/1018/1200/900" alt="Imagen 5">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="anuncio-card">
-                                <div class="anuncio-body">
-                                    <h3 class="anuncio-title">Título 6</h3>
-                                    <p class="anuncio-desc">Descripción breve del anuncio 6.</p>
-                                </div>
-                                <img class="anuncio-img" src="https://picsum.photos/id/1019/1200/900" alt="Imagen 6">
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#multiCarousel" data-bs-slide="prev" aria-label="Anterior">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+            <button class="nav-button prev-button" aria-label="Diapositiva anterior">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#multiCarousel" data-bs-slide="next" aria-label="Siguiente">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <button class="nav-button next-button" aria-label="Siguiente diapositiva">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
             </button>
-        </div>
-    </div>
+        </section>
+        <section class="filler-section">
+            <h2>Más contenido de la página</h2>
+        </section>
+    </main>
 
-    <hr class="separator">
-
-    <div class="gallery-wrap">
-        <div class="panel-title" style="margin-bottom:10px; text-align:center;">Galería</div>
-        <div class="gallery-track" id="galleryTrack" aria-live="polite">
-            <div class="gallery-item"><img src="https://picsum.photos/id/1021/900/600" alt="Gal1"></div>
-            <div class="gallery-item"><img src="https://picsum.photos/id/1022/900/600" alt="Gal2"></div>
-            <div class="gallery-item"><img src="https://picsum.photos/id/1023/900/600" alt="Gal3"></div>
-            <div class="gallery-item"><img src="https://picsum.photos/id/1024/900/600" alt="Gal4"></div>
-            <div class="gallery-item"><img src="https://picsum.photos/id/1025/900/600" alt="Gal5"></div>
-            <div class="gallery-item"><img src="https://picsum.photos/id/1026/900/600" alt="Gal6"></div>
-        </div>
-        <button class="gallery-btn prev" id="galleryPrev" aria-label="Anterior Galería">‹</button>
-        <button class="gallery-btn next" id="galleryNext" aria-label="Siguiente Galería">›</button>
-    </div>
-
-    <div class="page-wrap">
-        <hr class="separator">
-        <div class="mission-vision-grid">
-            <div class="grid-item">
-                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/creativity.png" alt="creativity"/>
-                <div>
-                    <h3>COMPETENTES</h3>
-                    <p>Promover la creatividad y la productividad en la comunidad educativa, impulsando habilidades innovadoras y eficientes.</p>
-                </div>
-            </div>
-            <div class="grid-item">
-                <img width="64" height="64" src="https://img.icons8.com/nolan/64/solidarity.png" alt="solidarity"/>
-                <div>
-                    <h3>DEMOCRÁTICOS</h3>
-                    <p>Desarrollar los valores de solidaridad, trabajo en equipo, tolerancia y participación activa, fortaleciendo una convivencia inclusiva.</p>
-                </div>
-            </div>
-            <div class="grid-item">
-                <img width="64" height="64" src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-autonomy-gig-economy-flaticons-flat-flat-icons.png" alt="external-autonomy-gig-economy-flaticons-flat-flat-icons"/>
-                <div>
-                    <h3>AUTÓNOMOS</h3>
-                    <p>Fomentar los valores de responsabilidad, honestidad, equidad y liderazgo, orientados a la creación y consolidación de una gestión empresarial ética y sostenible.</p>
-                </div>
-            </div>
-            <div class="grid-item">
-                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/leadership.png" alt="leadership"/>
-                <div>
-                    <h3>OBJETIVO</h3>
-                    <p>Formar líderes íntegros, competentes y emprendedores, capaces de generar conocimiento socialmente relevante, utilizando la tecnología de manera responsable para enfrentar desafíos sociales y laborales acorde a las necesidades de su entorno.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>
