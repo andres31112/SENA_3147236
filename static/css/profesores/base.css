@@ -1,6 +1,6 @@
-/* static/css/superadmin/base.css */
-
-/* Paleta de colores */
+/* ==============================
+   Paleta de colores
+   ============================== */
 :root {
     --color-primario: #0078ad;
     --color-primario-oscuro: #00628e;
@@ -14,7 +14,9 @@
     --color-sidebar-footer: #252b32;
 }
 
-/* General */
+/* ==============================
+   General
+   ============================== */
 body {
     font-family: 'Inter', sans-serif; /* Fuente moderna y legible */
     overflow-x: hidden; /* Evita scroll horizontal */
@@ -32,21 +34,26 @@ body {
     min-height: 100vh;
 }
 
-/* Sidebar */
+/* ==============================
+   Sidebar
+   ============================== */
 .sidebar {
     position: fixed; /* Siempre fijo */
     top: 0;
     left: 0;
     bottom: 0;
-    width: 280px; /* ¡IMPORTANTE! Define el ancho del sidebar */
-    background-color: #343a40; /* ¡IMPORTANTE! Color de fondo para que sea visible (gris oscuro) */
-    color: #c5c5c5; /* Color de texto para el sidebar */
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
-    padding: 0; /* Elimina padding por defecto si lo hubiera */
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05), 0 2px 10px 0 rgba(0, 0, 0, 0.05);
+    width: 280px; /* Ancho fijo */
+    background-color: var(--color-sidebar); /* Fondo oscuro */
+    color: var(--color-texto-secundario);
+    z-index: 1000;
+    padding: 0;
+    /* Sombras suaves */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), 
+                0 2px 10px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0; /* No se reduce */
 }
 
 /* Cabecera del sidebar */
@@ -55,8 +62,8 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Línea divisoria */
+    color: var(--color-blanco);
     font-size: 1.25rem;
 }
 
@@ -131,7 +138,9 @@ body {
     color: var(--color-texto-secundario);
 }
 
-/* Contenido principal */
+/* ==============================
+   Contenido principal
+   ============================== */
 .main-content {
     margin-left: 280px; /* Deja espacio para sidebar */
     flex-grow: 1;
@@ -152,7 +161,32 @@ body {
     border: 1px solid var(--color-borde-suave);
 }
 
-/* Responsive */
+/* ==============================
+   Dropdown en sidebar
+   ============================== */
+.nav-link.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}
+
+.nav-link[aria-expanded="true"]::after {
+    transform: rotate(-180deg);
+}
+
+.collapse.show .nav-link,
+.collapsing .nav-link {
+    padding-left: 3rem !important;
+}
+
+/* ==============================
+   Responsive
+   ============================== */
 @media (max-width: 991.98px) {
     .sidebar {
         left: -280px; /* Ocultar por defecto */

@@ -1,7 +1,5 @@
-/* static/css/superadmin/base.css */
-
-/* Paleta de colores */
 :root {
+    /* Paleta de Colores */
     --color-primario: #0078ad;
     --color-primario-oscuro: #00628e;
     --color-texto-principal: #2c3e50;
@@ -9,44 +7,49 @@
     --color-blanco: #ffffff;
     --color-fondo-seccion: #f8f9fa;
     --color-borde-suave: #ecf0f1;
-    --color-sidebar: #2c3e50;
-    --color-sidebar-hover: #34495e;
-    --color-sidebar-footer: #252b32;
 }
 
-/* General */
+/* ==============================
+   Body
+   ============================== */
 body {
-    font-family: 'Inter', sans-serif; /* Fuente moderna y legible */
-    overflow-x: hidden; /* Evita scroll horizontal */
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
     display: flex;
-    min-height: 100vh; /* Ocupa toda la altura */
-    background-color: var(--color-fondo-seccion);
     color: var(--color-texto-principal);
+    background-color: var(--color-fondo-seccion);
 }
 
-/* Contenedor principal */
+/* ==============================
+   App container
+   ============================== */
 .app-container {
     display: flex;
     min-height: 100vh;
 }
 
-/* Sidebar */
+/* ==============================
+   Sidebar
+   ============================== */
 .sidebar {
-    position: fixed; /* Siempre fijo */
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
-    width: 280px; /* ¡IMPORTANTE! Define el ancho del sidebar */
-    background-color: #343a40; /* ¡IMPORTANTE! Color de fondo para que sea visible (gris oscuro) */
-    color: #c5c5c5; /* Color de texto para el sidebar */
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
-    padding: 0; /* Elimina padding por defecto si lo hubiera */
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05), 0 2px 10px 0 rgba(0, 0, 0, 0.05);
+    width: 280px;
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    z-index: 1050;
+    padding: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05),
+                0 2px 10px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
 }
 
 /* Cabecera del sidebar */
@@ -55,22 +58,22 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
+    border-bottom: 1px solid var(--color-borde-suave);
+    color: var(--color-blanco);
     font-size: 1.25rem;
 }
 
 .sidebar-header .logo {
     font-size: 1.75rem;
-    color: var(--color-primario);
+    color: var(--color-blanco);
 }
 
 /* Navegación */
 .sidebar-nav {
-    list-style: none; /* Quita viñetas */
+    list-style: none;
     padding: 1rem 0;
     margin: 0;
-    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    flex-grow: 1;
 }
 
 .sidebar-nav li {
@@ -81,7 +84,7 @@ body {
     display: flex;
     align-items: center;
     padding: 0.75rem 1.5rem;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;
@@ -89,18 +92,18 @@ body {
 
 .sidebar-nav .nav-link:hover {
     color: var(--color-blanco);
-    background-color: var(--color-sidebar-hover);
+    background-color: var(--color-primario-oscuro);
 }
 
 .sidebar-nav .nav-link.active {
     color: var(--color-blanco);
-    background-color: var(--color-primario);
-    border-left: 4px solid var(--color-blanco); /* Indicador activo */
+    background-color: var(--color-primario-oscuro);
+    border-left: 4px solid var(--color-blanco);
     padding-left: 1.25rem;
 }
 
 .sidebar-nav .nav-link i {
-    width: 25px; /* Íconos alineados */
+    width: 25px;
     text-align: center;
     margin-right: 0.75rem;
     font-size: 1.1rem;
@@ -108,13 +111,13 @@ body {
 
 /* Footer del sidebar */
 .sidebar-footer {
-    padding: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--color-borde-suave);
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    background-color: var(--color-sidebar-footer);
-    color: var(--color-texto-secundario);
+    background-color: var(--color-primario-oscuro);
+    color: var(--color-blanco);
 }
 
 .sidebar-footer .user-info {
@@ -131,42 +134,70 @@ body {
     color: var(--color-texto-secundario);
 }
 
-/* Contenido principal */
+/* ==============================
+   Main content
+   ============================== */
 .main-content {
-    margin-left: 280px; /* Deja espacio para sidebar */
+    margin-left: 280px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
     transition: all 0.3s ease-in-out;
     background-color: var(--color-fondo-seccion);
     min-height: 100vh;
-    overflow-x: hidden;
 }
 
-/* Wrapper de contenido */
 .content-wrapper {
     padding: 20px;
     flex-grow: 1;
-    background-color: var(--color-blanco);
-    border-radius: 8px;
-    border: 1px solid var(--color-borde-suave);
 }
 
-/* Responsive */
+/* ==============================
+   Dropdown arrows
+   ============================== */
+.nav-link.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}
+
+.nav-link[aria-expanded="true"]::after {
+    transform: rotate(-180deg);
+}
+
+.collapse.show .nav-link,
+.collapsing .nav-link {
+    padding-left: 3rem !important;
+}
+
+/* ==============================
+   Responsividad
+   ============================== */
 @media (max-width: 991.98px) {
     .sidebar {
-        left: -280px; /* Ocultar por defecto */
+        left: -280px;
+        height: 100%;
         box-shadow: none;
     }
-    .sidebar.active {
-        left: 0; /* Mostrar cuando esté activo */
+
+    .sidebar.active,
+    .sidebar.show {
+        left: 0;
+        transform: translateX(0);
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05),
                     0 2px 10px rgba(0, 0, 0, 0.05);
     }
+
     .main-content {
-        margin-left: 0; /* Quitar espacio en móvil */
+        margin-left: 0;
     }
-    /* Overlay para móvil */
+
     .overlay {
         position: fixed;
         top: 0;
@@ -177,7 +208,9 @@ body {
         z-index: 999;
         display: none;
     }
-    .sidebar.active + .overlay {
-        display: block; /* Mostrar fondo oscuro */
+
+    .sidebar.active + .overlay,
+    .sidebar.show + .overlay {
+        display: block;
     }
 }

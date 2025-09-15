@@ -1,4 +1,3 @@
-
     document.addEventListener("DOMContentLoaded", function() {
         const sidebar = document.getElementById("sidebar");
         const sidebarToggle = document.getElementById("sidebarToggle");
@@ -7,7 +6,7 @@
         // --- Toggle sidebar ---
         if (sidebarToggle && sidebar) {
             sidebarToggle.addEventListener("click", function() {
-                sidebar.classList.toggle("active"); // Usa siempre "active"
+                sidebar.classList.toggle("active");
             });
         }
 

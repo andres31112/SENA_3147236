@@ -1,0 +1,57 @@
+/* 🎨 Paleta de colores */
+:root {
+    --color-primario: #0078ad;
+    --color-primario-oscuro: #00628e;
+    --color-texto-principal: #2c3e50;
+    --color-texto-secundario: #7f8c8d;
+    --color-blanco: #ffffff;
+    --color-fondo-seccion: #f8f9fa;
+    --color-borde-suave: #ecf0f1;
+}
+
+/* General */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--color-fondo-seccion);
+    color: var(--color-texto-principal);
+    line-height: 1.6;
+}
+
+h2 {
+    font-weight: 700;
+    color: var(--color-primario);
+}
+
+/* Tarjetas */
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card .card-header {
+    background-color: var(--color-blanco);
+    border-bottom: 1px solid var(--color-borde-suave);
+}
+
+.card .card-footer {
+    background-color: var(--color-blanco);
+    border-top: 1px solid var(--color-borde-suave);
+}
+
+/* Botones */
+.btn-outline-secondary {
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    border-color: var(--color-primario);
+}
