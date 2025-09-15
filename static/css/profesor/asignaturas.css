@@ -1,0 +1,168 @@
+/* Aquí va todo el código CSS que te entregué anteriormente. */
+/* No es necesario modificarlo. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+    --color-primario: #0078ad;
+    --color-primario-oscuro: #00628e;
+    --color-texto-principal: #2c3e50;
+    --color-texto-secundario: #7f8c8d;
+    --color-blanco: #FFFFFF;
+    --color-fondo-seccion: #f8f9fa;
+    --color-borde-suave: #ecf0f1;
+
+    --fuente-principal: 'Montserrat', sans-serif;
+    --fuente-secundaria: 'Inter', sans-serif;
+
+    --transicion-rapida: 0.3s ease-in-out;
+    --transicion-lenta: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fuente-secundaria);
+    color: var(--color-texto-principal);
+    background-color: var(--color-fondo-seccion);
+    line-height: 1.6;
+}
+
+header {
+    background: var(--color-primario);
+    color: var(--color-blanco);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-family: var(--fuente-principal);
+}
+
+.container {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+h3 {
+    font-family: var(--fuente-principal);
+    color: var(--color-primario-oscuro);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+p {
+    margin: 0.5rem 0;
+    color: var(--color-texto-secundario);
+}
+
+strong {
+    color: var(--color-texto-principal);
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-texto-principal);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    transition: color var(--transicion-rapida);
+}
+
+.back-btn:hover {
+    color: var(--color-primario);
+}
+
+/* Tarjetas para las Materias */
+.materia-card {
+    background: var(--color-blanco);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform var(--transicion-rapida), box-shadow var(--transicion-rapida);
+}
+
+.materia-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.materia-card h4 {
+    font-family: var(--fuente-principal);
+    font-size: 1.25rem;
+    color: var(--color-primario-oscuro);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.materia-card .btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background var(--transicion-rapida), transform var(--transicion-rapida);
+    font-family: var(--fuente-secundaria);
+}
+
+.materia-card .btn-primario {
+    background: var(--color-primario);
+    color: var(--color-blanco);
+}
+
+.materia-card .btn-primario:hover {
+    background: var(--color-primario-oscuro);
+    transform: translateY(-2px);
+}
+
+/* Estilos para los contenedores de las materias */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .main-header {
+        font-size: 20px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .card h3 {
+        font-size: 16px;
+    }
+
+    .back-btn {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+
+    .back-btn {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos del Profesor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profesor/cursos.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/superadmin/gestion_usuarios/profesores.css') }}">
+
+</head>
+<body>
+    {% extends "./base.html" %}
+    {% block content %}
+    <header class="main-header">
+        <h1>Cursos</h1>
+        <div class="header-icons">
+            <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-user"></i>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <a href="" class="back-btn"><i class="fas fa-arrow-left"></i> Volver al Menú Principal</a>
+
+            <div class="cards-container" id="cursosContainer">
+                <div class="card">
+                    <h3>Curso 305</h3>
+                    <a href="{{ url_for('profesor.asignaturas') }}" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 201</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 410</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 102</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 205</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 302</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 401</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 503</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 607</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 105</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 405</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 408</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 502</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+
+                <div class="card">
+                    <h3>Curso 601</h3>
+                    <a href="#" class="btn btn-primario">Ver Curso</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% endblock %}
+</body>
+</html>

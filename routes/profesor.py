@@ -60,6 +60,25 @@ def comunicaciones():
     """Página para ver y enviar comunicaciones a estudiantes y padres"""
     return render_template('profesor/comunicaciones.html')
 
+@profesor_bp.route('/asistencia')
+@login_required
+def asistencia():
+    """Página para ver y enviar comunicaciones a estudiantes y padres"""
+    return render_template('profesores/asistencia.html')
+
+@profesor_bp.route('/cursos')
+@login_required
+def cursos():
+    """Página para ver y enviar comunicaciones a estudiantes y padres"""
+    return render_template('profesores/cursos.html')
+
+@profesor_bp.route('/asignaturas')
+@login_required
+def asignaturas():
+    """Página para ver y enviar comunicaciones a estudiantes y padres"""
+    return render_template('profesores/asignaturas.html')
+
+
 
 @profesor_bp.route('/perfil')
 @login_required

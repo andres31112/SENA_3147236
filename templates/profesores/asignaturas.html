@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso 201</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profesor/asignaturas.css') }}">
+
+</head>
+<body>
+    {% extends "./base.html" %}
+    {% block content %}
+
+    <main>
+        <div class="container">
+            <a href="{{ url_for('profesor.cursos') }}" class="back-btn"><i class="fas fa-arrow-left"></i> Volver a la lista de cursos</a>
+
+            <h3>Materias del Curso 305</h3>
+            
+            <div class="cards-container">
+                <div class="materia-card">
+                    <h4>Matemáticas</h4>
+                    <a href="{{ url_for('profesor.asistencia') }}" class="btn btn-primario">Ver</a>
+                </div>
+
+                <div class="materia-card">
+                    <h4>Física</h4>
+                    <a href="#" class="btn btn-primario">Ver</a>
+                </div>
+
+                <div class="materia-card">
+                    <h4>Geometría</h4>
+                    <a href="#" class="btn btn-primario">Ver</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
+</body>
+</html>
