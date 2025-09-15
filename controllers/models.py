@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from extensions import db
 from controllers.permisos import ROLE_PERMISSIONS
 
-# ===============================
+# ===============================h
 # Roles
 # ===============================
 class Rol(db.Model):

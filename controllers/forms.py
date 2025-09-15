@@ -8,6 +8,7 @@ from controllers.models import Usuario, Rol
 # Funciones para QuerySelect
 # ================================
 def get_all_roles():
+    """Retorna todos los roles ordenados por nombre."""
     return Rol.query.order_by(Rol.nombre).all()
 
 
@@ -114,3 +115,20 @@ class UserEditForm(FlaskForm):
         if correo.data != self.original_correo:
             if Usuario.query.filter_by(correo=correo.data).first():
                 raise ValidationError('Ese correo electrónico ya está registrado. Por favor, elige uno diferente.')
+
+
+# ================================
+# Formulario de Solicitud de Restablecimiento de Contraseña
+# ================================
+class ForgotPasswordForm(FlaskForm):
+    correo = StringField('Correo Electrónico', validators=[DataRequired(), Email()])
+    submit = SubmitField('Solicitar Restablecimiento')
+
+
+# ================================
+# Formulario de Restablecimiento de Contraseña
+# ================================
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Nueva Contraseña', validators=[DataRequired(), Length(min=6)])
+    confirm_password = PasswordField('Confirmar Contraseña', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Restablecer Contraseña')
