@@ -13,7 +13,7 @@ def dashboard():
     """Panel principal del profesor con resúmenes de sus clases y tareas"""
     # Traer todas las clases del profesor
     clases = Clase.query.filter_by(profesorId=current_user.id_usuario).all()
-    return render_template('profesor/dashboard.html', clases=clases)
+    return render_template('profesores/dashboard.html', clases=clases)
 
 
 @profesor_bp.route('/registrar_calificaciones')
