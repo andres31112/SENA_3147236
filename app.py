@@ -11,13 +11,14 @@ from routes.estudiantes import estudiante_bp
 from routes.profesor import profesor_bp
 from routes.padres import padre_bp
 from config import Config
+from extensions import init_app # Importa la función de inicialización
 
 # ===============================
 # INICIALIZACIÓN DE LA APP
 # ===============================
 app = Flask(__name__)
 app.config.from_object(Config)
-db.init_app(app)
+init_app(app) # <-- ¡CAMBIO IMPORTANTE AQUÍ!
 
 # ===============================
 # CONFIGURACIÓN DE FLASK-LOGIN
