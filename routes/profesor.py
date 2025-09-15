@@ -9,7 +9,6 @@ profesor_bp = Blueprint('profesor', __name__, url_prefix='/profesor')
 
 @profesor_bp.route('/dashboard')
 @login_required
-@role_required(2)
 def dashboard():
     """Panel principal del profesor con resúmenes de sus clases y tareas"""
     # Traer todas las clases del profesor
@@ -19,7 +18,6 @@ def dashboard():
 
 @profesor_bp.route('/registrar_calificaciones')
 @login_required
-@permission_required('registrar_calificaciones')
 def registrar_calificaciones():
     """Permite al profesor registrar y editar calificaciones de sus estudiantes"""
     # Traer todas las clases del profesor
@@ -34,7 +32,6 @@ def registrar_calificaciones():
 
 @profesor_bp.route('/ver_lista_estudiantes')
 @login_required
-@permission_required('ver_lista_estudiantes')
 def ver_lista_estudiantes():
     """Muestra la lista de estudiantes de las asignaturas del profesor"""
     # Traer todas las clases del profesor
@@ -51,7 +48,6 @@ def ver_lista_estudiantes():
 
 @profesor_bp.route('/ver_horario_clases')
 @login_required
-@permission_required('ver_horario_clases')
 def ver_horario_clases():
     """Muestra el horario de clases del profesor"""
     clases = Clase.query.filter_by(profesorId=current_user.id_usuario).all()
